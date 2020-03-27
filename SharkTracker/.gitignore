@@ -1,0 +1,9 @@
+bin/
+obj/
+/packages/
+/SharkTracker/Data/
+SharkTracker.sln.DotSettings.user
+SharkTracker.sln
+.idea/
+
+
