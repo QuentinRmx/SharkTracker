@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Data" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+      <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Data\en_us\img\cards\01DE001.png" />
+      <Resource Include="Data\en_us\img\cards\01DE001.png" />
+      <None Remove="Data\en_us\img\cards\01DE001-full.png" />
+      <Resource Include="Data\en_us\img\cards\01DE001-full.png" />
+    </ItemGroup>
+
+</Project>
