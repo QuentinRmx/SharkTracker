@@ -16,9 +16,18 @@
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
-    <StackPanel VerticalAlignment="Top">
-        
-        <controls:CompactCardControl CardName="Vanguard Bannerman" ArtworkPath="01DE001.png" Margin="1" Height="30" />
-        <controls:CompactCardControl CardName="Tianna Crownguard" ArtworkPath="01DE002.png" Margin="1" Height="30" />
+    <Window.Resources>
+        <!-- <ResourceDictionary x:Key="ResourceDictionary" Source="../Resources/CardCompactControlTemplate.xaml"></ResourceDictionary> -->
+        <DataTemplate x:Key="cardTemplate" DataType="vm:CompactCardControlViewModel">
+            <controls:CompactCardControl CardName="{Binding CardName}" CardCode="{Binding CardCode}"
+                                         CardCost="{Binding CardCost}" />
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel VerticalAlignment="Top" x:Name="cardStackPanel">
+        <ItemsControl ItemsSource="{Binding CardControlViewModels}" ItemTemplate="{StaticResource cardTemplate}" />
+        <!-- <controls:CompactCardControl CardName="Vanguard Bannerman" ArtworkPath="01DE001.png" CardCost="4" Margin="1" -->
+        <!--                              Height="30" /> -->
+        <!-- <controls:CompactCardControl CardName="Tianna Crownguard" ArtworkPath="01DE002.png" CardCost="8" Margin="1" -->
+        <!--                              Height="30" /> -->
     </StackPanel>
 </Window>

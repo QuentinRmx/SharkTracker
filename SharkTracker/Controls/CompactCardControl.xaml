@@ -9,25 +9,29 @@
 
 
     <Grid>
-        <Popup x:Name="popupArtwork" Grid.Column="0" IsOpen="False" Placement="Right">
-            <Image x:Name="artworkFull" />
+        <!-- Popup to display the full artwork on mouse hover. -->
+        <Popup x:Name="popupArtwork" Grid.Column="0" IsOpen="False" Placement="Right" AllowsTransparency="True">
+            <Image x:Name="artworkFullPopup" />
         </Popup>
+        <!-- Border used as a background brush to display the cropped artwork. -->
         <Border BorderBrush="Black" BorderThickness="1" Padding="1">
             <Border.Background>
-                <ImageBrush x:Name="artwork" Stretch="None" Opacity="0.8" />
+                <!-- Card cropped artwork. -->
+                <ImageBrush x:Name="artworkImageBrush" Stretch="None" Opacity="0.8" />
             </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
-                <TextBlock x:Name="cardName" Grid.Column="0" Foreground="White" FontSize="12" FontWeight="Bold"
-                           Text="" TextAlignment="Center" />
-
+                <!-- Card name. -->
+                <TextBlock x:Name="cardNameTb" Grid.Column="0" Foreground="White" FontSize="12" FontWeight="Bold"
+                           Text="{Binding CardName}" TextAlignment="Center" />
+                <!-- Card cost. -->
                 <Border Grid.Column="1" BorderBrush="Black" Background="Gray" BorderThickness="1" Padding="1"
                         Width="15" CornerRadius="8">
-                    <TextBlock Text="3" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock x:Name="cardCostTb" Text="{Binding CardCost}" Foreground="White" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" />
                 </Border>
 
 
