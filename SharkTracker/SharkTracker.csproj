@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.1" />
       <PackageReference Include="MvvmLight" Version="5.4.1.1" />
       <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
@@ -19,9 +20,9 @@
 
     <ItemGroup>
       <None Remove="Data\en_us\img\cards\01DE001.png" />
-      <Resource Include="Data\en_us\img\cards\01DE001.png" />
       <None Remove="Data\en_us\img\cards\01DE001-full.png" />
-      <Resource Include="Data\en_us\img\cards\01DE001-full.png" />
+      <None Remove="Data\en_us\data\set1-en_us.json" />
+      <Resource Include="Data\en_us\data\set1-en_us.json" />
     </ItemGroup>
 
 </Project>

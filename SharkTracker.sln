@@ -12,5 +12,6 @@ Global
 		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
