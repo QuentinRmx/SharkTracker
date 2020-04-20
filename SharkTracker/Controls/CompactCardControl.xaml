@@ -19,13 +19,13 @@
                 <!-- Card cropped artwork. -->
                 <ImageBrush x:Name="artworkImageBrush" Stretch="None" Opacity="0.8" />
             </Border.Background>
-            <Grid>
+            <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <!-- Card name. -->
-                <TextBlock x:Name="cardNameTb" Grid.Column="0" Foreground="White" FontSize="12" FontWeight="Bold"
+                <TextBlock Background="Transparent" x:Name="cardNameTb" Grid.Column="0" Foreground="White" FontSize="12" FontWeight="Bold"
                            Text="{Binding CardName}" TextAlignment="Center" />
                 <!-- Card cost. -->
                 <Border Grid.Column="1" BorderBrush="Black" Background="Gray" BorderThickness="1" Padding="1"

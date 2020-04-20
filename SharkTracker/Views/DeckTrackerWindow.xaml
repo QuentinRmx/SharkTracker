@@ -9,25 +9,23 @@
         WindowStyle="None"
         mc:Ignorable="d"
         Topmost="True"
-        Title="MainWindow" Height="600" Width="180"
+        Title="Deck Tracker" Height="600" Width="180"
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize">
     <Window.DataContext>
-        <vm:MainViewModel />
+        <vm:DeckTrackerViewModel />
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="F" Command="{Binding OpenCollectionCommand}" />
+    </Window.InputBindings>
     <Window.Resources>
-        <!-- <ResourceDictionary x:Key="ResourceDictionary" Source="../Resources/CardCompactControlTemplate.xaml"></ResourceDictionary> -->
         <DataTemplate x:Key="cardTemplate" DataType="vm:CompactCardControlViewModel">
-            <controls:CompactCardControl CardName="{Binding CardName}" CardCode="{Binding CardCode}"
-                                         CardCost="{Binding CardCost}" />
+            <controls:CompactCardControl Card="{Binding Card}" />
         </DataTemplate>
     </Window.Resources>
     <StackPanel VerticalAlignment="Top" x:Name="cardStackPanel">
+        <TextBlock Background="#121212" Foreground="#e6e6e6" Text="No active deck found" Visibility="{Binding ShowNoDeckText}" />
         <ItemsControl ItemsSource="{Binding CardControlViewModels}" ItemTemplate="{StaticResource cardTemplate}" />
-        <!-- <controls:CompactCardControl CardName="Vanguard Bannerman" ArtworkPath="01DE001.png" CardCost="4" Margin="1" -->
-        <!--                              Height="30" /> -->
-        <!-- <controls:CompactCardControl CardName="Tianna Crownguard" ArtworkPath="01DE002.png" CardCost="8" Margin="1" -->
-        <!--                              Height="30" /> -->
     </StackPanel>
 </Window>

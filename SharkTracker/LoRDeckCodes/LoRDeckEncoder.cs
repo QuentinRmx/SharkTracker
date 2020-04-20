@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SharkTracker.LoRDeckCodes;
 
 namespace LoRDeckCodes
 {
-    public class LoRDeckEncoder
+    public static class LoRDeckEncoder
     {
-        private readonly static int CARD_CODE_LENGTH = 7;
-        private static Dictionary<string, int> FactionCodeToIntIdentifier = new Dictionary<string, int>();
-        private static Dictionary<int, string> IntIdentifierToFactionCode = new Dictionary<int, string>();
-        private readonly static int MAX_KNOWN_VERSION = 1;
+        private const int CARD_CODE_LENGTH = 7;
+        private static readonly Dictionary<string, int> FactionCodeToIntIdentifier = new Dictionary<string, int>();
+        private static readonly Dictionary<int, string> IntIdentifierToFactionCode = new Dictionary<int, string>();
+        private const int MAX_KNOWN_VERSION = 1;
 
         static LoRDeckEncoder()
         {
@@ -35,7 +32,7 @@ namespace LoRDeckCodes
         {
             List<CardCodeAndCount> result = new List<CardCodeAndCount>();
 
-            byte[] bytes = null;
+            byte[] bytes;
             try
             {
                 bytes = Base32.Decode(code);
@@ -148,7 +145,7 @@ namespace LoRDeckCodes
             groupedOf2s = SortGroupOf(groupedOf2s);
             groupedOf1s = SortGroupOf(groupedOf1s);
 
-            //Nofs (since rare) are simply sorted by the card code - there's no optimiziation based upon the card count
+            //Nofs (since rare) are simply sorted by the card code - there's no optimization based upon the card count
             ofN = ofN.OrderBy(c => c.CardCode).ToList();
 
             //Encode
@@ -263,15 +260,14 @@ namespace LoRDeckCodes
                 if (ccc.CardCode.Length != CARD_CODE_LENGTH)
                     return false;
 
-                int parsed;
-                if (!int.TryParse(ccc.CardCode.Substring(0, 2), out parsed))
+                if (!int.TryParse(ccc.CardCode.Substring(0, 2), out int _))
                     return false;
 
                 string faction = ccc.CardCode.Substring(2, 2);
                 if (!FactionCodeToIntIdentifier.ContainsKey(faction))
                     return false;
 
-                if (!int.TryParse(ccc.CardCode.Substring(4, 3), out parsed))
+                if (!int.TryParse(ccc.CardCode.Substring(4, 3), out int _))
                     return false;
 
                 if (ccc.Count < 1)

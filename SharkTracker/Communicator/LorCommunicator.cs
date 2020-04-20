@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using LoRDeckCodes;
 using Newtonsoft.Json;
@@ -26,18 +25,27 @@ namespace SharkTracker.Communicator
         
         public override List<CardCodeAndCount> GetActiveDeck()
         {
-            if (_client == null)
-                _client = new HttpClient();
             List<CardCodeAndCount> deck = new List<CardCodeAndCount>();
-            Task<HttpResponseMessage> resp = _client.GetAsync("http://127.0.0.1:21337/static-decklist");
-            if (resp.Result.IsSuccessStatusCode)
+            try
             {
-                string respBody = resp.Result.Content.ReadAsStringAsync().Result;
-                DeckResponse deckResponse = JsonConvert.DeserializeObject<DeckResponse>(respBody);
-                if (deckResponse != null)
+                if (_client == null)
+                    _client = new HttpClient();
+
+                Task<HttpResponseMessage> resp = _client.GetAsync("http://127.0.0.1:21337/static-decklist");
+                if (resp.Result.IsSuccessStatusCode)
                 {
-                    deck = LoRDeckEncoder.GetDeckFromCode(deckResponse.DeckCode);
+                    string respBody = resp.Result.Content.ReadAsStringAsync().Result;
+                    DeckResponse deckResponse = JsonConvert.DeserializeObject<DeckResponse>(respBody);
+                    if (deckResponse != null)
+                    {
+                        deck = LoRDeckEncoder.GetDeckFromCode(deckResponse.DeckCode);
+                    }
                 }
+
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex);
             }
             return deck;
         }
