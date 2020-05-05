@@ -22,7 +22,13 @@
       <None Remove="Data\en_us\img\cards\01DE001.png" />
       <None Remove="Data\en_us\img\cards\01DE001-full.png" />
       <None Remove="Data\en_us\data\set1-en_us.json" />
-      <Resource Include="Data\en_us\data\set1-en_us.json" />
+      <Resource Include="Data\en_us\data\set1-en_us.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Data\en_us\data\set2-en_us.json" />
+      <Resource Include="Data\en_us\data\set2-en_us.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using SharkTracker.Utils;
@@ -39,12 +41,12 @@ namespace SharkTracker.Models
         {
             get
             {
-                ERarity rarityEnum = Rarity switch
+                ERarity rarityEnum = Rarity.ToLower() switch
                 {
-                    "Champion" => ERarity.Champion,
-                    "Epic" => ERarity.Epic,
-                    "Rare" => ERarity.Rare,
-                    "Common" => ERarity.Common,
+                    "champion" => ERarity.Champion,
+                    "epic" => ERarity.Epic,
+                    "rare" => ERarity.Rare,
+                    "common" => ERarity.Common,
                     _ => ERarity.Common
                 };
 
@@ -59,6 +61,30 @@ namespace SharkTracker.Models
         {
             get => _bitmapArtwork;
             private set => _bitmapArtwork = value;
+        }
+
+        [JsonIgnore]
+        public Brush RarityColor
+        {
+            get
+            {
+                switch (RarityEnum)
+                {
+                    case ERarity.Champion:
+                        return new SolidColorBrush(Colors.Gold); 
+                        break;
+                    case ERarity.Epic:
+                        return new SolidColorBrush(Colors.Purple); 
+                        break;
+                    case ERarity.Rare:
+                        return new SolidColorBrush(Colors.RoyalBlue); 
+                        break;
+                    case ERarity.Common:
+                    default:
+                        return new SolidColorBrush(Colors.ForestGreen); 
+                        break;
+                }
+            }
         }
 
         // CONSTRUCTORS
@@ -78,7 +104,8 @@ namespace SharkTracker.Models
             }
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage resp = await client.GetAsync(Constants.URL_DL_CARD_IMG + Code + ".png");
+            string path = Constants.URL_DL_CARD_IMG_START + Code[1] + Constants.URL_DL_CARD_IMG_END;
+            HttpResponseMessage resp = await client.GetAsync(path + Code + ".png");
             if (resp.IsSuccessStatusCode)
             {
                 byte[] respContent = await resp.Content.ReadAsByteArrayAsync();

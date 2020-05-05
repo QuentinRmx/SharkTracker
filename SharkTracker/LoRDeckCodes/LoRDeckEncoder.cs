@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SharkTracker.LoRDeckCodes;
 
-namespace LoRDeckCodes
+namespace SharkTracker.LoRDeckCodes
 {
-    public static class LoRDeckEncoder
+    public class LoRDeckEncoder
     {
-        private const int CARD_CODE_LENGTH = 7;
-        private static readonly Dictionary<string, int> FactionCodeToIntIdentifier = new Dictionary<string, int>();
-        private static readonly Dictionary<int, string> IntIdentifierToFactionCode = new Dictionary<int, string>();
-        private const int MAX_KNOWN_VERSION = 1;
+        private readonly static int CARD_CODE_LENGTH = 7;
+        private static Dictionary<string, int> FactionCodeToIntIdentifier = new Dictionary<string, int>();
+        private static Dictionary<int, string> IntIdentifierToFactionCode = new Dictionary<int, string>();
+        private readonly static int MAX_KNOWN_VERSION = 2;
 
         static LoRDeckEncoder()
         {
@@ -20,19 +19,21 @@ namespace LoRDeckCodes
             FactionCodeToIntIdentifier.Add("NX", 3);
             FactionCodeToIntIdentifier.Add("PZ", 4);
             FactionCodeToIntIdentifier.Add("SI", 5);
+            FactionCodeToIntIdentifier.Add("BW", 6);
             IntIdentifierToFactionCode.Add(0, "DE");
             IntIdentifierToFactionCode.Add(1, "FR");
             IntIdentifierToFactionCode.Add(2, "IO");
             IntIdentifierToFactionCode.Add(3, "NX");
             IntIdentifierToFactionCode.Add(4, "PZ");
             IntIdentifierToFactionCode.Add(5, "SI");
+            IntIdentifierToFactionCode.Add(6, "BW");
         }
 
         public static List<CardCodeAndCount> GetDeckFromCode(string code)
         {
             List<CardCodeAndCount> result = new List<CardCodeAndCount>();
 
-            byte[] bytes;
+            byte[] bytes = null;
             try
             {
                 bytes = Base32.Decode(code);
@@ -145,7 +146,7 @@ namespace LoRDeckCodes
             groupedOf2s = SortGroupOf(groupedOf2s);
             groupedOf1s = SortGroupOf(groupedOf1s);
 
-            //Nofs (since rare) are simply sorted by the card code - there's no optimization based upon the card count
+            //Nofs (since rare) are simply sorted by the card code - there's no optimiziation based upon the card count
             ofN = ofN.OrderBy(c => c.CardCode).ToList();
 
             //Encode
@@ -260,14 +261,15 @@ namespace LoRDeckCodes
                 if (ccc.CardCode.Length != CARD_CODE_LENGTH)
                     return false;
 
-                if (!int.TryParse(ccc.CardCode.Substring(0, 2), out int _))
+                int parsed;
+                if (!int.TryParse(ccc.CardCode.Substring(0, 2), out parsed))
                     return false;
 
                 string faction = ccc.CardCode.Substring(2, 2);
                 if (!FactionCodeToIntIdentifier.ContainsKey(faction))
                     return false;
 
-                if (!int.TryParse(ccc.CardCode.Substring(4, 3), out int _))
+                if (!int.TryParse(ccc.CardCode.Substring(4, 3), out parsed))
                     return false;
 
                 if (ccc.Count < 1)

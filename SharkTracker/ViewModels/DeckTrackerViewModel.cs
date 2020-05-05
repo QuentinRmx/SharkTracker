@@ -73,7 +73,7 @@ namespace SharkTracker.ViewModels
         {
             _communicator = new LorCommunicator(new HttpClient());
             CardControlViewModels = new ObservableCollection<CompactCardControlViewModel>();
-            _allCards = CardsManager.getAllCards();
+            _allCards = CardsManager.Instance.GetAllCards();
             _timer = new DispatcherTimer();
             _timer.Tick += LoadDeck;
             _timer.Interval = TimeSpan.FromSeconds(1);

@@ -20,6 +20,10 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="Save" Width="40" Command="{Binding CommandSave}" />
         <TabControl Grid.Row="1">
+            <TabItem Header="Bilgewater">
+                <ListView ItemsSource="{Binding BilgewaterCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
             <TabItem Header="Demacia">
                 <ListView ItemsSource="{Binding DemaciaCards}" AlternationCount="2"
                           ItemTemplate="{StaticResource dtCard}" />
@@ -44,6 +48,7 @@
                 <ListView ItemsSource="{Binding SiCards}" AlternationCount="2"
                           ItemTemplate="{StaticResource dtCard}" />
             </TabItem>
+            
         </TabControl>
     </Grid>
 </Window>

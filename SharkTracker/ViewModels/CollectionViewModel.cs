@@ -24,29 +24,33 @@ namespace SharkTracker.ViewModels
             }
         }
 
+        public IEnumerable<Card> BilgewaterCards =>
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Bilgewater")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+
         public IEnumerable<Card> DemaciaCards =>
-            _playerCollection.FindAll(c => c.Collectible && c.Region == "Demacia").OrderBy(c => c.RarityEnum)
-                .ThenBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Demacia")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
 
         public IEnumerable<Card> IoniaCards =>
-            _playerCollection.FindAll(c => c.Collectible && c.Region == "Ionia").OrderBy(c => c.RarityEnum)
-                .ThenBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Ionia")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
 
         public IEnumerable<Card> FreljordCards =>
-            _playerCollection.FindAll(c => c.Collectible && c.Region == "Freljord").OrderBy(c => c.RarityEnum)
-                .ThenBy(c => c.Cost).ThenBy(c => c.Name).ToList().ToList();
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Freljord")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList().ToList();
 
         public IEnumerable<Card> NoxusCards =>
-            _playerCollection.FindAll(c => c.Collectible && c.Region == "Noxus").OrderBy(c => c.RarityEnum)
-                .ThenBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Noxus")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
 
         public IEnumerable<Card> PnzCards =>
-            _playerCollection.FindAll(c => c.Collectible && c.Region == "Piltover & Zaun").OrderBy(c => c.RarityEnum)
-                .ThenBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Piltover & Zaun")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
 
         public IEnumerable<Card> SiCards =>
-            _playerCollection.FindAll(c => c.Collectible && c.Region == "Shadow Isles").OrderBy(c => c.RarityEnum)
-                .ThenBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+            _playerCollection.FindAll(c => c.Collectible && c.Region == "Shadow Isles")
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
 
         public ICommand CommandSave => new RelayCommand(SaveCollection);
 
@@ -54,7 +58,7 @@ namespace SharkTracker.ViewModels
         // CONSTRUCTORS
         public CollectionViewModel()
         {
-            PlayerCollection = new List<Card>(CardsManager.getAllCards());
+            PlayerCollection = new List<Card>(CardsManager.Instance.GetAllCards());
         }
 
 
@@ -62,7 +66,7 @@ namespace SharkTracker.ViewModels
 
         private void SaveCollection()
         {
-            CardsManager.saveAllCards(PlayerCollection);
+            CardsManager.Instance.SaveUserCollection(PlayerCollection);
         }
     }
 }
