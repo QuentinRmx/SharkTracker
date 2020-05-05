@@ -1,80 +1,83 @@
-using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using SharkTracker.Utils;
+using SharkTracker.Models;
 
 namespace SharkTracker.Controls
 {
-    public partial class CompactCardControl : UserControl
+    public partial class CompactCardControl
     {
-        public static readonly DependencyProperty ArtworkPathProperty =
-            DependencyProperty.Register("ArtworkPath", typeof(string), typeof(CompactCardControl));
+        public static readonly DependencyProperty CardProperty = DependencyProperty.Register("Card", typeof(Card),
+            typeof(CompactCardControl), new PropertyMetadata(default(Card)));
 
-        public static readonly DependencyProperty CardNameProperty = DependencyProperty.Register("CardName",
-            typeof(string), typeof(CompactCardControl), new PropertyMetadata(default(string)));
 
-        public string ArtworkPath
+        public Card Card
         {
-            get => GetValue(ArtworkPathProperty) as string;
-            set
-            {
-                SetValue(ArtworkPathProperty, value);
-                SetArtworkBackground();
-            }
+            get => (Card) GetValue(CardProperty);
+            set => SetValue(CardProperty, value);
         }
 
-        public string CardName
-        {
-            get => GetValue(CardNameProperty) as string;
-            set
-            {
-                SetValue(CardNameProperty, value);
-                SetCardName();
-            }
-        }
 
-        private void SetCardName()
-        {
-            cardName.Text = CardName;
-        }
+        // CONSTRUCTOR
 
         public CompactCardControl()
         {
             InitializeComponent();
-            Loaded += (sender, args) => SetArtworkBackground();
-            Loaded += (sender, args) => SetCardName();
-            MouseEnter += (sender, args) => ShowFullCard();
-            MouseLeave += (sender, args) => HideFullCard();
+            Loaded += (sender, args) => UpdateUI();
+            MouseEnter += (sender, args) => SetPopupDisplayState(true);
+            MouseLeave += (sender, args) => SetPopupDisplayState(false);
         }
 
-        private void ShowFullCard()
+        private async void UpdateUI()
         {
-            popupArtwork.IsOpen = true;
+            SetCardCost();
+            SetCardName();
+            await Card.GetArtworkFromInternet();
+            SetArtworkBackground();
+            SetPopupArtwork();
         }
 
-        private void HideFullCard()
+        // METHODS
+
+        private void SetPopupDisplayState(bool shouldDisplay)
         {
-            popupArtwork.IsOpen = false;
+            popupArtwork.IsOpen = shouldDisplay;
         }
 
+        private void SetCardName()
+        {
+            cardNameTb.Text = Card.Name;
+        }
+
+        private void SetCardCost()
+        {
+            cardCostTb.Text = Card.Cost.ToString();
+        }
+
+        /// <summary>
+        /// Crop the artwork and set it as the background.
+        /// </summary>
         private void SetArtworkBackground()
         {
-            if (string.IsNullOrEmpty(ArtworkPath) ||
-                !Uri.IsWellFormedUriString(Constants.PATH_IMG_PREFIX + ArtworkPath, UriKind.Relative))
-            {
+            if (Card.BitmapArtwork == null)
                 return;
-            }
-
             CroppedBitmap cb = new CroppedBitmap(
-                new BitmapImage(new Uri(Constants.PATH_IMG_PREFIX + ArtworkPath, UriKind.Relative)),
+                Card.BitmapArtwork,
                 new Int32Rect(30, 200, 620, 200));
             TransformedBitmap tb = new TransformedBitmap(cb, new ScaleTransform(0.25, 0.25));
-            artwork.ImageSource = tb;
-            BitmapImage fullImg = new BitmapImage(new Uri(Constants.PATH_IMG_PREFIX + ArtworkPath, UriKind.Relative));
-            TransformedBitmap scaledArt = new TransformedBitmap(fullImg, new ScaleTransform(0.5, 0.5));
-            artworkFull.Source = scaledArt;
+            artworkImageBrush.ImageSource = tb;
+        }
+
+
+        /// <summary>
+        /// Scale down the artwork and pass it to the popup.
+        /// </summary>
+        private void SetPopupArtwork()
+        {
+            if (Card.BitmapArtwork == null)
+                return;
+            TransformedBitmap scaledArt = new TransformedBitmap(Card.BitmapArtwork, new ScaleTransform(0.5, 0.5));
+            artworkFullPopup.Source = scaledArt;
         }
     }
 }

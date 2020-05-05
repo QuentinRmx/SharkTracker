@@ -1,0 +1,54 @@
+<Window x:Class="SharkTracker.Views.CollectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:SharkTracker.ViewModels"
+        mc:Ignorable="d"
+        Title="Collection Manager" Height="800" Width="500">
+    <Window.DataContext>
+        <vm:CollectionViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="Save" Width="40" Command="{Binding CommandSave}" />
+        <TabControl Grid.Row="1">
+            <TabItem Header="Bilgewater">
+                <ListView ItemsSource="{Binding BilgewaterCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            <TabItem Header="Demacia">
+                <ListView ItemsSource="{Binding DemaciaCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            <TabItem Header="Freljord">
+                <ListView ItemsSource="{Binding FreljordCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            <TabItem Header="Ionia">
+                <ListView ItemsSource="{Binding IoniaCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            <TabItem Header="Noxus">
+                <ListView ItemsSource="{Binding NoxusCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            <TabItem Header="Piltover and Zaun">
+                <ListView ItemsSource="{Binding PnzCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            <TabItem Header="Shadow Isles">
+                <ListView ItemsSource="{Binding SiCards}" AlternationCount="2"
+                          ItemTemplate="{StaticResource dtCard}" />
+            </TabItem>
+            
+        </TabControl>
+    </Grid>
+</Window>
