@@ -1,0 +1,35 @@
+using System.Windows;
+using System.Windows.Input;
+using SharkTracker.Utils;
+
+namespace SharkTracker.Views
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            SizeToContent = SizeToContent.WidthAndHeight;
+            // Draggable window by clicking anywhere.
+            this.MouseDown += TryDragMove;
+            // Exiting the application with the Escape key.
+            this.KeyDown += delegate(object sender, KeyEventArgs args)
+            {
+                if (args.Key == Key.Escape)
+                {
+                    Close();
+                }
+            };
+            
+            Dispatcher.Invoke(() => CardsManager.Instance.LoadAllCards());
+        }
+        
+        private void TryDragMove(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            if (mouseButtonEventArgs.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+    }
+}
