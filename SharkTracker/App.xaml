@@ -4,8 +4,9 @@
              xmlns:local="clr-namespace:SharkTracker"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:models="clr-namespace:SharkTracker.Models"
-             StartupUri="Views/DeckTrackerWindow.xaml">
+             StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
+        <Color x:Key="MainBackgroundColor">#121212</Color>
         <!-- DataTemplate for cards in collection's listviews. -->
         <DataTemplate x:Key="dtCard" DataType="models:Card">
             <Border BorderThickness="1" BorderBrush="White" CornerRadius="5">
@@ -15,8 +16,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Background="{Binding RarityColor}" Margin="2" CornerRadius="3">
-                    </Border>
+                    <Border Grid.Column="0" Background="{Binding RarityColor}" Margin="2" CornerRadius="3" />
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Grid.Column="1"
                                Text="{Binding Name}" Padding="10, 0, 150, 0" />
                     <xctk:IntegerUpDown HorizontalAlignment="Center" FontSize="18" Grid.Column="2" Padding="5"
@@ -52,10 +52,30 @@
             <Setter Property="Foreground" Value="#e6e6e6" />
             <Setter Property="Background" Value="#121212" />
         </Style>
-
-        <!-- <Style TargetType="TextBlock"> -->
-        <!--     <Setter Property="Foreground" Value="#e6e6e6" /> -->
-        <!--     <Setter Property="Background" Value="#121212" /> -->
+        <!-- Style ScrollViewer -->
+        <!-- <Style TargetType="ScrollBar"> -->
+        <!--     <Setter Property="OverridesDefaultStyle" Value="True" /> -->
+        <!--     <Setter Property="Background" Value="White" /> -->
+        <!--     <Setter Property="Foreground" Value="LightGray" /> -->
+        <!--     <Setter Property="Width" Value="8" /> -->
+        <!--     <Setter Property="MinWidth" Value="8" /> -->
         <!-- </Style> -->
+        <!-- Style Button -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#e6e6e6" />
+            <!-- <Setter Property="Template"> -->
+            <!--     <Setter.Value> -->
+            <!--         <ControlTemplate TargetType="Button"> -->
+            <!--             <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}"/> -->
+            <!--             <ControlTemplate.Triggers> -->
+            <!--                 <Trigger Property="IsMouseOver" Value="True"> -->
+            <!--                     <Setter Property="Background" Value="Transparent" /> -->
+            <!--                 </Trigger> -->
+            <!--             </ControlTemplate.Triggers> -->
+            <!--         </ControlTemplate> -->
+            <!--     </Setter.Value> -->
+            <!-- </Setter> -->
+        </Style>
     </Application.Resources>
 </Application>

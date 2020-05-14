@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:SharkTracker.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="30" d:DesignWidth="180" d:DataContext="{vm:CompactCardControlViewModel }">
+             d:DesignHeight="30" d:DesignWidth="Auto" d:DataContext="{vm:CompactCardControlViewModel }">
 
 
     <Grid>

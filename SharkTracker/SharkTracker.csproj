@@ -9,6 +9,9 @@
 
     <ItemGroup>
       <Folder Include="Data" />
+      <Folder Include="Data\en_us\img\cards" />
+      <Folder Include="Resources\fonts" />
+      <Folder Include="Resources\icons" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +32,74 @@
       <Resource Include="Data\en_us\data\set2-en_us.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Data\en_us\img\regions\icon-demacia.png" />
+      <Resource Include="Data\en_us\img\regions\icon-demacia.png" />
+      <None Remove="Data\en_us\img\regions\icon-all.png" />
+      <Resource Include="Data\en_us\img\regions\icon-all.png" />
+      <None Remove="Data\en_us\img\regions\icon-bilgewater.png" />
+      <Resource Include="Data\en_us\img\regions\icon-bilgewater.png" />
+      <None Remove="Data\en_us\img\regions\icon-freljord.png" />
+      <Resource Include="Data\en_us\img\regions\icon-freljord.png" />
+      <None Remove="Data\en_us\img\regions\icon-ionia.png" />
+      <Resource Include="Data\en_us\img\regions\icon-ionia.png" />
+      <None Remove="Data\en_us\img\regions\icon-noxus.png" />
+      <Resource Include="Data\en_us\img\regions\icon-noxus.png" />
+      <None Remove="Data\en_us\img\regions\icon-piltoverzaun.png" />
+      <Resource Include="Data\en_us\img\regions\icon-piltoverzaun.png" />
+      <None Remove="Data\en_us\img\regions\icon-shadowisles.png" />
+      <Resource Include="Data\en_us\img\regions\icon-shadowisles.png" />
+      <None Remove="Resources\fonts\Friz Quadrata Std Medium.otf" />
+      <Resource Include="Resources\fonts\friz.otf" />
+      <None Remove="Resources\icons\menu_icon_collapse.png" />
+      <Resource Include="Resources\icons\menu_icon_collapse.png" />
+      <None Remove="Resources\icons\menu_icon_open.png" />
+      <Resource Include="Resources\icons\menu_icon_open.png" />
+      <None Remove="Resources\icons\menu_icon_collapse_style.png" />
+      <Resource Include="Resources\icons\menu_icon_collapse_style.png" />
+      <None Remove="Resources\icons\menu_icon_open_style.png" />
+      <Resource Include="Resources\icons\menu_icon_open_style.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Controls\CardCollectionControl.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\RegionSelectorControl.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Views\MainWindow.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\CollectionControl.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\MainMenuControl.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\TrackerControl.xaml">
+        <Generator></Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\CardCollectionControl.xaml.cs">
+        <DependentUpon>CardCollectionControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\RegionSelectorControl.xaml.cs">
+        <DependentUpon>RegionSelectorControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\MainWindow.xaml.cs">
+        <DependentUpon>MainWindow.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\CollectionControl.xaml.cs">
+        <DependentUpon>CollectionControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\MainMenuControl.xaml.cs">
+        <DependentUpon>MainMenuControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\TrackerControl.xaml.cs">
+        <DependentUpon>TrackerControl.xaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

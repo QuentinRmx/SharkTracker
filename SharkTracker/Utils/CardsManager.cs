@@ -2,22 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SharkTracker.Models;
+using SharkTracker.Observation;
 
 namespace SharkTracker.Utils
 {
-    public class CardsManager
+    public class CardsManager : Observable
     {
         // ATTRIBUTES
+        
+        private readonly List<Observer> _observers = new List<Observer>();
 
-        private static List<Card> _cards;
+        private List<Card> _cards;
 
-        private static Dictionary<string, int> _userCollection;
+        private Dictionary<string, int> _userCollection;
 
         private static CardsManager _instance;
 
-        private static readonly object Instancelock = new object();
 
         public static CardsManager Instance
         {
@@ -35,24 +38,26 @@ namespace SharkTracker.Utils
             _cards = new List<Card>();
             _userCollection = new Dictionary<string, int>();
             LoadUserCollection();
-            LoadAllCards();
         }
 
         // METHODS
 
-        private void LoadAllCards()
+        public async Task<bool> LoadAllCards()
         {
             _cards = new List<Card>();
 
             // SET 1
-            string json = File.ReadAllText(Constants.PATH_CARD_SET_1);
+            string json = await File.ReadAllTextAsync(Constants.PATH_CARD_SET_1);
             _cards.AddRange(JsonConvert.DeserializeObject<List<Card>>(json));
+            
+            _observers.ForEach(o => o.Notify());
             foreach (Card c in _cards)
             {
                 try
                 {
                     _userCollection.TryGetValue(c.Code, out int value);
                     c.QuantityOwned = value;
+                    // await c.LoadArtwork();
                 }
                 catch (Exception ex)
                 {
@@ -61,13 +66,17 @@ namespace SharkTracker.Utils
             }
 
             // SET 2
-            json = File.ReadAllText(Constants.PATH_CARD_SET_2);
+            json = await File.ReadAllTextAsync(Constants.PATH_CARD_SET_2);
             _cards.AddRange(JsonConvert.DeserializeObject<List<Card>>(json));
+            
+            _observers.ForEach(o => o.Notify());
             foreach (Card c in _cards)
             {
                 _userCollection.TryGetValue(c.Code, out int value);
                 c.QuantityOwned = value;
+                // await c.LoadArtwork();
             }
+            return true;
         }
 
         private void LoadUserCollection()
@@ -97,11 +106,6 @@ namespace SharkTracker.Utils
             return _cards;
         }
 
-        public Card GetCardFromCode(string code)
-        {
-            return _cards.First(c => c.Code == code);
-        }
-
         public void SaveUserCollection(List<Card> cards)
         {
             foreach (Card c in cards)
@@ -127,6 +131,24 @@ namespace SharkTracker.Utils
             }
 
             _cards.First(ca => ca.Code == c.Code).QuantityOwned = c.QuantityOwned;
+        }
+
+        /// <inheritdoc />
+        public void Register(Observer o)
+        {
+            if (!_observers.Contains(o))
+            {
+                _observers.Add(o);
+            }
+        }
+
+        /// <inheritdoc />
+        public void Unregister(Observer o)
+        {
+            if (_observers.Contains(o))
+            {
+                _observers.Remove(o);
+            }
         }
     }
 }

@@ -7,14 +7,14 @@ namespace SharkTracker.Controls
 {
     public partial class CompactCardControl
     {
-        public static readonly DependencyProperty CardProperty = DependencyProperty.Register("Card", typeof(Card),
+        public static readonly DependencyProperty CardCompactProperty = DependencyProperty.Register("CardCompact", typeof(Card),
             typeof(CompactCardControl), new PropertyMetadata(default(Card)));
 
 
-        public Card Card
+        public Card CardCompact
         {
-            get => (Card) GetValue(CardProperty);
-            set => SetValue(CardProperty, value);
+            get => (Card) GetValue(CardCompactProperty);
+            set => SetValue(CardCompactProperty, value);
         }
 
 
@@ -32,7 +32,7 @@ namespace SharkTracker.Controls
         {
             SetCardCost();
             SetCardName();
-            await Card.GetArtworkFromInternet();
+            await CardCompact.LoadArtwork();
             SetArtworkBackground();
             SetPopupArtwork();
         }
@@ -46,12 +46,12 @@ namespace SharkTracker.Controls
 
         private void SetCardName()
         {
-            cardNameTb.Text = Card.Name;
+            cardNameTb.Text = CardCompact.Name;
         }
 
         private void SetCardCost()
         {
-            cardCostTb.Text = Card.Cost.ToString();
+            cardCostTb.Text = CardCompact.Cost.ToString();
         }
 
         /// <summary>
@@ -59,10 +59,10 @@ namespace SharkTracker.Controls
         /// </summary>
         private void SetArtworkBackground()
         {
-            if (Card.BitmapArtwork == null)
+            if (CardCompact.BitmapArtwork == null)
                 return;
             CroppedBitmap cb = new CroppedBitmap(
-                Card.BitmapArtwork,
+                CardCompact.BitmapArtwork,
                 new Int32Rect(30, 200, 620, 200));
             TransformedBitmap tb = new TransformedBitmap(cb, new ScaleTransform(0.25, 0.25));
             artworkImageBrush.ImageSource = tb;
@@ -74,9 +74,9 @@ namespace SharkTracker.Controls
         /// </summary>
         private void SetPopupArtwork()
         {
-            if (Card.BitmapArtwork == null)
+            if (CardCompact.BitmapArtwork == null)
                 return;
-            TransformedBitmap scaledArt = new TransformedBitmap(Card.BitmapArtwork, new ScaleTransform(0.5, 0.5));
+            TransformedBitmap scaledArt = new TransformedBitmap(CardCompact.BitmapArtwork, new ScaleTransform(0.5, 0.5));
             artworkFullPopup.Source = scaledArt;
         }
     }

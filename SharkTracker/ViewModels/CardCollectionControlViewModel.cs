@@ -1,13 +1,13 @@
-using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using SharkTracker.Models;
 
 namespace SharkTracker.ViewModels
 {
-    public class CompactCardControlViewModel : ViewModelBase
+    public class CardCollectionControlViewModel : ViewModelBase
     {
-        // ATTRIBUTES
 
+        // ATTRIBUTES
+        
         private Card _card;
 
         public Card Card
@@ -22,10 +22,8 @@ namespace SharkTracker.ViewModels
 
         // CONSTRUCTORS
 
-        public CompactCardControlViewModel() : base()
-        {
-        }
-
         // METHODS
+
+
     }
 }

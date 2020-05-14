@@ -1,0 +1,18 @@
+<UserControl x:Class="SharkTracker.Controls.MainMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SharkTracker.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="Auto" d:DesignWidth="100">
+    <StackPanel x:Name="MenuPanel" Orientation="Vertical" Margin="5" Width="Auto" Height="Auto">
+        <Button x:Name="ButtonCollapse" Click="ButtonCollapse_OnClick" Background="Transparent"
+                BorderBrush="Transparent">
+            <Image x:Name="ImgCollapse" MaxHeight="16" MaxWidth="16" Height="16" Width="16"
+                   Source="../Resources/icons/menu_icon_open_style.png" />
+        </Button>
+        <Button x:Name="ButtonTracker" Content="Tracker" Click="ButtonTracker_OnClick" />
+        <Button x:Name="ButtonCollection" Content="Collection" Click="ButtonCollection_OnClick" />
+    </StackPanel>
+</UserControl>

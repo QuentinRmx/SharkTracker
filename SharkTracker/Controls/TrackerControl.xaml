@@ -1,0 +1,23 @@
+<UserControl x:Class="SharkTracker.Controls.TrackerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SharkTracker.Controls"
+             xmlns:viewModels="clr-namespace:SharkTracker.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="Auto" d:DesignWidth="200">
+    <UserControl.DataContext>
+        <viewModels:TrackerControlViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <DataTemplate x:Key="cardTemplate" DataType="viewModels:CompactCardControlViewModel">
+            <local:CompactCardControl CardCompact="{Binding Card}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <StackPanel VerticalAlignment="Top" Margin="10" Height="Auto">
+        <TextBlock Background="#121212" Foreground="#e6e6e6" Text="No active deck found" FontSize="20"
+                   Visibility="{Binding ShowNoDeckText}" />
+        <ItemsControl Width="200" ItemsSource="{Binding CardControlViewModels}" ItemTemplate="{StaticResource cardTemplate}" />
+    </StackPanel>
+</UserControl>

@@ -1,15 +1,16 @@
 using System;
-using System.Linq;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 using SharkTracker.Utils;
 
 namespace SharkTracker.Models
 {
-    public class Card
+    public class Card : ObservableObject
     {
         // ATTRIBUTES
 
@@ -34,7 +35,7 @@ namespace SharkTracker.Models
 
         [JsonProperty("collectible")] public bool Collectible { get; set; }
 
-        [JsonProperty("quantityOwned")] public int QuantityOwned { get; set; } = 0;
+        [JsonProperty("quantityOwned")] public int QuantityOwned { get; set; }
 
         [JsonIgnore]
         public ERarity RarityEnum
@@ -54,65 +55,88 @@ namespace SharkTracker.Models
             }
         }
 
-        [JsonIgnore] private BitmapSource _bitmapArtwork = null;
-
         [JsonIgnore]
-        public BitmapSource BitmapArtwork
+        public ERegion RegionEnum
         {
-            get => _bitmapArtwork;
-            private set => _bitmapArtwork = value;
+            get
+            {
+                ERegion regionEnum = Region.ToLower() switch
+                {
+                    "bilgewater" => ERegion.Bilgewater,
+                    "demacia" => ERegion.Demacia,
+                    "freljord" => ERegion.Freljord,
+                    "ionia" => ERegion.Ionia,
+                    "noxus" => ERegion.Noxus,
+                    "piltover & zaun" => ERegion.PnZ,
+                    "shadow isles" => ERegion.Si,
+                    _ => ERegion.Si
+                };
+
+                return regionEnum;
+            }
         }
+
+        [JsonIgnore] public BitmapSource BitmapArtwork { get; private set; }
 
         [JsonIgnore]
         public Brush RarityColor
         {
             get
             {
-                switch (RarityEnum)
+                return RarityEnum switch
                 {
-                    case ERarity.Champion:
-                        return new SolidColorBrush(Colors.Gold); 
-                        break;
-                    case ERarity.Epic:
-                        return new SolidColorBrush(Colors.Purple); 
-                        break;
-                    case ERarity.Rare:
-                        return new SolidColorBrush(Colors.RoyalBlue); 
-                        break;
-                    case ERarity.Common:
-                    default:
-                        return new SolidColorBrush(Colors.ForestGreen); 
-                        break;
-                }
+                    ERarity.Champion => new SolidColorBrush(Colors.Gold),
+                    ERarity.Epic => new SolidColorBrush(Colors.Purple),
+                    ERarity.Rare => new SolidColorBrush(Colors.RoyalBlue),
+                    ERarity.Common => new SolidColorBrush(Colors.ForestGreen),
+                    _ => new SolidColorBrush(Colors.Red)
+                };
             }
         }
 
         // CONSTRUCTORS
 
-        public Card()
-        {
-        }
-
         // METHODS
 
-        public async Task<BitmapSource> GetArtworkFromInternet()
+        public async Task LoadArtwork()
         {
+            if (BitmapArtwork != null)
+                return;
             BitmapArtwork = new BitmapImage();
             if (string.IsNullOrEmpty(Code))
             {
-                return BitmapArtwork;
+                return;
+            }
+
+            string artworkPath = Constants.PATH_CACHE_ARTWORK + Code + Constants.ARTWORK_SUFFIX;
+            if (File.Exists(artworkPath))
+            {
+                // byte[] img = await File.ReadAllBytesAsync(artworkPath);
+                // BitmapArtwork = ImageHelper.LoadImageFromBytes(img);
+                BitmapArtwork = new BitmapImage(new Uri(artworkPath, UriKind.Relative));
+                return;
             }
 
             HttpClient client = new HttpClient();
-            string path = Constants.URL_DL_CARD_IMG_START + Code[1] + Constants.URL_DL_CARD_IMG_END;
-            HttpResponseMessage resp = await client.GetAsync(path + Code + ".png");
+            string path = Constants.URL_DL_CARD_IMG_START + Code[1] + Constants.URL_DL_CARD_IMG_END + Code +
+                          Constants.ARTWORK_SUFFIX;
+            HttpResponseMessage resp = await client.GetAsync(path);
             if (resp.IsSuccessStatusCode)
             {
                 byte[] respContent = await resp.Content.ReadAsByteArrayAsync();
-                BitmapArtwork = ImageHelper.LoadImage(respContent);
+                BitmapArtwork = ImageHelper.LoadImageFromBytes(respContent);
+                await File.WriteAllBytesAsync(artworkPath, respContent);
             }
 
-            return BitmapArtwork;
+            RaisePropertyChanged(nameof(BitmapArtwork));
+        }
+
+        /// <summary>
+        /// Empties the BitmapArtwork property to reduce memory usage.
+        /// </summary>
+        public void ClearArtwork()
+        {
+            BitmapArtwork = null;
         }
     }
 }

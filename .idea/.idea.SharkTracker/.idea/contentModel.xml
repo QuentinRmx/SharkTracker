@@ -7,9 +7,14 @@
     <e p="D:\_dev\C#\SharkTracker" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="SharkTracker" t="IncludeRecursive">
+        <e p=".gitignore" t="Include" />
+        <e p="Annotations.cs" t="Include" />
         <e p="App.xaml" t="Include" />
         <e p="App.xaml.cs" t="Include" />
         <e p="AssemblyInfo.cs" t="Include" />
+        <e p="Behaviors" t="Include">
+          <e p="ScrollViewerBehavior.cs" t="Include" />
+        </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Communicator" t="Include">
           <e p="AsbtractLorCommunicator.cs" t="Include" />
@@ -17,8 +22,18 @@
           <e p="LorCommunicator.cs" t="Include" />
         </e>
         <e p="Controls" t="Include">
+          <e p="CardCollectionControl.xaml" t="Include" />
+          <e p="CardCollectionControl.xaml.cs" t="Include" />
+          <e p="CollectionControl.xaml" t="Include" />
+          <e p="CollectionControl.xaml.cs" t="Include" />
           <e p="CompactCardControl.xaml" t="Include" />
           <e p="CompactCardControl.xaml.cs" t="Include" />
+          <e p="MainMenuControl.xaml" t="Include" />
+          <e p="MainMenuControl.xaml.cs" t="Include" />
+          <e p="RegionSelectorControl.xaml" t="Include" />
+          <e p="RegionSelectorControl.xaml.cs" t="Include" />
+          <e p="TrackerControl.xaml" t="Include" />
+          <e p="TrackerControl.xaml.cs" t="Include" />
         </e>
         <e p="Data" t="Include">
           <e p="en_us" t="Include">
@@ -29,8 +44,601 @@
               <e p="set2-en_us.json" t="Include" />
             </e>
             <e p="img" t="Include">
+              <e p="cards" t="Include">
+                <e p="01DE002.png" t="Include" />
+                <e p="01DE003.png" t="Include" />
+                <e p="01DE004.png" t="Include" />
+                <e p="01DE006.png" t="Include" />
+                <e p="01DE007.png" t="Include" />
+                <e p="01DE009.png" t="Include" />
+                <e p="01DE010.png" t="Include" />
+                <e p="01DE011.png" t="Include" />
+                <e p="01DE012.png" t="Include" />
+                <e p="01DE012T1.png" t="Include" />
+                <e p="01DE012T2.png" t="Include" />
+                <e p="01DE013.png" t="Include" />
+                <e p="01DE014.png" t="Include" />
+                <e p="01DE015.png" t="Include" />
+                <e p="01DE016.png" t="Include" />
+                <e p="01DE017.png" t="Include" />
+                <e p="01DE018.png" t="Include" />
+                <e p="01DE019.png" t="Include" />
+                <e p="01DE020.png" t="Include" />
+                <e p="01DE021.png" t="Include" />
+                <e p="01DE022.png" t="Include" />
+                <e p="01DE022T1.png" t="Include" />
+                <e p="01DE022T2.png" t="Include" />
+                <e p="01DE023.png" t="Include" />
+                <e p="01DE024.png" t="Include" />
+                <e p="01DE025.png" t="Include" />
+                <e p="01DE026.png" t="Include" />
+                <e p="01DE027.png" t="Include" />
+                <e p="01DE028.png" t="Include" />
+                <e p="01DE029.png" t="Include" />
+                <e p="01DE030.png" t="Include" />
+                <e p="01DE031.png" t="Include" />
+                <e p="01DE032.png" t="Include" />
+                <e p="01DE033.png" t="Include" />
+                <e p="01DE034.png" t="Include" />
+                <e p="01DE035.png" t="Include" />
+                <e p="01DE036.png" t="Include" />
+                <e p="01DE037.png" t="Include" />
+                <e p="01DE038.png" t="Include" />
+                <e p="01DE039.png" t="Include" />
+                <e p="01DE040.png" t="Include" />
+                <e p="01DE041.png" t="Include" />
+                <e p="01DE042.png" t="Include" />
+                <e p="01DE042T1.png" t="Include" />
+                <e p="01DE042T2.png" t="Include" />
+                <e p="01DE042T3.png" t="Include" />
+                <e p="01DE043.png" t="Include" />
+                <e p="01DE044.png" t="Include" />
+                <e p="01DE045.png" t="Include" />
+                <e p="01DE045T1.png" t="Include" />
+                <e p="01DE045T2.png" t="Include" />
+                <e p="01DE046.png" t="Include" />
+                <e p="01DE047.png" t="Include" />
+                <e p="01DE048.png" t="Include" />
+                <e p="01DE049.png" t="Include" />
+                <e p="01DE050.png" t="Include" />
+                <e p="01DE051.png" t="Include" />
+                <e p="01DE052.png" t="Include" />
+                <e p="01DE053.png" t="Include" />
+                <e p="01DE054.png" t="Include" />
+                <e p="01DE055.png" t="Include" />
+                <e p="01DE056.png" t="Include" />
+                <e p="01FR001.png" t="Include" />
+                <e p="01FR003.png" t="Include" />
+                <e p="01FR004.png" t="Include" />
+                <e p="01FR005.png" t="Include" />
+                <e p="01FR006.png" t="Include" />
+                <e p="01FR007.png" t="Include" />
+                <e p="01FR008.png" t="Include" />
+                <e p="01FR008T1.png" t="Include" />
+                <e p="01FR009.png" t="Include" />
+                <e p="01FR009T1.png" t="Include" />
+                <e p="01FR009T2.png" t="Include" />
+                <e p="01FR010.png" t="Include" />
+                <e p="01FR011.png" t="Include" />
+                <e p="01FR012.png" t="Include" />
+                <e p="01FR013.png" t="Include" />
+                <e p="01FR014.png" t="Include" />
+                <e p="01FR016.png" t="Include" />
+                <e p="01FR017.png" t="Include" />
+                <e p="01FR018.png" t="Include" />
+                <e p="01FR019.png" t="Include" />
+                <e p="01FR020.png" t="Include" />
+                <e p="01FR021.png" t="Include" />
+                <e p="01FR021T1.png" t="Include" />
+                <e p="01FR022.png" t="Include" />
+                <e p="01FR023.png" t="Include" />
+                <e p="01FR024.png" t="Include" />
+                <e p="01FR024T1.png" t="Include" />
+                <e p="01FR024T2.png" t="Include" />
+                <e p="01FR024T3.png" t="Include" />
+                <e p="01FR024T4.png" t="Include" />
+                <e p="01FR024T5.png" t="Include" />
+                <e p="01FR025.png" t="Include" />
+                <e p="01FR026.png" t="Include" />
+                <e p="01FR027.png" t="Include" />
+                <e p="01FR028.png" t="Include" />
+                <e p="01FR029.png" t="Include" />
+                <e p="01FR030.png" t="Include" />
+                <e p="01FR031.png" t="Include" />
+                <e p="01FR032.png" t="Include" />
+                <e p="01FR033.png" t="Include" />
+                <e p="01FR034.png" t="Include" />
+                <e p="01FR035.png" t="Include" />
+                <e p="01FR036.png" t="Include" />
+                <e p="01FR036T1.png" t="Include" />
+                <e p="01FR037.png" t="Include" />
+                <e p="01FR038.png" t="Include" />
+                <e p="01FR038T1.png" t="Include" />
+                <e p="01FR038T2.png" t="Include" />
+                <e p="01FR038T3.png" t="Include" />
+                <e p="01FR039.png" t="Include" />
+                <e p="01FR039T1.png" t="Include" />
+                <e p="01FR039T2.png" t="Include" />
+                <e p="01FR040.png" t="Include" />
+                <e p="01FR041.png" t="Include" />
+                <e p="01FR042.png" t="Include" />
+                <e p="01FR043.png" t="Include" />
+                <e p="01FR043T1.png" t="Include" />
+                <e p="01FR045.png" t="Include" />
+                <e p="01FR046.png" t="Include" />
+                <e p="01FR047.png" t="Include" />
+                <e p="01FR048.png" t="Include" />
+                <e p="01FR049.png" t="Include" />
+                <e p="01FR049T1.png" t="Include" />
+                <e p="01FR050.png" t="Include" />
+                <e p="01FR051.png" t="Include" />
+                <e p="01FR052.png" t="Include" />
+                <e p="01FR052T1.png" t="Include" />
+                <e p="01FR053.png" t="Include" />
+                <e p="01FR054.png" t="Include" />
+                <e p="01FR055.png" t="Include" />
+                <e p="01FR056.png" t="Include" />
+                <e p="01FR057.png" t="Include" />
+                <e p="01IO001.png" t="Include" />
+                <e p="01IO002.png" t="Include" />
+                <e p="01IO003.png" t="Include" />
+                <e p="01IO004.png" t="Include" />
+                <e p="01IO005.png" t="Include" />
+                <e p="01IO006.png" t="Include" />
+                <e p="01IO007.png" t="Include" />
+                <e p="01IO007T1.png" t="Include" />
+                <e p="01IO008.png" t="Include" />
+                <e p="01IO009.png" t="Include" />
+                <e p="01IO009T1.png" t="Include" />
+                <e p="01IO009T2.png" t="Include" />
+                <e p="01IO009T3.png" t="Include" />
+                <e p="01IO010.png" t="Include" />
+                <e p="01IO011.png" t="Include" />
+                <e p="01IO012.png" t="Include" />
+                <e p="01IO012T1.png" t="Include" />
+                <e p="01IO012T2.png" t="Include" />
+                <e p="01IO013.png" t="Include" />
+                <e p="01IO014.png" t="Include" />
+                <e p="01IO015.png" t="Include" />
+                <e p="01IO015T1.png" t="Include" />
+                <e p="01IO015T2.png" t="Include" />
+                <e p="01IO016.png" t="Include" />
+                <e p="01IO017.png" t="Include" />
+                <e p="01IO018.png" t="Include" />
+                <e p="01IO019.png" t="Include" />
+                <e p="01IO020.png" t="Include" />
+                <e p="01IO021.png" t="Include" />
+                <e p="01IO022.png" t="Include" />
+                <e p="01IO023.png" t="Include" />
+                <e p="01IO024.png" t="Include" />
+                <e p="01IO026.png" t="Include" />
+                <e p="01IO027.png" t="Include" />
+                <e p="01IO028.png" t="Include" />
+                <e p="01IO028T1.png" t="Include" />
+                <e p="01IO028T2.png" t="Include" />
+                <e p="01IO029.png" t="Include" />
+                <e p="01IO030.png" t="Include" />
+                <e p="01IO031.png" t="Include" />
+                <e p="01IO032.png" t="Include" />
+                <e p="01IO032T1.png" t="Include" />
+                <e p="01IO032T2.png" t="Include" />
+                <e p="01IO033.png" t="Include" />
+                <e p="01IO033T1.png" t="Include" />
+                <e p="01IO036.png" t="Include" />
+                <e p="01IO037.png" t="Include" />
+                <e p="01IO038.png" t="Include" />
+                <e p="01IO039.png" t="Include" />
+                <e p="01IO040.png" t="Include" />
+                <e p="01IO041.png" t="Include" />
+                <e p="01IO041T1.png" t="Include" />
+                <e p="01IO041T2.png" t="Include" />
+                <e p="01IO042.png" t="Include" />
+                <e p="01IO043.png" t="Include" />
+                <e p="01IO044.png" t="Include" />
+                <e p="01IO045.png" t="Include" />
+                <e p="01IO046.png" t="Include" />
+                <e p="01IO047.png" t="Include" />
+                <e p="01IO048.png" t="Include" />
+                <e p="01IO049.png" t="Include" />
+                <e p="01IO050.png" t="Include" />
+                <e p="01IO052.png" t="Include" />
+                <e p="01IO052T1.png" t="Include" />
+                <e p="01IO053.png" t="Include" />
+                <e p="01IO054.png" t="Include" />
+                <e p="01IO055.png" t="Include" />
+                <e p="01IO056.png" t="Include" />
+                <e p="01IO056T1.png" t="Include" />
+                <e p="01IO057.png" t="Include" />
+                <e p="01NX002.png" t="Include" />
+                <e p="01NX003.png" t="Include" />
+                <e p="01NX004.png" t="Include" />
+                <e p="01NX005.png" t="Include" />
+                <e p="01NX006.png" t="Include" />
+                <e p="01NX006T1.png" t="Include" />
+                <e p="01NX006T2.png" t="Include" />
+                <e p="01NX006T3.png" t="Include" />
+                <e p="01NX007.png" t="Include" />
+                <e p="01NX008.png" t="Include" />
+                <e p="01NX009.png" t="Include" />
+                <e p="01NX010.png" t="Include" />
+                <e p="01NX011.png" t="Include" />
+                <e p="01NX012.png" t="Include" />
+                <e p="01NX013.png" t="Include" />
+                <e p="01NX014.png" t="Include" />
+                <e p="01NX015.png" t="Include" />
+                <e p="01NX016.png" t="Include" />
+                <e p="01NX017.png" t="Include" />
+                <e p="01NX019.png" t="Include" />
+                <e p="01NX020.png" t="Include" />
+                <e p="01NX020T1.png" t="Include" />
+                <e p="01NX020T2.png" t="Include" />
+                <e p="01NX020T3.png" t="Include" />
+                <e p="01NX021.png" t="Include" />
+                <e p="01NX022.png" t="Include" />
+                <e p="01NX023.png" t="Include" />
+                <e p="01NX024.png" t="Include" />
+                <e p="01NX025.png" t="Include" />
+                <e p="01NX026.png" t="Include" />
+                <e p="01NX027.png" t="Include" />
+                <e p="01NX029.png" t="Include" />
+                <e p="01NX030.png" t="Include" />
+                <e p="01NX031.png" t="Include" />
+                <e p="01NX032.png" t="Include" />
+                <e p="01NX033.png" t="Include" />
+                <e p="01NX034.png" t="Include" />
+                <e p="01NX035.png" t="Include" />
+                <e p="01NX036.png" t="Include" />
+                <e p="01NX037.png" t="Include" />
+                <e p="01NX038.png" t="Include" />
+                <e p="01NX038T1.png" t="Include" />
+                <e p="01NX038T2.png" t="Include" />
+                <e p="01NX039.png" t="Include" />
+                <e p="01NX040.png" t="Include" />
+                <e p="01NX040T1.png" t="Include" />
+                <e p="01NX041.png" t="Include" />
+                <e p="01NX042.png" t="Include" />
+                <e p="01NX042T1.png" t="Include" />
+                <e p="01NX042T2.png" t="Include" />
+                <e p="01NX043.png" t="Include" />
+                <e p="01NX044.png" t="Include" />
+                <e p="01NX045.png" t="Include" />
+                <e p="01NX046.png" t="Include" />
+                <e p="01NX046T1.png" t="Include" />
+                <e p="01NX047.png" t="Include" />
+                <e p="01NX048.png" t="Include" />
+                <e p="01NX049.png" t="Include" />
+                <e p="01NX050.png" t="Include" />
+                <e p="01NX051.png" t="Include" />
+                <e p="01NX052.png" t="Include" />
+                <e p="01NX053.png" t="Include" />
+                <e p="01NX054.png" t="Include" />
+                <e p="01NX055.png" t="Include" />
+                <e p="01NX056.png" t="Include" />
+                <e p="01PZ001.png" t="Include" />
+                <e p="01PZ002.png" t="Include" />
+                <e p="01PZ003.png" t="Include" />
+                <e p="01PZ004.png" t="Include" />
+                <e p="01PZ005.png" t="Include" />
+                <e p="01PZ006.png" t="Include" />
+                <e p="01PZ007.png" t="Include" />
+                <e p="01PZ008.png" t="Include" />
+                <e p="01PZ008T1.png" t="Include" />
+                <e p="01PZ008T2.png" t="Include" />
+                <e p="01PZ009.png" t="Include" />
+                <e p="01PZ010.png" t="Include" />
+                <e p="01PZ012.png" t="Include" />
+                <e p="01PZ013.png" t="Include" />
+                <e p="01PZ013T1.png" t="Include" />
+                <e p="01PZ014.png" t="Include" />
+                <e p="01PZ014T1.png" t="Include" />
+                <e p="01PZ015.png" t="Include" />
+                <e p="01PZ016.png" t="Include" />
+                <e p="01PZ017.png" t="Include" />
+                <e p="01PZ018.png" t="Include" />
+                <e p="01PZ019.png" t="Include" />
+                <e p="01PZ020.png" t="Include" />
+                <e p="01PZ021.png" t="Include" />
+                <e p="01PZ022.png" t="Include" />
+                <e p="01PZ023.png" t="Include" />
+                <e p="01PZ024.png" t="Include" />
+                <e p="01PZ025.png" t="Include" />
+                <e p="01PZ026.png" t="Include" />
+                <e p="01PZ027.png" t="Include" />
+                <e p="01PZ028.png" t="Include" />
+                <e p="01PZ029.png" t="Include" />
+                <e p="01PZ030.png" t="Include" />
+                <e p="01PZ030T1.png" t="Include" />
+                <e p="01PZ031.png" t="Include" />
+                <e p="01PZ032.png" t="Include" />
+                <e p="01PZ033.png" t="Include" />
+                <e p="01PZ033T1.png" t="Include" />
+                <e p="01PZ034.png" t="Include" />
+                <e p="01PZ035.png" t="Include" />
+                <e p="01PZ036.png" t="Include" />
+                <e p="01PZ036T1.png" t="Include" />
+                <e p="01PZ036T2.png" t="Include" />
+                <e p="01PZ038.png" t="Include" />
+                <e p="01PZ039.png" t="Include" />
+                <e p="01PZ040.png" t="Include" />
+                <e p="01PZ040T1.png" t="Include" />
+                <e p="01PZ040T2.png" t="Include" />
+                <e p="01PZ040T3.png" t="Include" />
+                <e p="01PZ042.png" t="Include" />
+                <e p="01PZ043.png" t="Include" />
+                <e p="01PZ044.png" t="Include" />
+                <e p="01PZ044T2.png" t="Include" />
+                <e p="01PZ045.png" t="Include" />
+                <e p="01PZ046.png" t="Include" />
+                <e p="01PZ047.png" t="Include" />
+                <e p="01PZ048.png" t="Include" />
+                <e p="01PZ048T1.png" t="Include" />
+                <e p="01PZ049.png" t="Include" />
+                <e p="01PZ050.png" t="Include" />
+                <e p="01PZ051.png" t="Include" />
+                <e p="01PZ052.png" t="Include" />
+                <e p="01PZ053.png" t="Include" />
+                <e p="01PZ054.png" t="Include" />
+                <e p="01PZ054T1.png" t="Include" />
+                <e p="01PZ055.png" t="Include" />
+                <e p="01PZ056.png" t="Include" />
+                <e p="01PZ056T1.png" t="Include" />
+                <e p="01PZ056T10.png" t="Include" />
+                <e p="01PZ056T2.png" t="Include" />
+                <e p="01PZ056T3.png" t="Include" />
+                <e p="01PZ056T4.png" t="Include" />
+                <e p="01PZ056T5.png" t="Include" />
+                <e p="01PZ056T6.png" t="Include" />
+                <e p="01PZ056T7.png" t="Include" />
+                <e p="01PZ056T8.png" t="Include" />
+                <e p="01PZ056T9.png" t="Include" />
+                <e p="01PZ057.png" t="Include" />
+                <e p="01PZ058.png" t="Include" />
+                <e p="01PZ059.png" t="Include" />
+                <e p="01PZ060.png" t="Include" />
+                <e p="01SI001.png" t="Include" />
+                <e p="01SI002.png" t="Include" />
+                <e p="01SI003.png" t="Include" />
+                <e p="01SI004.png" t="Include" />
+                <e p="01SI005.png" t="Include" />
+                <e p="01SI006.png" t="Include" />
+                <e p="01SI007.png" t="Include" />
+                <e p="01SI007T1.png" t="Include" />
+                <e p="01SI009.png" t="Include" />
+                <e p="01SI010.png" t="Include" />
+                <e p="01SI011.png" t="Include" />
+                <e p="01SI012.png" t="Include" />
+                <e p="01SI014.png" t="Include" />
+                <e p="01SI015.png" t="Include" />
+                <e p="01SI016.png" t="Include" />
+                <e p="01SI018.png" t="Include" />
+                <e p="01SI019.png" t="Include" />
+                <e p="01SI020.png" t="Include" />
+                <e p="01SI021.png" t="Include" />
+                <e p="01SI022.png" t="Include" />
+                <e p="01SI023.png" t="Include" />
+                <e p="01SI024.png" t="Include" />
+                <e p="01SI025.png" t="Include" />
+                <e p="01SI026.png" t="Include" />
+                <e p="01SI027.png" t="Include" />
+                <e p="01SI027T1.png" t="Include" />
+                <e p="01SI028.png" t="Include" />
+                <e p="01SI029.png" t="Include" />
+                <e p="01SI030.png" t="Include" />
+                <e p="01SI030T1.png" t="Include" />
+                <e p="01SI030T2.png" t="Include" />
+                <e p="01SI031.png" t="Include" />
+                <e p="01SI032.png" t="Include" />
+                <e p="01SI033.png" t="Include" />
+                <e p="01SI033T1.png" t="Include" />
+                <e p="01SI034.png" t="Include" />
+                <e p="01SI035.png" t="Include" />
+                <e p="01SI035T1.png" t="Include" />
+                <e p="01SI036.png" t="Include" />
+                <e p="01SI037.png" t="Include" />
+                <e p="01SI038.png" t="Include" />
+                <e p="01SI039.png" t="Include" />
+                <e p="01SI040.png" t="Include" />
+                <e p="01SI041.png" t="Include" />
+                <e p="01SI042.png" t="Include" />
+                <e p="01SI042T1.png" t="Include" />
+                <e p="01SI042T2.png" t="Include" />
+                <e p="01SI043.png" t="Include" />
+                <e p="01SI044.png" t="Include" />
+                <e p="01SI045.png" t="Include" />
+                <e p="01SI046.png" t="Include" />
+                <e p="01SI047.png" t="Include" />
+                <e p="01SI048.png" t="Include" />
+                <e p="01SI048T1.png" t="Include" />
+                <e p="01SI049.png" t="Include" />
+                <e p="01SI050.png" t="Include" />
+                <e p="01SI051.png" t="Include" />
+                <e p="01SI052.png" t="Include" />
+                <e p="01SI052T1.png" t="Include" />
+                <e p="01SI052T2.png" t="Include" />
+                <e p="01SI053.png" t="Include" />
+                <e p="01SI053T1.png" t="Include" />
+                <e p="01SI053T2.png" t="Include" />
+                <e p="01SI054.png" t="Include" />
+                <e p="01SI055.png" t="Include" />
+                <e p="01SI056.png" t="Include" />
+                <e p="01SI057.png" t="Include" />
+                <e p="01SI058.png" t="Include" />
+                <e p="02BW001.png" t="Include" />
+                <e p="02BW002.png" t="Include" />
+                <e p="02BW003.png" t="Include" />
+                <e p="02BW004.png" t="Include" />
+                <e p="02BW005.png" t="Include" />
+                <e p="02BW006.png" t="Include" />
+                <e p="02BW007.png" t="Include" />
+                <e p="02BW008.png" t="Include" />
+                <e p="02BW008T01.png" t="Include" />
+                <e p="02BW008T02.png" t="Include" />
+                <e p="02BW009.png" t="Include" />
+                <e p="02BW010.png" t="Include" />
+                <e p="02BW011.png" t="Include" />
+                <e p="02BW012.png" t="Include" />
+                <e p="02BW013.png" t="Include" />
+                <e p="02BW014.png" t="Include" />
+                <e p="02BW015.png" t="Include" />
+                <e p="02BW016.png" t="Include" />
+                <e p="02BW017.png" t="Include" />
+                <e p="02BW018.png" t="Include" />
+                <e p="02BW019.png" t="Include" />
+                <e p="02BW020.png" t="Include" />
+                <e p="02BW021.png" t="Include" />
+                <e p="02BW022.png" t="Include" />
+                <e p="02BW022T1.png" t="Include" />
+                <e p="02BW022T2.png" t="Include" />
+                <e p="02BW022T3.png" t="Include" />
+                <e p="02BW022T4.png" t="Include" />
+                <e p="02BW023.png" t="Include" />
+                <e p="02BW024.png" t="Include" />
+                <e p="02BW025.png" t="Include" />
+                <e p="02BW026.png" t="Include" />
+                <e p="02BW026T1.png" t="Include" />
+                <e p="02BW026T2.png" t="Include" />
+                <e p="02BW026T3.png" t="Include" />
+                <e p="02BW026T4.png" t="Include" />
+                <e p="02BW026T5.png" t="Include" />
+                <e p="02BW027.png" t="Include" />
+                <e p="02BW028.png" t="Include" />
+                <e p="02BW028T1.png" t="Include" />
+                <e p="02BW029.png" t="Include" />
+                <e p="02BW030.png" t="Include" />
+                <e p="02BW030T1.png" t="Include" />
+                <e p="02BW030T2.png" t="Include" />
+                <e p="02BW030T3.png" t="Include" />
+                <e p="02BW030T4.png" t="Include" />
+                <e p="02BW031.png" t="Include" />
+                <e p="02BW032.png" t="Include" />
+                <e p="02BW032T1.png" t="Include" />
+                <e p="02BW032T2.png" t="Include" />
+                <e p="02BW032T3.png" t="Include" />
+                <e p="02BW032T4.png" t="Include" />
+                <e p="02BW033.png" t="Include" />
+                <e p="02BW034.png" t="Include" />
+                <e p="02BW034T1.png" t="Include" />
+                <e p="02BW035.png" t="Include" />
+                <e p="02BW036.png" t="Include" />
+                <e p="02BW037.png" t="Include" />
+                <e p="02BW038.png" t="Include" />
+                <e p="02BW039.png" t="Include" />
+                <e p="02BW040.png" t="Include" />
+                <e p="02BW041.png" t="Include" />
+                <e p="02BW042.png" t="Include" />
+                <e p="02BW043.png" t="Include" />
+                <e p="02BW044.png" t="Include" />
+                <e p="02BW045.png" t="Include" />
+                <e p="02BW046.png" t="Include" />
+                <e p="02BW046T1.png" t="Include" />
+                <e p="02BW046T2.png" t="Include" />
+                <e p="02BW046T3.png" t="Include" />
+                <e p="02BW047.png" t="Include" />
+                <e p="02BW048.png" t="Include" />
+                <e p="02BW049.png" t="Include" />
+                <e p="02BW050.png" t="Include" />
+                <e p="02BW051.png" t="Include" />
+                <e p="02BW053.png" t="Include" />
+                <e p="02BW053T1.png" t="Include" />
+                <e p="02BW053T2.png" t="Include" />
+                <e p="02BW054.png" t="Include" />
+                <e p="02BW055.png" t="Include" />
+                <e p="02BW056.png" t="Include" />
+                <e p="02BW056T1.png" t="Include" />
+                <e p="02BW057.png" t="Include" />
+                <e p="02BW058.png" t="Include" />
+                <e p="02BW059.png" t="Include" />
+                <e p="02BW060.png" t="Include" />
+                <e p="02BW060T1.png" t="Include" />
+                <e p="02BW061.png" t="Include" />
+                <e p="02BW062.png" t="Include" />
+                <e p="02BW063.png" t="Include" />
+                <e p="02DE001.png" t="Include" />
+                <e p="02DE002.png" t="Include" />
+                <e p="02DE003.png" t="Include" />
+                <e p="02DE004.png" t="Include" />
+                <e p="02DE005.png" t="Include" />
+                <e p="02DE006.png" t="Include" />
+                <e p="02DE006T1.png" t="Include" />
+                <e p="02DE006T2.png" t="Include" />
+                <e p="02DE006T3.png" t="Include" />
+                <e p="02DE007.png" t="Include" />
+                <e p="02DE008.png" t="Include" />
+                <e p="02DE009.png" t="Include" />
+                <e p="02DE010.png" t="Include" />
+                <e p="02FR001.png" t="Include" />
+                <e p="02FR002.png" t="Include" />
+                <e p="02FR002T1.png" t="Include" />
+                <e p="02FR002T3.png" t="Include" />
+                <e p="02FR003.png" t="Include" />
+                <e p="02FR004.png" t="Include" />
+                <e p="02FR005.png" t="Include" />
+                <e p="02FR005T1.png" t="Include" />
+                <e p="02FR006.png" t="Include" />
+                <e p="02FR007.png" t="Include" />
+                <e p="02FR008.png" t="Include" />
+                <e p="02FR009.png" t="Include" />
+                <e p="02FR010.png" t="Include" />
+                <e p="02IO001.png" t="Include" />
+                <e p="02IO002.png" t="Include" />
+                <e p="02IO002T1.png" t="Include" />
+                <e p="02IO003.png" t="Include" />
+                <e p="02IO003T1.png" t="Include" />
+                <e p="02IO004.png" t="Include" />
+                <e p="02IO005.png" t="Include" />
+                <e p="02IO005T1.png" t="Include" />
+                <e p="02IO006.png" t="Include" />
+                <e p="02IO006T1.png" t="Include" />
+                <e p="02IO006T2.png" t="Include" />
+                <e p="02IO006T3.png" t="Include" />
+                <e p="02IO007.png" t="Include" />
+                <e p="02IO008.png" t="Include" />
+                <e p="02IO008T1.png" t="Include" />
+                <e p="02IO009.png" t="Include" />
+                <e p="02IO010.png" t="Include" />
+                <e p="02IO010T1.png" t="Include" />
+                <e p="02NX001.png" t="Include" />
+                <e p="02NX002.png" t="Include" />
+                <e p="02NX003.png" t="Include" />
+                <e p="02NX004.png" t="Include" />
+                <e p="02NX004T1.png" t="Include" />
+                <e p="02NX005.png" t="Include" />
+                <e p="02NX006.png" t="Include" />
+                <e p="02NX007.png" t="Include" />
+                <e p="02NX007T1.png" t="Include" />
+                <e p="02NX007T2.png" t="Include" />
+                <e p="02NX008.png" t="Include" />
+                <e p="02NX009.png" t="Include" />
+                <e p="02NX010.png" t="Include" />
+                <e p="02PZ001.png" t="Include" />
+                <e p="02PZ002.png" t="Include" />
+                <e p="02PZ003.png" t="Include" />
+                <e p="02PZ004.png" t="Include" />
+                <e p="02PZ005.png" t="Include" />
+                <e p="02PZ006.png" t="Include" />
+                <e p="02PZ007.png" t="Include" />
+                <e p="02PZ008.png" t="Include" />
+                <e p="02PZ008T1.png" t="Include" />
+                <e p="02PZ008T2.png" t="Include" />
+                <e p="02PZ009.png" t="Include" />
+                <e p="02PZ010.png" t="Include" />
+                <e p="02SI001.png" t="Include" />
+                <e p="02SI002.png" t="Include" />
+                <e p="02SI003.png" t="Include" />
+                <e p="02SI004.png" t="Include" />
+                <e p="02SI005.png" t="Include" />
+                <e p="02SI006.png" t="Include" />
+                <e p="02SI007.png" t="Include" />
+                <e p="02SI008.png" t="Include" />
+                <e p="02SI008T1.png" t="Include" />
+                <e p="02SI008T2.png" t="Include" />
+                <e p="02SI008T3.png" t="Include" />
+                <e p="02SI009.png" t="Include" />
+                <e p="02SI010.png" t="Include" />
+              </e>
               <e p="regions" t="Include">
                 <e p="icon-all.png" t="Include" />
+                <e p="icon-bilgewater.png" t="Include" />
                 <e p="icon-demacia.png" t="Include" />
                 <e p="icon-freljord.png" t="Include" />
                 <e p="icon-ionia.png" t="Include" />
@@ -50,43 +658,62 @@
         <e p="Models" t="Include">
           <e p="Card.cs" t="Include" />
           <e p="ERarity.cs" t="Include" />
+          <e p="ERegion.cs" t="Include" />
           <e p="KeyWord.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
-          <e p="Release" t="Include">
+          <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
               <e p="App.g.cs" t="Include" />
               <e p="Controls" t="Include">
+                <e p="CardCollectionControl.g.cs" t="Include" />
+                <e p="CollectionControl.g.cs" t="Include" />
                 <e p="CompactCardControl.g.cs" t="Include" />
+                <e p="MainMenuControl.g.cs" t="Include" />
+                <e p="RegionSelectorControl.g.cs" t="Include" />
+                <e p="TrackerControl.g.cs" t="Include" />
               </e>
               <e p="GeneratedInternalTypeHelper.g.cs" t="Include" />
               <e p="SharkTracker.AssemblyInfo.cs" t="Include" />
               <e p="Views" t="Include">
-                <e p="CollectionWindow.g.cs" t="Include" />
-                <e p="DeckTrackerWindow.g.cs" t="Include" />
+                <e p="MainWindow.g.cs" t="Include" />
               </e>
             </e>
           </e>
         </e>
+        <e p="Observation" t="Include">
+          <e p="Observable.cs" t="Include" />
+          <e p="Observer.cs" t="Include" />
+        </e>
         <e p="Resources" t="Include">
           <e p="CardCompactControlTemplate.xaml" t="Include" />
+          <e p="fonts" t="Include">
+            <e p="friz.otf" t="Include" />
+          </e>
+          <e p="icons" t="Include">
+            <e p="menu_icon_collapse.png" t="Include" />
+            <e p="menu_icon_collapse_style.png" t="Include" />
+            <e p="menu_icon_open.png" t="Include" />
+            <e p="menu_icon_open_style.png" t="Include" />
+          </e>
         </e>
         <e p="SharkTracker.csproj" t="IncludeRecursive" />
         <e p="Utils" t="Include">
+          <e p="ArtworkManager.cs" t="Include" />
           <e p="CardsManager.cs" t="Include" />
           <e p="Constants.cs" t="Include" />
           <e p="ImageHelper.cs" t="Include" />
         </e>
         <e p="ViewModels" t="Include">
-          <e p="CollectionViewModel.cs" t="Include" />
+          <e p="CardCollectionControlViewModel.cs" t="Include" />
+          <e p="CollectionControlViewModel.cs" t="Include" />
           <e p="CompactCardControlViewModel.cs" t="Include" />
-          <e p="DeckTrackerViewModel.cs" t="Include" />
+          <e p="MainWindowViewModel.cs" t="Include" />
+          <e p="TrackerControlViewModel.cs" t="Include" />
         </e>
         <e p="Views" t="Include">
-          <e p="CollectionWindow.xaml" t="Include" />
-          <e p="CollectionWindow.xaml.cs" t="Include" />
-          <e p="DeckTrackerWindow.xaml" t="Include" />
-          <e p="DeckTrackerWindow.xaml.cs" t="Include" />
+          <e p="MainWindow.xaml" t="Include" />
+          <e p="MainWindow.xaml.cs" t="Include" />
         </e>
       </e>
       <e p="SharkTracker.sln" t="IncludeFlat" />

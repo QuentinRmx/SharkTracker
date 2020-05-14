@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -17,11 +16,10 @@ using SharkTracker.Views;
 
 namespace SharkTracker.ViewModels
 {
-    public class DeckTrackerViewModel : ViewModelBase
+    public class TrackerControlViewModel : ViewModelBase
     {
-
-        // ATTRIBUTES
-
+// ATTRIBUTES
+    
         private ObservableCollection<CompactCardControlViewModel> _cardControlViewModels;
 
         public ObservableCollection<CompactCardControlViewModel> CardControlViewModels
@@ -34,17 +32,10 @@ namespace SharkTracker.ViewModels
             }
         }
 
-        public ICommand OpenCollectionCommand => new RelayCommand(OpenCollectionWindow);
-
-        private void OpenCollectionWindow()
-        {
-            CollectionWindow collectionWindow = new CollectionWindow();
-            collectionWindow.Show();
-        }
 
         private readonly AbstractLorCommunicator _communicator;
         
-        private bool _deckLoaded = false;
+        private bool _deckLoaded;
 
         public bool DeckLoaded
         {
@@ -59,17 +50,17 @@ namespace SharkTracker.ViewModels
 
         public Visibility ShowNoDeckText => (DeckLoaded) ? Visibility.Collapsed : Visibility.Visible;
 
-        private bool _deckShowed = false;
+        private bool _deckShowed;
 
         private List<CardCodeAndCount> deckAsCardCodeAndCount;
 
         private readonly List<Card> _allCards;
 
-        private DispatcherTimer _timer;
+        private readonly DispatcherTimer _timer;
 
         // CONSTRUCTORS
 
-        public DeckTrackerViewModel()
+        public TrackerControlViewModel()
         {
             _communicator = new LorCommunicator(new HttpClient());
             CardControlViewModels = new ObservableCollection<CompactCardControlViewModel>();
@@ -87,27 +78,32 @@ namespace SharkTracker.ViewModels
         private void LoadDeck(object sender, EventArgs eventArgs)
         {
             List<CardCodeAndCount> deckResp = _communicator.GetActiveDeck();
-            if (deckResp != null)
+            if (deckResp == null)
+                return;
+            
+            if (deckResp.Count == 0)
             {
-                if (deckResp.Count == 0)
-                {
-                    if (DeckLoaded)
-                    {
-                        CardControlViewModels.Clear();
-                        DeckLoaded = false;
-                        _deckShowed = false;
-                    }
-
-                    return;
-                }
-                
-                DeckLoaded = true;
-                deckAsCardCodeAndCount = deckResp;
-                DisplayDeck();
+                _timer.Stop();
             }
+
+            if (deckResp.Count == 0)
+            {
+                if (DeckLoaded)
+                {
+                    CardControlViewModels.Clear();
+                    DeckLoaded = false;
+                    _deckShowed = false;
+                }
+
+                return;
+            }
+                
+            DeckLoaded = true;
+            deckAsCardCodeAndCount = deckResp;
+            DisplayDeck();
         }
         
-        private async void DisplayDeck()
+        private void DisplayDeck()
         {
             if (_deckShowed)
                 return;
@@ -130,6 +126,5 @@ namespace SharkTracker.ViewModels
             }
             
         }
-
     }
 }

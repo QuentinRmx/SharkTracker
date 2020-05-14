@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -12,7 +13,7 @@ namespace SharkTracker.Utils
 
         // METHODS
 
-        public static BitmapImage LoadImage(byte[] imageData)
+        public static BitmapImage LoadImageFromBytes(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0) return null;
             BitmapImage image = new BitmapImage();
@@ -29,5 +30,15 @@ namespace SharkTracker.Utils
             image.Freeze();
             return image;
         }
+
+        public static BitmapImage LoadImageFromFile(string path)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+            image.EndInit();
+            return image;
+        }
+        
     }
 }

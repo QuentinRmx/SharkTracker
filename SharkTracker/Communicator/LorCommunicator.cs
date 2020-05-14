@@ -9,11 +9,10 @@ namespace SharkTracker.Communicator
 {
     public class LorCommunicator : AbstractLorCommunicator
     {
-
         // ATTRIBUTES
 
         // CONSTRUCTORS
-        
+
         /// <inheritdoc />
         public LorCommunicator(HttpClient client) : base(client)
         {
@@ -21,10 +20,16 @@ namespace SharkTracker.Communicator
 
         // METHODS
 
-        
+
         public override List<CardCodeAndCount> GetActiveDeck()
         {
+            
             List<CardCodeAndCount> deck = new List<CardCodeAndCount>();
+            if (!_isActive)
+            {
+                return deck;
+            }
+            
             try
             {
                 _client ??= new HttpClient();
@@ -39,20 +44,17 @@ namespace SharkTracker.Communicator
                         deck = LoRDeckEncoder.GetDeckFromCode(deckResponse.DeckCode);
                     }
                 }
-
             }
-            catch (AggregateException ex)
+            catch (AggregateException)
             {
                 //TODO: do something about that lol.
-                Console.WriteLine(ex);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
-                Console.WriteLine($"Error here: {ex}");
+                //TODO: do something about that lol.
             }
+
             return deck;
         }
-
-        
     }
 }
