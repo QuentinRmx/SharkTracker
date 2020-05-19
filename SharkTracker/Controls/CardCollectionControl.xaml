@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SharkTracker.Controls"
              xmlns:vm="clr-namespace:SharkTracker.ViewModels"
+
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{vm:CardCollectionControlViewModel }">
+             d:DesignHeight="200" d:DesignWidth="200" d:DataContext="{vm:CardCollectionControlViewModel }">
 
     <UserControl.Resources>
 
@@ -16,33 +17,22 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Popup x:Name="popupArtwork" Grid.Column="0" IsOpen="False" Placement="Right" AllowsTransparency="True">
             <Image x:Name="artworkFullPopup" />
         </Popup>
         <Image Grid.Column="0" Grid.Row="0" Height="128" Width="85" x:Name="artworkImage" />
-        <StackPanel Orientation="Vertical" Grid.Column="1">
-            <Label Foreground="GhostWhite" FontSize="20" x:Name="cardName" Style="{StaticResource FontLoL}" />
-            <StackPanel Height="25" Orientation="Horizontal">
-                <Border Width="25" CornerRadius="1" BorderBrush="FloralWhite" BorderThickness="1">
-                    <Button Margin="-1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                            FontWeight="Bold"
-                            BorderThickness="0" Background="Transparent"
-                            Foreground="GhostWhite" Content=" - " Click="DecrementOwned" />
-                </Border>
-                <Label x:Name="quantityLabel" Foreground="White" FontSize="14"/>
-                <Border Width="25" CornerRadius="1" BorderBrush="FloralWhite" BorderThickness="1">
-                    <Button Margin="-1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                            FontWeight="Bold"
-                            BorderThickness="0" Background="Transparent"
-                            Foreground="GhostWhite" Content=" + " Click="IncrementOwned" />
-                </Border>
-            </StackPanel>
+        <StackPanel Margin="5 0 5 50" Orientation="Vertical" Grid.Column="1" Grid.Row="0" Width="Auto" Height="Auto">
+            <Label Foreground="GhostWhite" FontSize="16" x:Name="cardName" Style="{StaticResource FontLoL}" />
+            <local:CardCounterControl x:Name="cardCounter"></local:CardCounterControl>
         </StackPanel>
+        <Line Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Fill="GhostWhite" StrokeThickness="1" Stroke="GhostWhite"
+              X1="20" X2="170" Margin="0 0 0 25"/>
     </Grid>
 </UserControl>

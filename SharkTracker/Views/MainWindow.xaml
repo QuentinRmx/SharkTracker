@@ -9,21 +9,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="Auto" Width="700"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="#121212"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Topmost="True"
-        >
+        Topmost="True">
     <Window.DataContext>
-        <vm:MainWindowViewModel></vm:MainWindowViewModel>
+        <vm:MainWindowViewModel />
     </Window.DataContext>
     <Grid Height="Auto">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <controls:MainMenuControl Grid.Column="0" CurrentSelection="{Binding CurrentMenuSelection, Mode=TwoWay}"/>
-        <Frame Grid.Column="1" Height="Auto" Width="Auto" Source="{Binding CurrentMenuSelection}"
+        <controls:MainMenuControl Grid.Column="0" CurrentSelection="{Binding CurrentMenuSelection, Mode=TwoWay}" />
+        <Frame Margin="0" x:Name="MainWindowFrame" Grid.Column="1" Height="Auto" Width="Auto"
+               Source="{Binding CurrentMenuSelection}"
                NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

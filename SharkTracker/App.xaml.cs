@@ -7,5 +7,7 @@ namespace SharkTracker
     /// </summary>
     public partial class App : Application
     {
+        
+        
     }
 }

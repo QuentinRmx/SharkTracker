@@ -7,10 +7,8 @@ using SharkTracker.Observation;
 
 namespace SharkTracker.Controls
 {
-    public partial class RegionSelectorControl : UserControl, Observable
+    public partial class RegionSelectorControl : UserControl
     {
-        private readonly IList<Observer> _observers = new List<Observer>();
-
         public static readonly DependencyProperty OnRegionChangedProperty =
             DependencyProperty.Register("OnRegionChanged", typeof(ICommand), typeof(RegionSelectorControl),
                 new PropertyMetadata(default(ICommand)));
@@ -26,24 +24,6 @@ namespace SharkTracker.Controls
         public RegionSelectorControl()
         {
             InitializeComponent();
-        }
-
-        /// <inheritdoc />
-        public void Register(Observer o)
-        {
-            if (!_observers.Contains(o))
-            {
-                _observers.Add(o);
-            }
-        }
-
-        /// <inheritdoc />
-        public void Unregister(Observer o)
-        {
-            if (_observers.Contains(o))
-            {
-                _observers.Remove(o);
-            }
         }
 
         private void Update()
@@ -90,6 +70,12 @@ namespace SharkTracker.Controls
         private void BtnSi_OnClick(object sender, RoutedEventArgs e)
         {
             SelectedRegion = ERegion.Si;
+            Update();
+        }
+
+        private void BtnAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            SelectedRegion = ERegion.ALL;
             Update();
         }
     }

@@ -79,6 +79,12 @@
       <Page Update="Controls\TrackerControl.xaml">
         <Generator></Generator>
       </Page>
+      <Page Update="Controls\CardCounterControl.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\RegionStatisticsControl.xaml">
+        <Generator></Generator>
+      </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -99,6 +105,12 @@
       </Compile>
       <Compile Update="Controls\TrackerControl.xaml.cs">
         <DependentUpon>TrackerControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\CardCounterControl.xaml.cs">
+        <DependentUpon>CardCounterControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\RegionStatisticsControl.xaml.cs">
+        <DependentUpon>RegionStatisticsControl.xaml</DependentUpon>
       </Compile>
     </ItemGroup>
 

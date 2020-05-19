@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SharkTracker.LoRDeckCodes;
@@ -10,6 +11,11 @@ namespace SharkTracker.Communicator
         protected HttpClient _client;
 
         protected bool _isActive = true;
+        public bool IsActive => _isActive;
+
+        public event EventHandler OnStarting;
+
+        public EventHandler OnStopping;
 
         protected AbstractLorCommunicator(HttpClient client)
         {
@@ -21,11 +27,13 @@ namespace SharkTracker.Communicator
         public void Start()
         {
             _isActive = true;
+            OnStarting?.Invoke(this, EventArgs.Empty);
         }
 
         public void Stop()
         {
             _isActive = false;
+            OnStopping?.Invoke(this, EventArgs.Empty);
         }
     }
 }

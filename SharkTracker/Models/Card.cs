@@ -69,11 +69,16 @@ namespace SharkTracker.Models
                     "noxus" => ERegion.Noxus,
                     "piltover & zaun" => ERegion.PnZ,
                     "shadow isles" => ERegion.Si,
-                    _ => ERegion.Si
+                    _ => ERegion.ALL
                 };
 
                 return regionEnum;
             }
+        }
+
+        public bool IsSelectedRegion(ERegion region)
+        {
+            return (region == ERegion.ALL || region == RegionEnum);
         }
 
         [JsonIgnore] public BitmapSource BitmapArtwork { get; private set; }

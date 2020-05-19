@@ -9,11 +9,9 @@ using SharkTracker.Observation;
 
 namespace SharkTracker.Utils
 {
-    public class CardsManager : Observable
+    public class CardsManager : AbstractObservable
     {
         // ATTRIBUTES
-        
-        private readonly List<Observer> _observers = new List<Observer>();
 
         private List<Card> _cards;
 
@@ -57,7 +55,6 @@ namespace SharkTracker.Utils
                 {
                     _userCollection.TryGetValue(c.Code, out int value);
                     c.QuantityOwned = value;
-                    // await c.LoadArtwork();
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +71,6 @@ namespace SharkTracker.Utils
             {
                 _userCollection.TryGetValue(c.Code, out int value);
                 c.QuantityOwned = value;
-                // await c.LoadArtwork();
             }
             return true;
         }
@@ -133,22 +129,6 @@ namespace SharkTracker.Utils
             _cards.First(ca => ca.Code == c.Code).QuantityOwned = c.QuantityOwned;
         }
 
-        /// <inheritdoc />
-        public void Register(Observer o)
-        {
-            if (!_observers.Contains(o))
-            {
-                _observers.Add(o);
-            }
-        }
-
-        /// <inheritdoc />
-        public void Unregister(Observer o)
-        {
-            if (_observers.Contains(o))
-            {
-                _observers.Remove(o);
-            }
-        }
+        
     }
 }

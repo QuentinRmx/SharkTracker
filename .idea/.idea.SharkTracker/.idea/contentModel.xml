@@ -24,6 +24,8 @@
         <e p="Controls" t="Include">
           <e p="CardCollectionControl.xaml" t="Include" />
           <e p="CardCollectionControl.xaml.cs" t="Include" />
+          <e p="CardCounterControl.xaml" t="Include" />
+          <e p="CardCounterControl.xaml.cs" t="Include" />
           <e p="CollectionControl.xaml" t="Include" />
           <e p="CollectionControl.xaml.cs" t="Include" />
           <e p="CompactCardControl.xaml" t="Include" />
@@ -32,6 +34,8 @@
           <e p="MainMenuControl.xaml.cs" t="Include" />
           <e p="RegionSelectorControl.xaml" t="Include" />
           <e p="RegionSelectorControl.xaml.cs" t="Include" />
+          <e p="RegionStatisticsControl.xaml" t="Include" />
+          <e p="RegionStatisticsControl.xaml.cs" t="Include" />
           <e p="TrackerControl.xaml" t="Include" />
           <e p="TrackerControl.xaml.cs" t="Include" />
         </e>
@@ -667,10 +671,12 @@
               <e p="App.g.cs" t="Include" />
               <e p="Controls" t="Include">
                 <e p="CardCollectionControl.g.cs" t="Include" />
+                <e p="CardCounterControl.g.cs" t="Include" />
                 <e p="CollectionControl.g.cs" t="Include" />
                 <e p="CompactCardControl.g.cs" t="Include" />
                 <e p="MainMenuControl.g.cs" t="Include" />
                 <e p="RegionSelectorControl.g.cs" t="Include" />
+                <e p="RegionStatisticsControl.g.cs" t="Include" />
                 <e p="TrackerControl.g.cs" t="Include" />
               </e>
               <e p="GeneratedInternalTypeHelper.g.cs" t="Include" />
@@ -682,7 +688,8 @@
           </e>
         </e>
         <e p="Observation" t="Include">
-          <e p="Observable.cs" t="Include" />
+          <e p="AbstractObservable.cs" t="Include" />
+          <e p="IObservable.cs" t="Include" />
           <e p="Observer.cs" t="Include" />
         </e>
         <e p="Resources" t="Include">

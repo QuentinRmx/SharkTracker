@@ -14,7 +14,7 @@ namespace SharkTracker.Utils
 
 #elif RELEASE
 
-        public const string PATH_CACHE_ARTWORK = @"/img/cards/";
+        public const string PATH_CACHE_ARTWORK = @"./img/cards/";
 
         public const string PATH_CARD_SET_1 = @"set1-en_us.json";
 

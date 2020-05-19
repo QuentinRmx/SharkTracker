@@ -19,7 +19,7 @@ namespace SharkTracker.ViewModels
     public class TrackerControlViewModel : ViewModelBase
     {
 // ATTRIBUTES
-    
+
         private ObservableCollection<CompactCardControlViewModel> _cardControlViewModels;
 
         public ObservableCollection<CompactCardControlViewModel> CardControlViewModels
@@ -34,7 +34,7 @@ namespace SharkTracker.ViewModels
 
 
         private readonly AbstractLorCommunicator _communicator;
-        
+
         private bool _deckLoaded;
 
         public bool DeckLoaded
@@ -45,10 +45,15 @@ namespace SharkTracker.ViewModels
                 _deckLoaded = value;
                 RaisePropertyChanged(nameof(DeckLoaded));
                 RaisePropertyChanged(nameof(ShowNoDeckText));
-            } 
+            }
         }
 
         public Visibility ShowNoDeckText => (DeckLoaded) ? Visibility.Collapsed : Visibility.Visible;
+
+        public ICommand BtnActive_OnClickCommand => new RelayCommand(ButtonActiveOnClick);
+
+        public object IsActiveText =>
+            (_communicator != null && _communicator.IsActive) ? "Stop tracker" : "Start tracker";
 
         private bool _deckShowed;
 
@@ -63,6 +68,8 @@ namespace SharkTracker.ViewModels
         public TrackerControlViewModel()
         {
             _communicator = new LorCommunicator(new HttpClient());
+            _communicator.OnStarting += (sender, args) => CommunicatorActivityChanged();
+            _communicator.OnStopping += (sender, args) => CommunicatorActivityChanged();
             CardControlViewModels = new ObservableCollection<CompactCardControlViewModel>();
             _allCards = CardsManager.Instance.GetAllCards();
             _timer = new DispatcherTimer();
@@ -80,10 +87,11 @@ namespace SharkTracker.ViewModels
             List<CardCodeAndCount> deckResp = _communicator.GetActiveDeck();
             if (deckResp == null)
                 return;
-            
+
             if (deckResp.Count == 0)
             {
                 _timer.Stop();
+                _communicator.Stop();
             }
 
             if (deckResp.Count == 0)
@@ -97,12 +105,12 @@ namespace SharkTracker.ViewModels
 
                 return;
             }
-                
+
             DeckLoaded = true;
             deckAsCardCodeAndCount = deckResp;
             DisplayDeck();
         }
-        
+
         private void DisplayDeck()
         {
             if (_deckShowed)
@@ -114,7 +122,8 @@ namespace SharkTracker.ViewModels
                 Card card = _allCards.First(c => c.Code == cardCodeAndCount.CardCode);
                 CompactCardControlViewModel cardControl = new CompactCardControlViewModel
                 {
-                    Card = card
+                    Card = card,
+                    CardCodeAndCount = cardCodeAndCount
                 };
                 toAdd.Add(cardControl);
             }
@@ -124,7 +133,26 @@ namespace SharkTracker.ViewModels
             {
                 CardControlViewModels.Add(compactCardControlView);
             }
-            
+        }
+
+
+        private void ButtonActiveOnClick()
+        {
+            if (_communicator.IsActive)
+            {
+                _communicator.Stop();
+                _timer.Stop();
+            }
+            else
+            {
+                _communicator.Start();
+                _timer.Start();
+            }
+        }
+
+        private void CommunicatorActivityChanged()
+        {
+            RaisePropertyChanged(nameof(IsActiveText));
         }
     }
 }

@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SharkTracker.Models;
+using SharkTracker.Observation;
 
 namespace SharkTracker.Controls
 {
-    public partial class CardCollectionControl : UserControl
+    public partial class CardCollectionControl : UserControl, Observer, IObservable
     {
         public static readonly DependencyProperty CardCollectionProperty = DependencyProperty.Register("CardCollection",
             typeof(Card),
@@ -26,6 +28,7 @@ namespace SharkTracker.Controls
             Loaded += (sender, args) => UpdateUI();
             artworkImage.MouseEnter += (sender, args) => SetPopupDisplayState(true);
             artworkImage.MouseLeave += (sender, args) => SetPopupDisplayState(false);
+            cardCounter.Register(this);
         }
 
         private void SetPopupDisplayState(bool shouldDisplay)
@@ -48,16 +51,21 @@ namespace SharkTracker.Controls
         private async void UpdateUI()
         {
             SetCardName();
-            SetOwnedQuantity();
+            SetCounterValue();
             await CardCollection.LoadArtwork();
             SetArtwork();
             SetPopupArtwork();
         }
 
-        private void SetOwnedQuantity()
+        private void SetCounterValue()
         {
-            quantityLabel.Content = CardCollection.QuantityOwned;
+            cardCounter.Quantity = CardCollection.QuantityOwned;
         }
+
+        // private void SetOwnedQuantity()
+        // {
+        //     quantityLabel.Content = CardCollection.QuantityOwned;
+        // }
 
         private void SetArtwork()
         {
@@ -73,18 +81,47 @@ namespace SharkTracker.Controls
             cardName.Content = CardCollection.Name;
         }
 
-        private void IncrementOwned(object sender, RoutedEventArgs e)
+        // private void IncrementOwned(object sender, RoutedEventArgs e)
+        // {
+        //     if (CardCollection.QuantityOwned == 3) return;
+        //     CardCollection.QuantityOwned++;
+        //     SetOwnedQuantity();
+        // }
+        //
+        // private void DecrementOwned(object sender, RoutedEventArgs e)
+        // {
+        //     if (CardCollection.QuantityOwned == 0) return;
+        //     CardCollection.QuantityOwned--;
+        //     SetOwnedQuantity();
+        // }
+        
+        /// <inheritdoc />
+        public void Notify()
         {
-            if (CardCollection.QuantityOwned == 3) return;
-            CardCollection.QuantityOwned++;
-            SetOwnedQuantity();
+            CardCollection.QuantityOwned = cardCounter.Quantity;
+            NotifyAll();
         }
 
-        private void DecrementOwned(object sender, RoutedEventArgs e)
+        private readonly List<Observer> _observers = new List<Observer>();
+        
+        /// <inheritdoc />
+        public void Register(Observer o)
         {
-            if (CardCollection.QuantityOwned == 0) return;
-            CardCollection.QuantityOwned--;
-            SetOwnedQuantity();
+            if (!_observers.Contains(o))
+                _observers.Add(o);
+        }
+
+        /// <inheritdoc />
+        public void Unregister(Observer o)
+        {
+            if (_observers.Contains(o))
+                _observers.Remove(o);
+        }
+
+        /// <inheritdoc />
+        public void NotifyAll()
+        {
+            _observers.ForEach(o => o.Notify());
         }
     }
 }

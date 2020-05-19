@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SharkTracker.Controls"
              xmlns:viewModels="clr-namespace:SharkTracker.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="Auto" d:DesignWidth="200">
+             d:DesignHeight="Auto" d:DesignWidth="Auto">
     <UserControl.DataContext>
         <viewModels:TrackerControlViewModel />
     </UserControl.DataContext>
@@ -18,6 +18,8 @@
     <StackPanel VerticalAlignment="Top" Margin="10" Height="Auto">
         <TextBlock Background="#121212" Foreground="#e6e6e6" Text="No active deck found" FontSize="20"
                    Visibility="{Binding ShowNoDeckText}" />
-        <ItemsControl Width="200" ItemsSource="{Binding CardControlViewModels}" ItemTemplate="{StaticResource cardTemplate}" />
+        <ItemsControl Width="Auto" ItemsSource="{Binding CardControlViewModels}" ItemTemplate="{StaticResource cardTemplate}" />
+        
+        <Button Content="{Binding IsActiveText}" Command="{Binding BtnActive_OnClickCommand}" ></Button>
     </StackPanel>
 </UserControl>

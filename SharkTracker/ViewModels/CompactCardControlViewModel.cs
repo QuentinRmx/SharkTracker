@@ -1,5 +1,6 @@
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
+using SharkTracker.LoRDeckCodes;
 using SharkTracker.Models;
 
 namespace SharkTracker.ViewModels
@@ -19,6 +20,21 @@ namespace SharkTracker.ViewModels
                 RaisePropertyChanged(nameof(Card));
             }
         }
+
+        private CardCodeAndCount _cardCodeAndCount;
+
+        public CardCodeAndCount CardCodeAndCount
+        {
+            get => _cardCodeAndCount;
+            set
+            {
+                _cardCodeAndCount = value;
+                RaisePropertyChanged(nameof(CardCodeAndCount));
+                RaisePropertyChanged(nameof(CopiesInDeck));
+            }
+        }
+
+        public string CopiesInDeck => $"x{CardCodeAndCount.Count}";
 
         // CONSTRUCTORS
 

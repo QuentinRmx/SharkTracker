@@ -8,8 +8,10 @@
              xmlns:command="http://www.galasoft.ch/mvvmlight"
              xmlns:viewModels="clr-namespace:SharkTracker.ViewModels"
              xmlns:behaviors="clr-namespace:SharkTracker.Behaviors"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             Background="Transparent"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="600">
+             d:DesignHeight="800" d:DesignWidth="800">
 
     <UserControl.DataContext>
         <viewModels:CollectionControlViewModel />
@@ -31,12 +33,131 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <local:RegionSelectorControl Grid.Row="0" OnRegionChanged="{Binding ChangeRegionCommand}" />
-        <ItemsControl Grid.Row="1" ScrollViewer.CanContentScroll="True" MaxHeight="700"
-                      VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding CardVms}"
-                      ItemTemplate="{StaticResource cardTemplate}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <local:RegionSelectorControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                     OnRegionChanged="{Binding ChangeRegionCommand}" />
+
+        <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" FontSize="30" HorizontalContentAlignment="Center"
+               Foreground="#e6e6e6" Background="Transparent" Content="{Binding SelectedRegionName}" />
+
+        <!-- <local:RegionStatisticsControl NbChampions="{Binding NbChampions, Mode=OneWay}" RegionCards="{Binding CurrentRegionCards}" Grid.Row="2" Grid.Column="0" /> -->
+        <Grid Width="350" Grid.Row="2" Grid.Column="0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="#e6e6e6" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Content="Owned" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="1" />
+            <Label Content="Progress" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="2" />
+            <Label Content="Shards" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="3" />
+
+            <!-- Champions -->
+            <Label Content="Champions" Grid.Row="1" Grid.Column="0" />
+            <Label Content="{Binding TextNbChampions}" x:Name="LabelTotalChampions" Grid.Row="1" Grid.Column="1" />
+            <Label Content="{Binding ProgressChampions}" x:Name="LabelProgressChampions" Grid.Row="1" Grid.Column="2" />
+            <Label Content="{Binding TextShardsChampions}" x:Name="LabelShardsChampions" Grid.Row="1" Grid.Column="3" />
+            <!-- Epics -->
+            <Label Content="Epics" Grid.Row="2" Grid.Column="0" />
+            <Label Content="{Binding TextNbEpics}" x:Name="LabelTotalEpics" Grid.Row="2" Grid.Column="1" />
+            <Label Content="{Binding ProgressEpics}" x:Name="LabelProgressEpics" Grid.Row="2" Grid.Column="2" />
+            <Label Content="{Binding TextShardsEpics}" x:Name="LabelShardsEpics" Grid.Row="2" Grid.Column="3" />
+            <!-- Rares -->
+            <Label Content="Rares" Grid.Row="3" Grid.Column="0" />
+            <Label Content="{Binding TextNbRares}" x:Name="LabelTotalRares" Grid.Row="3" Grid.Column="1" />
+            <Label Content="{Binding ProgressRares}" x:Name="LabelProgressRares" Grid.Row="3" Grid.Column="2" />
+            <Label Content="{Binding TextShardsRares}" x:Name="LabelShardsRares" Grid.Row="3" Grid.Column="3" />
+            <!-- Commons -->
+            <Label Content="Commons" Grid.Row="4" Grid.Column="0" />
+            <Label Content="{Binding TextNbCommons}" x:Name="LabelTotalCommons" Grid.Row="4" Grid.Column="1" />
+            <Label Content="{Binding ProgressCommons}" x:Name="LabelProgressCommons" Grid.Row="4" Grid.Column="2" />
+            <Label Content="{Binding TextShardsCommons}" x:Name="LabelShardsCommons" Grid.Row="4" Grid.Column="3" />
+            <!-- Total -->
+            <Line Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Fill="GhostWhite" StrokeThickness="1"
+                  Stroke="GhostWhite" X1="20" X2="280" />
+            <Label Content="Total" FontWeight="Bold" FontSize="14" Grid.Row="6" Grid.Column="0" />
+            <Label Content="{Binding TextNbTotal}" FontWeight="Bold" FontSize="14" x:Name="LabelTotal" Grid.Row="6"
+                   Grid.Column="1" />
+            <Label Content="{Binding ProgressTotal}" FontWeight="Bold" FontSize="14" x:Name="LabelProgressTotal"
+                   Grid.Row="6"
+                   Grid.Column="2" />
+            <Label Content="{Binding ShardsTotal}" FontWeight="Bold" FontSize="14" x:Name="LabelShardsTotal"
+                   Grid.Row="6"
+                   Grid.Column="3" />
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="#e6e6e6" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!-- Headers -->
+            <Label Content="Resources" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="0" />
+            <Label Content="Owned" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="1" />
+            <!-- Champions WC -->
+            <Label Content="Champions WC" Grid.Row="1" Grid.Column="0"/>
+            <TextBox Text="{Binding NbWildcardsChampions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"/>
+            <!-- Epics WC -->
+            <Label Content="Epics WC" Grid.Row="2" Grid.Column="0"/>
+            <TextBox Text="{Binding TextEpicsWc}" Grid.Row="2" Grid.Column="1"/>
+            <!-- Rares WC -->
+            <Label Content="Rares WC" Grid.Row="3" Grid.Column="0"/>
+            <TextBox Text="{Binding TextRaresWc}" Grid.Row="3" Grid.Column="1"/>
+            <!-- Commons WC -->
+            <Label Content="Commons WC" Grid.Row="4" Grid.Column="0"/>
+            <TextBox Text="{Binding TextCommonsWc}" Grid.Row="4" Grid.Column="1"/>
+            <!-- Shards -->
+            <Label Content="Shards" Grid.Row="5" Grid.Column="0"/>
+            <TextBox Text="{Binding TextShards}" Grid.Row="5" Grid.Column="1"/>
+        </Grid>
+        <!--
+            VirtualizingStackPanel.VirtualizationMode="Recycling"  
+            VirtualizingPanel.ScrollUnit="Item" 
+            VirtualizingPanel.CacheLength="1,1"
+            VirtualizingPanel.IsVirtualizing="True" 
+        -->
+        <ItemsControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ScrollViewer.CanContentScroll="True" MaxHeight="700" Width="300"
+                      ItemsSource="{Binding CardVms}" ItemTemplate="{StaticResource cardTemplate}"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      VirtualizingPanel.ScrollUnit="Item"
+                      VirtualizingPanel.CacheLength="1,1"
+                      VirtualizingPanel.IsVirtualizing="True">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel />
@@ -48,6 +169,7 @@
                         behaviors:ScrollViewerBehavior.AutoScrollToTop="{Binding ResetScrollbar, Mode=TwoWay}"
                         x:Name="ScrollbarList" HorizontalScrollBarVisibility="Disabled"
                         VerticalScrollBarVisibility="Auto"
+                        PanningDeceleration="1"
                         Padding="{TemplateBinding Padding}">
                         <ItemsPresenter />
                     </ScrollViewer>
@@ -55,5 +177,6 @@
             </ItemsControl.Template>
         </ItemsControl>
     </Grid>
+
 
 </UserControl>

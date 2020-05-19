@@ -21,10 +21,20 @@ namespace SharkTracker.Views
                 }
             };
             
+            MainWindowFrame.KeyDown += delegate(object sender, KeyEventArgs args)
+            {
+                if (args.Key == Key.Escape)
+                {
+                    Close();
+                }
+            };
+
+            MainWindowFrame.MouseDown += TryDragMove;
+            
             Dispatcher.Invoke(() => CardsManager.Instance.LoadAllCards());
         }
         
-        private void TryDragMove(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        public void TryDragMove(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             if (mouseButtonEventArgs.LeftButton == MouseButtonState.Pressed)
             {
