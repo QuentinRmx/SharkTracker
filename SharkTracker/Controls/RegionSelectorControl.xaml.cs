@@ -72,6 +72,12 @@ namespace SharkTracker.Controls
             SelectedRegion = ERegion.Si;
             Update();
         }
+        
+        private void BtnTargon_OnClick(object sender, RoutedEventArgs e)
+        {
+            SelectedRegion = ERegion.Targon;
+            Update();
+        }
 
         private void BtnAll_OnClick(object sender, RoutedEventArgs e)
         {

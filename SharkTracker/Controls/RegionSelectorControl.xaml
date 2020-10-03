@@ -46,5 +46,10 @@
                 <Image Height="70" Width="70" Source="../Data/en_us/img/regions/icon-shadowisles.png"></Image>
             </StackPanel>
         </Button>
+        <Button x:Name="BtnTargon" Background="Transparent" Foreground="Transparent" Click="BtnTargon_OnClick">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Height="70" Width="70" Source="../Data/en_us/img/regions/icon-targon.png"></Image>
+            </StackPanel>
+        </Button>
     </StackPanel>
 </UserControl>

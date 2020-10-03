@@ -58,6 +58,18 @@
       <Resource Include="Resources\icons\menu_icon_collapse_style.png" />
       <None Remove="Resources\icons\menu_icon_open_style.png" />
       <Resource Include="Resources\icons\menu_icon_open_style.png" />
+      <None Remove="Resources\pictures\sharkboiii.png" />
+      <Resource Include="Resources\pictures\sharkboiii.png" />
+      <None Remove="Data\en_us\img\regions\icon-targon.png" />
+      <Resource Include="Data\en_us\img\regions\icon-targon.png" />
+      <None Remove="Data\en_us\data\set3-en_us.json" />
+      <Resource Include="Data\en_us\data\set3-en_us.json" />
+      <None Remove="Data\en_us\img\sets\set3.png" />
+      <Resource Include="Data\en_us\img\sets\set3.png" />
+      <None Remove="Data\en_us\img\sets\set2.png" />
+      <Resource Include="Data\en_us\img\sets\set2.png" />
+      <None Remove="Data\en_us\img\sets\set1.png" />
+      <Resource Include="Data\en_us\img\sets\set1.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -83,6 +95,15 @@
         <Generator></Generator>
       </Page>
       <Page Update="Controls\RegionStatisticsControl.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Views\SplashWindow.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\ImageRadioButton.xaml">
+        <Generator></Generator>
+      </Page>
+      <Page Update="Controls\DeckManagerControl.xaml">
         <Generator></Generator>
       </Page>
     </ItemGroup>
@@ -111,6 +132,15 @@
       </Compile>
       <Compile Update="Controls\RegionStatisticsControl.xaml.cs">
         <DependentUpon>RegionStatisticsControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\SplashWindow.xaml.cs">
+        <DependentUpon>SplashWindow.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\ImageRadioButton.xaml.cs">
+        <DependentUpon>ImageRadioButton.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Controls\DeckManagerControl.xaml.cs">
+        <DependentUpon>DeckManagerControl.xaml</DependentUpon>
       </Compile>
     </ItemGroup>
 

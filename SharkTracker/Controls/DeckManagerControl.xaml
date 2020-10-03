@@ -1,0 +1,62 @@
+<UserControl x:Class="SharkTracker.Controls.DeckManagerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:SharkTracker.ViewModels"
+             xmlns:local="clr-namespace:SharkTracker.Controls"
+             xmlns:models="clr-namespace:SharkTracker.Models"
+             mc:Ignorable="d"
+             d:DesignHeight="Auto" d:DesignWidth="Auto">
+    <UserControl.DataContext>
+        <vm:DeckManagerViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="cardTemplate" DataType="vm:CompactCardControlViewModel">
+            <local:CompactCardControl CardCompact="{Binding Card}" />
+        </DataTemplate>
+        <DataTemplate x:Key="cBoxTemplate" DataType="models:Deck" >
+            <Label Content="{Binding Name}" Background="Transparent"
+                   FontFamily="Friz Quadrata Std" Foreground="#e6e6e6"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Margin="5">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="#e6e6e6" />
+                <Setter Property="FontFamily" Value="Friz Quadrata Std"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <local:RegionSelectorControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                     OnRegionChanged="{Binding ChangeRegionCommand}" />
+        <Label Background="#121212" Foreground="#e6e6e6" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+               FontFamily="Friz Quadrata Std" Content="Deck Manager"
+               FontSize="28" HorizontalAlignment="Center" />
+        <ComboBox SelectedItem="{Binding ActiveDeck}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"
+                  ItemsSource="{Binding Decks}" Height="25"
+                  Background="Transparent"
+                  FontFamily="Friz Quadrata Std" ItemTemplate="{StaticResource cBoxTemplate}">
+            
+        </ComboBox>
+        <!-- Active deck -->
+        <ItemsControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"
+                      ItemsSource="{Binding CardControlViewModels}"
+                      ItemTemplate="{StaticResource cardTemplate}" />
+        <StackPanel HorizontalAlignment="Left" Grid.Row="2" Grid.Column="2">
+            <Label Content="Deck name" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

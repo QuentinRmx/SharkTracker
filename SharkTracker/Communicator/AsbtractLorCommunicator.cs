@@ -15,7 +15,7 @@ namespace SharkTracker.Communicator
 
         public event EventHandler OnStarting;
 
-        public EventHandler OnStopping;
+        public event EventHandler OnStopping;
 
         protected AbstractLorCommunicator(HttpClient client)
         {

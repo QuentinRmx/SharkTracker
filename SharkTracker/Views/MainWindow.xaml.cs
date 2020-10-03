@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Input;
+using SharkTracker.Managers;
 using SharkTracker.Utils;
 
 namespace SharkTracker.Views

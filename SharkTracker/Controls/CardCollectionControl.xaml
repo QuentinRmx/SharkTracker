@@ -5,16 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SharkTracker.Controls"
              xmlns:vm="clr-namespace:SharkTracker.ViewModels"
-
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="200" d:DataContext="{vm:CardCollectionControlViewModel }">
-
-    <UserControl.Resources>
-
-        <Style x:Key="FontLoL">
-            <Setter Property="TextElement.FontFamily" Value="Resources/fonts/friz.otf" />
-        </Style>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -29,10 +21,11 @@
         </Popup>
         <Image Grid.Column="0" Grid.Row="0" Height="128" Width="85" x:Name="artworkImage" />
         <StackPanel Margin="5 0 5 50" Orientation="Vertical" Grid.Column="1" Grid.Row="0" Width="Auto" Height="Auto">
-            <Label Foreground="GhostWhite" FontSize="16" x:Name="cardName" Style="{StaticResource FontLoL}" />
-            <local:CardCounterControl x:Name="cardCounter"></local:CardCounterControl>
+            <Label Foreground="GhostWhite" FontSize="16" x:Name="cardName" FontFamily="Friz Quadrata Std" />
+            <local:CardCounterControl x:Name="cardCounter" />
         </StackPanel>
-        <Line Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Fill="GhostWhite" StrokeThickness="1" Stroke="GhostWhite"
-              X1="20" X2="170" Margin="0 0 0 25"/>
+        <Line Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Fill="GhostWhite" StrokeThickness="1"
+              Stroke="GhostWhite"
+              X1="20" X2="170" Margin="0 0 0 25" />
     </Grid>
 </UserControl>

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SharkTracker.Models;
 using SharkTracker.Observation;
+using SharkTracker.Utils;
 
-namespace SharkTracker.Utils
+namespace SharkTracker.Managers
 {
     public class CardsManager : AbstractObservable
     {
@@ -17,8 +18,9 @@ namespace SharkTracker.Utils
 
         private Dictionary<string, int> _userCollection;
 
-        private static CardsManager _instance;
+        private UserResources _userResources;
 
+        private static CardsManager _instance;
 
         public static CardsManager Instance
         {
@@ -33,21 +35,37 @@ namespace SharkTracker.Utils
 
         private CardsManager()
         {
+            // CheckLocalFiles();
             _cards = new List<Card>();
             _userCollection = new Dictionary<string, int>();
             LoadUserCollection();
+            LoadUserResources();
         }
+
+        // private static void CheckLocalFiles()
+        // {
+        //     if (!File.Exists(Constants.PATH_COLLECTION))
+        //     {
+        //         File.Create(Constants.PATH_COLLECTION);
+        //     }
+        //     
+        //     if (!File.Exists(Constants.PATH_USER_RESOURCES))
+        //     {
+        //         File.Create(Constants.PATH_USER_RESOURCES);
+        //     }
+        // }
 
         // METHODS
 
         public async Task<bool> LoadAllCards()
         {
             _cards = new List<Card>();
+            _userCollection ??= new Dictionary<string, int>();
 
             // SET 1
             string json = await File.ReadAllTextAsync(Constants.PATH_CARD_SET_1);
             _cards.AddRange(JsonConvert.DeserializeObject<List<Card>>(json));
-            
+
             _observers.ForEach(o => o.Notify());
             foreach (Card c in _cards)
             {
@@ -65,12 +83,39 @@ namespace SharkTracker.Utils
             // SET 2
             json = await File.ReadAllTextAsync(Constants.PATH_CARD_SET_2);
             _cards.AddRange(JsonConvert.DeserializeObject<List<Card>>(json));
-            
+
             _observers.ForEach(o => o.Notify());
             foreach (Card c in _cards)
             {
-                _userCollection.TryGetValue(c.Code, out int value);
-                c.QuantityOwned = value;
+                try
+                {
+                    _userCollection.TryGetValue(c.Code, out int value);
+                    c.QuantityOwned = value;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+            
+            // SET 3
+            json = await File.ReadAllTextAsync(Constants.PATH_CARD_SET_3);
+            _cards.AddRange(JsonConvert.DeserializeObject<List<Card>>(json));
+
+            _observers.ForEach(o => o.Notify());
+            foreach (Card c in _cards)
+            {
+                try
+                {
+                    _userCollection.TryGetValue(c.Code, out int value);
+                    c.QuantityOwned = value;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
             return true;
         }
@@ -129,6 +174,42 @@ namespace SharkTracker.Utils
             _cards.First(ca => ca.Code == c.Code).QuantityOwned = c.QuantityOwned;
         }
 
-        
+        private void LoadUserResources()
+        {
+            if (!File.Exists(Constants.PATH_USER_RESOURCES))
+            {
+                using FileStream tmp = File.Create(Constants.PATH_USER_RESOURCES);
+                tmp.Close();
+                SaveUserResources(new UserResources());
+                return;
+            }
+
+            string json = File.ReadAllText(Constants.PATH_USER_RESOURCES);
+            _userResources = JsonConvert.DeserializeObject<UserResources>(json);
+            if (_userResources == null)
+            {
+                _userResources = new UserResources();
+                SaveUserResources(_userResources);
+            }
+        }
+
+        public void SaveUserResources(UserResources userResources)
+        {
+            _userResources = userResources;
+            string json = JsonConvert.SerializeObject(userResources);
+            using StreamWriter writer = new StreamWriter(Constants.PATH_USER_RESOURCES);
+            writer.Write(json);
+            writer.Close();
+        }
+
+        public UserResources GetUserResources()
+        {
+            if (_userResources == null)
+            {
+                LoadUserResources();
+            }
+
+            return _userResources;
+        }
     }
 }

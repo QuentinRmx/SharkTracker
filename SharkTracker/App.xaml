@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SharkTracker"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:models="clr-namespace:SharkTracker.Models"
-             StartupUri="Views/MainWindow.xaml">
+             xmlns:models="clr-namespace:SharkTracker.Models">
     <Application.Resources>
         <Color x:Key="MainBackgroundColor">#121212</Color>
         <!-- DataTemplate for cards in collection's listviews. -->
@@ -17,13 +16,30 @@
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Background="{Binding RarityColor}" Margin="2" CornerRadius="3" />
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Grid.Column="1"
+                    <TextBlock FontFamily="Friz Quadrata Std" HorizontalAlignment="Left" VerticalAlignment="Center"
+                               FontSize="15" Grid.Column="1"
                                Text="{Binding Name}" Padding="10, 0, 150, 0" />
                     <xctk:IntegerUpDown HorizontalAlignment="Center" FontSize="18" Grid.Column="2" Padding="5"
                                         Text="{Binding QuantityOwned}" Minimum="0" Maximum="3" />
                 </Grid>
             </Border>
         </DataTemplate>
+        <!-- ComboBox -->
+        <Style TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
+            <Setter Property="Foreground" Value="#e6e6e6" />
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+        <!-- ComboBoxItem -->
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+        <!-- Label -->
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
+        </Style>
         <!-- Style IntegerUpDown -->
         <Style TargetType="xctk:IntegerUpDown">
             <Setter Property="Foreground" Value="#e6e6e6" />
@@ -35,16 +51,19 @@
         <!-- Style ListView -->
         <Style TargetType="ListView">
             <Setter Property="Background" Value="#121212" />
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
         </Style>
         <!-- Style ListViewItem -->
         <Style TargetType="ListViewItem">
             <Setter Property="Foreground" Value="#e6e6e6" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
             <Setter Property="Background" Value="#121212" />
         </Style>
         <!-- Style TabControl -->
         <Style TargetType="TabControl">
             <Setter Property="Foreground" Value="#e6e6e6" />
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
             <Setter Property="Background" Value="#121212" />
         </Style>
         <!-- Style TabItem -->
@@ -64,6 +83,7 @@
         <Style TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#e6e6e6" />
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
             <!-- <Setter Property="Template"> -->
             <!--     <Setter.Value> -->
             <!--         <ControlTemplate TargetType="Button"> -->

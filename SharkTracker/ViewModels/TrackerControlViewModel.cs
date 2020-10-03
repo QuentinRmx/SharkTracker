@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SharkTracker.Communicator;
 using SharkTracker.LoRDeckCodes;
+using SharkTracker.Managers;
 using SharkTracker.Models;
 using SharkTracker.Utils;
 using SharkTracker.Views;
@@ -74,8 +75,13 @@ namespace SharkTracker.ViewModels
             _allCards = CardsManager.Instance.GetAllCards();
             _timer = new DispatcherTimer();
             _timer.Tick += LoadDeck;
-            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Interval = TimeSpan.FromSeconds(2);
+#if DEBUG
+            _timer.Stop();
+            _communicator.Stop();
+#elif RELEASE
             _timer.Start();
+#endif
         }
 
 

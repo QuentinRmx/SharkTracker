@@ -34,7 +34,7 @@
                 </Border>
                 <!-- Card name. -->
                 <TextBlock Background="Transparent" x:Name="cardNameTb" Grid.Column="1" Foreground="GhostWhite"
-                           FontSize="15" 
+                           FontSize="15" FontFamily="Friz Quadrata Std"
                            Text="{Binding Card.Name}" TextAlignment="Center" />
                 <!-- Copies in deck -->
                 <Border Grid.Column="2" BorderBrush="Transparent" Background="#121212" BorderThickness="1" Opacity="0.8" 

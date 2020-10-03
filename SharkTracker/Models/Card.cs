@@ -69,6 +69,7 @@ namespace SharkTracker.Models
                     "noxus" => ERegion.Noxus,
                     "piltover & zaun" => ERegion.PnZ,
                     "shadow isles" => ERegion.Si,
+                    "targon" => ERegion.Targon,
                     _ => ERegion.ALL
                 };
 

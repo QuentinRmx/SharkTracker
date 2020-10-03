@@ -17,9 +17,9 @@ namespace SharkTracker.Controls
             DependencyProperty.Register("CurrentSelection", typeof(string), typeof(MainMenuControl),
                 new PropertyMetadata(default(string)));
 
-        private double _defaultWidth;
+        private readonly double _defaultWidth;
 
-        private double _collapsedWidth = 24;
+        private readonly double _collapsedWidth = 24;
 
         public MainMenuControl()
         {
@@ -41,6 +41,7 @@ namespace SharkTracker.Controls
             _isCollapsed = !_isCollapsed;
             ButtonTracker.Visibility = (_isCollapsed) ? Visibility.Collapsed : Visibility.Visible;
             ButtonCollection.Visibility = (_isCollapsed) ? Visibility.Collapsed : Visibility.Visible;
+            ButtonDeckManager.Visibility = (_isCollapsed) ? Visibility.Collapsed : Visibility.Visible;
             ImgCollapse.Source = new BitmapImage((_isCollapsed) ? PATH_COLLAPSE : PATH_OPEN);
             Width = _isCollapsed ? _collapsedWidth : _defaultWidth;
         }
@@ -54,5 +55,17 @@ namespace SharkTracker.Controls
         {
             CurrentSelection = "../Controls/CollectionControl.xaml";
         }
+
+        private void ButtonDeckManager_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentSelection = "../Controls/DeckManagerControl.xaml";
+        }
+
+        private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Close();
+        }
+        
+        
     }
 }

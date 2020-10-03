@@ -11,7 +11,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              Background="Transparent"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1000">
 
     <UserControl.DataContext>
         <viewModels:CollectionControlViewModel />
@@ -24,6 +24,9 @@
     </i:Interaction.Triggers>
 
     <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="Friz Quadrata Std" />
+        </Style>
         <DataTemplate x:Key="cardTemplate" DataType="viewModels:CardCollectionControlViewModel">
             <local:CardCollectionControl CardCollection="{Binding Card}" />
         </DataTemplate>
@@ -71,40 +74,59 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label Content="Owned" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="1" />
-            <Label Content="Progress" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="2" />
-            <Label Content="Shards" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="3" />
+            <Label Content="Owned" FontFamily="Friz Quadrata Std" Grid.Row="0" FontWeight="Bold" FontSize="14"
+                   Grid.Column="1" />
+            <Label Content="Progress" FontFamily="Friz Quadrata Std" Grid.Row="0" FontWeight="Bold" FontSize="14"
+                   Grid.Column="2" />
+            <Label Content="Shards" FontFamily="Friz Quadrata Std" Grid.Row="0" FontWeight="Bold" FontSize="14"
+                   Grid.Column="3" />
 
             <!-- Champions -->
-            <Label Content="Champions" Grid.Row="1" Grid.Column="0" />
-            <Label Content="{Binding TextNbChampions}" x:Name="LabelTotalChampions" Grid.Row="1" Grid.Column="1" />
-            <Label Content="{Binding ProgressChampions}" x:Name="LabelProgressChampions" Grid.Row="1" Grid.Column="2" />
-            <Label Content="{Binding TextShardsChampions}" x:Name="LabelShardsChampions" Grid.Row="1" Grid.Column="3" />
+            <Label Content="Champions" FontFamily="Friz Quadrata Std" Grid.Row="1" Grid.Column="0" />
+            <Label Content="{Binding TextNbChampions}" FontFamily="Friz Quadrata Std" x:Name="LabelTotalChampions"
+                   Grid.Row="1" Grid.Column="1" />
+            <Label Content="{Binding ProgressChampions}" FontFamily="Friz Quadrata Std" x:Name="LabelProgressChampions"
+                   Grid.Row="1" Grid.Column="2" />
+            <Label Content="{Binding TextShardsChampions}" FontFamily="Friz Quadrata Std" x:Name="LabelShardsChampions"
+                   Grid.Row="1" Grid.Column="3" />
             <!-- Epics -->
-            <Label Content="Epics" Grid.Row="2" Grid.Column="0" />
-            <Label Content="{Binding TextNbEpics}" x:Name="LabelTotalEpics" Grid.Row="2" Grid.Column="1" />
-            <Label Content="{Binding ProgressEpics}" x:Name="LabelProgressEpics" Grid.Row="2" Grid.Column="2" />
-            <Label Content="{Binding TextShardsEpics}" x:Name="LabelShardsEpics" Grid.Row="2" Grid.Column="3" />
+            <Label Content="Epics" FontFamily="Friz Quadrata Std" Grid.Row="2" Grid.Column="0" />
+            <Label Content="{Binding TextNbEpics}" FontFamily="Friz Quadrata Std" x:Name="LabelTotalEpics" Grid.Row="2"
+                   Grid.Column="1" />
+            <Label Content="{Binding ProgressEpics}" FontFamily="Friz Quadrata Std" x:Name="LabelProgressEpics"
+                   Grid.Row="2" Grid.Column="2" />
+            <Label Content="{Binding TextShardsEpics}" FontFamily="Friz Quadrata Std" x:Name="LabelShardsEpics"
+                   Grid.Row="2" Grid.Column="3" />
             <!-- Rares -->
-            <Label Content="Rares" Grid.Row="3" Grid.Column="0" />
-            <Label Content="{Binding TextNbRares}" x:Name="LabelTotalRares" Grid.Row="3" Grid.Column="1" />
-            <Label Content="{Binding ProgressRares}" x:Name="LabelProgressRares" Grid.Row="3" Grid.Column="2" />
-            <Label Content="{Binding TextShardsRares}" x:Name="LabelShardsRares" Grid.Row="3" Grid.Column="3" />
+            <Label Content="Rares" FontFamily="Friz Quadrata Std" Grid.Row="3" Grid.Column="0" />
+            <Label Content="{Binding TextNbRares}" FontFamily="Friz Quadrata Std" x:Name="LabelTotalRares" Grid.Row="3"
+                   Grid.Column="1" />
+            <Label Content="{Binding ProgressRares}" FontFamily="Friz Quadrata Std" x:Name="LabelProgressRares"
+                   Grid.Row="3" Grid.Column="2" />
+            <Label Content="{Binding TextShardsRares}" FontFamily="Friz Quadrata Std" x:Name="LabelShardsRares"
+                   Grid.Row="3" Grid.Column="3" />
             <!-- Commons -->
-            <Label Content="Commons" Grid.Row="4" Grid.Column="0" />
-            <Label Content="{Binding TextNbCommons}" x:Name="LabelTotalCommons" Grid.Row="4" Grid.Column="1" />
-            <Label Content="{Binding ProgressCommons}" x:Name="LabelProgressCommons" Grid.Row="4" Grid.Column="2" />
-            <Label Content="{Binding TextShardsCommons}" x:Name="LabelShardsCommons" Grid.Row="4" Grid.Column="3" />
+            <Label Content="Commons" FontFamily="Friz Quadrata Std" Grid.Row="4" Grid.Column="0" />
+            <Label Content="{Binding TextNbCommons}" FontFamily="Friz Quadrata Std" x:Name="LabelTotalCommons"
+                   Grid.Row="4" Grid.Column="1" />
+            <Label Content="{Binding ProgressCommons}" FontFamily="Friz Quadrata Std" x:Name="LabelProgressCommons"
+                   Grid.Row="4" Grid.Column="2" />
+            <Label Content="{Binding TextShardsCommons}" FontFamily="Friz Quadrata Std" x:Name="LabelShardsCommons"
+                   Grid.Row="4" Grid.Column="3" />
             <!-- Total -->
             <Line Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Fill="GhostWhite" StrokeThickness="1"
                   Stroke="GhostWhite" X1="20" X2="280" />
-            <Label Content="Total" FontWeight="Bold" FontSize="14" Grid.Row="6" Grid.Column="0" />
-            <Label Content="{Binding TextNbTotal}" FontWeight="Bold" FontSize="14" x:Name="LabelTotal" Grid.Row="6"
+            <Label Content="Total" FontFamily="Friz Quadrata Std" FontWeight="Bold" FontSize="14" Grid.Row="6"
+                   Grid.Column="0" />
+            <Label Content="{Binding TextNbTotal}" FontFamily="Friz Quadrata Std" FontWeight="Bold" FontSize="14"
+                   x:Name="LabelTotal" Grid.Row="6"
                    Grid.Column="1" />
-            <Label Content="{Binding ProgressTotal}" FontWeight="Bold" FontSize="14" x:Name="LabelProgressTotal"
+            <Label Content="{Binding ProgressTotal}" FontFamily="Friz Quadrata Std" FontWeight="Bold" FontSize="14"
+                   x:Name="LabelProgressTotal"
                    Grid.Row="6"
                    Grid.Column="2" />
-            <Label Content="{Binding ShardsTotal}" FontWeight="Bold" FontSize="14" x:Name="LabelShardsTotal"
+            <Label Content="{Binding ShardsTotal}" FontFamily="Friz Quadrata Std" FontWeight="Bold" FontSize="14"
+                   x:Name="LabelShardsTotal"
                    Grid.Row="6"
                    Grid.Column="3" />
         </Grid>
@@ -131,20 +153,21 @@
             <Label Content="Resources" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="0" />
             <Label Content="Owned" Grid.Row="0" FontWeight="Bold" FontSize="14" Grid.Column="1" />
             <!-- Champions WC -->
-            <Label Content="Champions WC" Grid.Row="1" Grid.Column="0"/>
-            <TextBox Text="{Binding NbWildcardsChampions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"/>
+            <Label Content="Champions WC" Grid.Row="1" Grid.Column="0" />
+            <TextBox Text="{Binding NbWildcardsChampions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="1" Grid.Column="1" />
             <!-- Epics WC -->
-            <Label Content="Epics WC" Grid.Row="2" Grid.Column="0"/>
-            <TextBox Text="{Binding TextEpicsWc}" Grid.Row="2" Grid.Column="1"/>
+            <Label Content="Epics WC" Grid.Row="2" Grid.Column="0" />
+            <TextBox Text="{Binding NbWildcardsEpics, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" />
             <!-- Rares WC -->
-            <Label Content="Rares WC" Grid.Row="3" Grid.Column="0"/>
-            <TextBox Text="{Binding TextRaresWc}" Grid.Row="3" Grid.Column="1"/>
+            <Label Content="Rares WC" Grid.Row="3" Grid.Column="0" />
+            <TextBox Text="{Binding NbWildcardsRares, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" />
             <!-- Commons WC -->
-            <Label Content="Commons WC" Grid.Row="4" Grid.Column="0"/>
-            <TextBox Text="{Binding TextCommonsWc}" Grid.Row="4" Grid.Column="1"/>
+            <Label Content="Commons WC" Grid.Row="4" Grid.Column="0" />
+            <TextBox Text="{Binding NbWildcardsCommons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" />
             <!-- Shards -->
-            <Label Content="Shards" Grid.Row="5" Grid.Column="0"/>
-            <TextBox Text="{Binding TextShards}" Grid.Row="5" Grid.Column="1"/>
+            <Label Content="Shards" Grid.Row="5" Grid.Column="0" />
+            <TextBox Text="{Binding TextShards}" Grid.Row="5" Grid.Column="1" />
         </Grid>
         <!--
             VirtualizingStackPanel.VirtualizationMode="Recycling"  
@@ -152,30 +175,36 @@
             VirtualizingPanel.CacheLength="1,1"
             VirtualizingPanel.IsVirtualizing="True" 
         -->
-        <ItemsControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ScrollViewer.CanContentScroll="True" MaxHeight="700" Width="300"
-                      ItemsSource="{Binding CardVms}" ItemTemplate="{StaticResource cardTemplate}"
-                      VirtualizingStackPanel.VirtualizationMode="Recycling"
-                      VirtualizingPanel.ScrollUnit="Item"
-                      VirtualizingPanel.CacheLength="1,1"
-                      VirtualizingPanel.IsVirtualizing="True">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <ScrollViewer
-                        behaviors:ScrollViewerBehavior.AutoScrollToTop="{Binding ResetScrollbar, Mode=TwoWay}"
-                        x:Name="ScrollbarList" HorizontalScrollBarVisibility="Disabled"
-                        VerticalScrollBarVisibility="Auto"
-                        PanningDeceleration="1"
-                        Padding="{TemplateBinding Padding}">
-                        <ItemsPresenter />
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
-        </ItemsControl>
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical">
+            <ComboBox Height="25" Background="Transparent" Foreground="Black" x:Name="FilterCb" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilter}" />
+            <!-- <local:ImageRadioButton ImageRadionButtonElements="{Binding ListFiltersRarity}" ></local:ImageRadioButton> -->
+            <ItemsControl ScrollViewer.CanContentScroll="True"
+                          MaxHeight="700" Width="300"
+                          ItemsSource="{Binding CardVms}" ItemTemplate="{StaticResource cardTemplate}"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          VirtualizingPanel.ScrollUnit="Item"
+                          VirtualizingPanel.CacheLength="1,1"
+                          VirtualizingPanel.IsVirtualizing="True">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <ScrollViewer
+                            behaviors:ScrollViewerBehavior.AutoScrollToTop="{Binding ResetScrollbar, Mode=TwoWay}"
+                            x:Name="ScrollbarList" HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto"
+                            PanningDeceleration="1"
+                            Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+            </ItemsControl>
+        </StackPanel>
+
     </Grid>
 
 

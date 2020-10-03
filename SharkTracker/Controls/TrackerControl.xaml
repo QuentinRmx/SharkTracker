@@ -16,10 +16,11 @@
         </DataTemplate>
     </UserControl.Resources>
     <StackPanel VerticalAlignment="Top" Margin="10" Height="Auto">
-        <TextBlock Background="#121212" Foreground="#e6e6e6" Text="No active deck found" FontSize="20"
-                   Visibility="{Binding ShowNoDeckText}" />
-        <ItemsControl Width="Auto" ItemsSource="{Binding CardControlViewModels}" ItemTemplate="{StaticResource cardTemplate}" />
-        
-        <Button Content="{Binding IsActiveText}" Command="{Binding BtnActive_OnClickCommand}" ></Button>
+        <Button Content="{Binding IsActiveText}" Command="{Binding BtnActive_OnClickCommand}" />
+        <TextBlock Background="#121212" Foreground="#e6e6e6" Text="No &#10;active deck &#10;found" FontSize="16"
+                   TextAlignment="Center" Visibility="{Binding ShowNoDeckText}" FontFamily="Friz Quadrata Std" />
+        <ItemsControl Width="Auto" ItemsSource="{Binding CardControlViewModels}"
+                      ItemTemplate="{StaticResource cardTemplate}" />
+
     </StackPanel>
 </UserControl>

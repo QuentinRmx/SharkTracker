@@ -7,12 +7,19 @@
              mc:Ignorable="d"
              d:DesignHeight="Auto" d:DesignWidth="100">
     <StackPanel x:Name="MenuPanel" Orientation="Vertical" Margin="5" Width="Auto" Height="Auto">
+        <Button Width="20" Height="20" x:Name="ButtonClose" Click="ButtonClose_OnClick" Background="Transparent"
+                BorderBrush="Transparent" Content="x">
+            <!-- <Image x:Name="ImgClose" MaxHeight="16" MaxWidth="16" Height="16" Width="16" -->
+            <!--        Source="../Resources/icons/menu_icon_open_style.png" /> -->
+        </Button>
         <Button x:Name="ButtonCollapse" Click="ButtonCollapse_OnClick" Background="Transparent"
                 BorderBrush="Transparent">
             <Image x:Name="ImgCollapse" MaxHeight="16" MaxWidth="16" Height="16" Width="16"
                    Source="../Resources/icons/menu_icon_open_style.png" />
         </Button>
+
         <Button x:Name="ButtonTracker" Content="Tracker" Click="ButtonTracker_OnClick" />
         <Button x:Name="ButtonCollection" Content="Collection" Click="ButtonCollection_OnClick" />
+        <Button x:Name="ButtonDeckManager" Content="Decks" Click="ButtonDeckManager_OnClick" />
     </StackPanel>
 </UserControl>

@@ -7,7 +7,9 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using SharkTracker.Managers;
 using SharkTracker.Models;
+using SharkTracker.Models.Filters;
 using SharkTracker.Observation;
 using SharkTracker.Utils;
 
@@ -37,9 +39,7 @@ namespace SharkTracker.ViewModels
             }
         }
 
-        public List<Card> CurrentRegionCards => _collection
-            .FindAll(c => c.Collectible && c.IsSelectedRegion(SelectedRegion))
-            .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+        public List<Card> CurrentRegionCards => GetCurrentRegionCards();
 
         private ERegion _selectedRegion;
 
@@ -179,26 +179,69 @@ namespace SharkTracker.ViewModels
 
         public string TextShardsCommons => $"{_shardsCommons}";
 
-        public string TextNbTotal => $"{NbChampions + NbEpics + NbRares + NbCommons}/{CurrentRegionCards.Count * 3}";
+        public string TextNbTotal =>
+            $"{NbChampions + NbEpics + NbRares + NbCommons}/{GetCurrentRegionCards(false).Count * 3}";
 
         public string ProgressTotal =>
-            $"{((NbChampions + NbEpics + NbRares + NbCommons) * 100) / (CurrentRegionCards.Count * 3)}%";
+            $"{((NbChampions + NbEpics + NbRares + NbCommons) * 100) / (GetCurrentRegionCards(false).Count * 3)}%";
 
         public string ShardsTotal =>
             $"{_shardsChampions + _shardsEpics + _shardsRares + _shardsCommons}";
-        
-        // User resources
 
-        private int _nbWildcardsChampions;
+        // User resources
 
         public int NbWildcardsChampions
         {
-            get => _nbWildcardsChampions;
+            get => UserResources.ChampionWcs;
             set
             {
-                _nbWildcardsChampions = value;
+                UserResources.ChampionWcs = value;
                 RaisePropertyChanged(nameof(NbWildcardsChampions));
                 RaisePropertyChanged(nameof(TextNbChampions));
+            }
+        }
+
+        public int NbWildcardsEpics
+        {
+            get => UserResources.EpicWcs;
+            set
+            {
+                UserResources.EpicWcs = value;
+                RaisePropertyChanged(nameof(NbWildcardsEpics));
+                RaisePropertyChanged(nameof(TextNbEpics));
+            }
+        }
+
+        private UserResources _userResources;
+
+        public UserResources UserResources
+        {
+            get => _userResources;
+            set
+            {
+                _userResources = value;
+                RaisePropertyChanged(nameof(UserResources));
+                RaisePropertyChanged(nameof(NbWildcardsChampions));
+                RaisePropertyChanged(nameof(TextNbChampions));
+            }
+        }
+
+        public static IEnumerable<ECollectionFilter> FilterTypes => new[]
+        {
+            ECollectionFilter.ALL, ECollectionFilter.Champions, ECollectionFilter.Epics, ECollectionFilter.Rares,
+            ECollectionFilter.Commons, ECollectionFilter.Incomplete
+        };
+
+        private ECollectionFilter _selectedFilter = ECollectionFilter.ALL;
+
+        public ECollectionFilter SelectedFilter
+        {
+            get => _selectedFilter;
+            set
+            {
+                _selectedFilter = value;
+                RaisePropertyChanged(nameof(SelectedFilter));
+                PrepareViewModels();
             }
         }
 
@@ -226,15 +269,58 @@ namespace SharkTracker.ViewModels
             PrepareViewModels();
         }
 
+        /// <summary>
+        /// If the parameter withFilter is false, all the cards of the selected region will be returned.
+        /// Otherwise, the additional filters selected by the user will be applied before returning the list.
+        /// </summary>
+        /// <param name="withFilter">Indicates if the additional user filters must be applied.</param>
+        /// <returns>The cards belonging to the current region, filtered or not.</returns>
+        private List<Card> GetCurrentRegionCards(bool withFilter = true)
+        {
+            // TODO: Filters abstraction
+            List<Card> currentCards = _collection
+                .FindAll(c => c.Collectible && c.IsSelectedRegion(SelectedRegion))
+                .OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
+            // If the filters are disabled we return now so we don't apply any.
+            if (!withFilter) return currentCards;
+            // Otherwise we apply the filters.
+            switch (SelectedFilter)
+            {
+                case ECollectionFilter.Champions:
+                    currentCards = currentCards.Where(c => c.RarityEnum == ERarity.Champion).ToList();
+                    break;
+                case ECollectionFilter.Epics:
+                    currentCards = currentCards.Where(c => c.RarityEnum == ERarity.Epic).ToList();
+                    break;
+                case ECollectionFilter.Rares:
+                    currentCards = currentCards.Where(c => c.RarityEnum == ERarity.Rare).ToList();
+                    break;
+                case ECollectionFilter.Commons:
+                    currentCards = currentCards.Where(c => c.RarityEnum == ERarity.Common).ToList();
+                    break;
+                case ECollectionFilter.Incomplete:
+                    currentCards = currentCards.Where(c => c.QuantityOwned != 3).ToList();
+                    break;
+                case ECollectionFilter.ALL:
+                    break;
+                default:
+                    break;
+            }
+
+            return currentCards;
+        }
+
         private void UpdateCollection()
         {
             _collection = CardsManager.Instance.GetAllCards();
+            UserResources = CardsManager.Instance.GetUserResources();
             UpdateStats();
         }
 
         private void SaveCollection()
         {
             CardsManager.Instance.SaveUserCollection(_collection);
+            CardsManager.Instance.SaveUserResources(UserResources);
             UpdateStats();
         }
 
@@ -282,33 +368,34 @@ namespace SharkTracker.ViewModels
 
         private void UpdateStats()
         {
+            List<Card> currentCards = GetCurrentRegionCards(false);
             _maxChampionsPerRegion =
-                CurrentRegionCards.Count(c => c.RarityEnum == ERarity.Champion) * 3;
-            NbChampions = CurrentRegionCards.Where(c => c.RarityEnum == ERarity.Champion).Select(c => c.QuantityOwned)
+                currentCards.Count(c => c.RarityEnum == ERarity.Champion) * 3;
+            NbChampions = currentCards.Where(c => c.RarityEnum == ERarity.Champion).Select(c => c.QuantityOwned)
                 .Sum();
             RaisePropertyChanged(nameof(ProgressChampions));
             RaisePropertyChanged(nameof(TextNbChampions));
             RaisePropertyChanged(nameof(TextShardsChampions));
 
             _maxEpicsPerRegion =
-                CurrentRegionCards.Count(c => c.RarityEnum == ERarity.Epic) * 3;
-            NbEpics = CurrentRegionCards.Where(c => c.RarityEnum == ERarity.Epic).Select(c => c.QuantityOwned)
+                currentCards.Count(c => c.RarityEnum == ERarity.Epic) * 3;
+            NbEpics = currentCards.Where(c => c.RarityEnum == ERarity.Epic).Select(c => c.QuantityOwned)
                 .Sum();
             RaisePropertyChanged(nameof(TextNbEpics));
             RaisePropertyChanged(nameof(ProgressEpics));
             RaisePropertyChanged(nameof(TextShardsEpics));
 
             _maxRaresPerRegion =
-                CurrentRegionCards.Count(c => c.RarityEnum == ERarity.Rare) * 3;
-            NbRares = CurrentRegionCards.Where(c => c.RarityEnum == ERarity.Rare).Select(c => c.QuantityOwned)
+                currentCards.Count(c => c.RarityEnum == ERarity.Rare) * 3;
+            NbRares = currentCards.Where(c => c.RarityEnum == ERarity.Rare).Select(c => c.QuantityOwned)
                 .Sum();
             RaisePropertyChanged(nameof(TextNbRares));
             RaisePropertyChanged(nameof(ProgressRares));
             RaisePropertyChanged(nameof(TextShardsRares));
 
             _maxCommonsPerRegion =
-                CurrentRegionCards.Count(c => c.RarityEnum == ERarity.Common) * 3;
-            NbCommons = CurrentRegionCards.Where(c => c.RarityEnum == ERarity.Common).Select(c => c.QuantityOwned)
+                currentCards.Count(c => c.RarityEnum == ERarity.Common) * 3;
+            NbCommons = currentCards.Where(c => c.RarityEnum == ERarity.Common).Select(c => c.QuantityOwned)
                 .Sum();
             RaisePropertyChanged(nameof(TextNbCommons));
             RaisePropertyChanged(nameof(ProgressCommons));

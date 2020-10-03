@@ -1,0 +1,43 @@
+<Window x:Class="SharkTracker.Views.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:SharkTracker.Views"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        Background="#121212"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Topmost="True"
+        Title="SplashWindow" Height="Auto" Width="Auto">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard Name="FormFade" Completed="FormFade_OnCompleted">
+                    <DoubleAnimation Name="FormFadeAnimation"
+                                     Storyboard.TargetProperty="(Window.Opacity)"
+                                     From="0.0" To="1.0" Duration="0:0:1"
+                                     AutoReverse="False" RepeatBehavior="1x" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <!-- <EventTrigger RoutedEvent="Window.Unloaded"> -->
+        <!--     <BeginStoryboard> -->
+        <!--         <Storyboard Name="FormFadeOut" Completed="FormFadeOut_Completed"> -->
+        <!--             <DoubleAnimation Name="FormFadeOutAnimation" -->
+        <!--                              Storyboard.TargetName="FormFadeOut" -->
+        <!--                              Storyboard.TargetProperty="(Window.Opacity)" -->
+        <!--                              From="1.0" To="0.0" Duration="0:0:1" -->
+        <!--                              AutoReverse="False" RepeatBehavior="1x" /> -->
+        <!--         </Storyboard> -->
+        <!--     </BeginStoryboard> -->
+        <!-- </EventTrigger> -->
+    </Window.Triggers>
+    <Grid>
+        <Label Content="SharkTracker 1.0" FontSize="40" FontFamily="Friz Quadrata Std" FontWeight="Bold"
+               Foreground="#e6e6e6"
+               HorizontalAlignment="Center" />
+        <Image Source="../Resources/pictures/sharkboiii.png" Width="640" Height="540" ></Image>
+    </Grid>
+</Window>

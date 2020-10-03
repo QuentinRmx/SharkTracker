@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkTracker", "SharkTracker\SharkTracker.csproj", "{02098438-DF9F-47B8-B4BD-31D7A98361F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkTrackerCore", "SharkTrackerCore\SharkTrackerCore.csproj", "{56AFD633-2133-4C26-9BA2-F5FEBF88A858}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02098438-DF9F-47B8-B4BD-31D7A98361F8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{56AFD633-2133-4C26-9BA2-F5FEBF88A858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56AFD633-2133-4C26-9BA2-F5FEBF88A858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56AFD633-2133-4C26-9BA2-F5FEBF88A858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56AFD633-2133-4C26-9BA2-F5FEBF88A858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

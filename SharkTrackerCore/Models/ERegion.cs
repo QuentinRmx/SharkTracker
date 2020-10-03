@@ -1,6 +1,4 @@
-using System.Windows.Markup;
-
-namespace SharkTracker.Models
+namespace SharkTrackerCore.Models
 {
     public enum ERegion
     {

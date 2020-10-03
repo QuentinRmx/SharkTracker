@@ -71,6 +71,7 @@ namespace SharkTracker.Controls
         {
             if (CardCollection.BitmapArtwork == null)
                 return;
+
             TransformedBitmap scaledArt =
                 new TransformedBitmap(CardCollection.BitmapArtwork, new ScaleTransform(0.125, 0.125));
             artworkImage.Source = scaledArt;

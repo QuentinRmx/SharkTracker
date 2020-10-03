@@ -1,6 +1,4 @@
-using System.IO;
-
-namespace SharkTracker.Utils
+namespace SharkTrackerCore
 {
     public static class Constants
     {

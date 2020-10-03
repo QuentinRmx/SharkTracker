@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Navigation;
+using SharkTracker.Views;
 
 namespace SharkTracker
 {
@@ -7,7 +10,15 @@ namespace SharkTracker
     /// </summary>
     public partial class App : Application
     {
-        
-        
+        /// <inheritdoc />
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+#if DEBUG
+            StartupUri = new Uri(@"/Views/MainWindow.xaml", UriKind.Relative);
+#elif RELEASE
+            StartupUri = new Uri(@"/Views/SplashWindow.xaml", UriKind.Relative);
+#endif
+        }
     }
 }
