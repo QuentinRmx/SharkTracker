@@ -10,6 +10,7 @@
     <ItemGroup>
       <Folder Include="Data" />
       <Folder Include="Data\en_us\img\cards" />
+      <Folder Include="Managers" />
       <Folder Include="Resources\fonts" />
       <Folder Include="Resources\icons" />
     </ItemGroup>
@@ -142,6 +143,10 @@
       <Compile Update="Controls\DeckManagerControl.xaml.cs">
         <DependentUpon>DeckManagerControl.xaml</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharkTrackerCore\SharkTrackerCore.csproj" />
     </ItemGroup>
 
 </Project>

@@ -4,13 +4,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:SharkTracker.Views"
+        xmlns:vm="clr-namespace:SharkTracker.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         AllowsTransparency="True"
         Background="#121212"
         ResizeMode="NoResize"
         WindowStyle="None"
         Topmost="True"
-        Title="SplashWindow" Height="Auto" Width="Auto">
+        Title="SplashWindow" Height="Auto" Width="600">
+    <Window.DataContext>
+        <vm:SplashWindowViewModel />
+    </Window.DataContext>
+
     <Window.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">
             <BeginStoryboard>
@@ -22,6 +28,7 @@
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
+
         <!-- <EventTrigger RoutedEvent="Window.Unloaded"> -->
         <!--     <BeginStoryboard> -->
         <!--         <Storyboard Name="FormFadeOut" Completed="FormFadeOut_Completed"> -->
@@ -34,10 +41,27 @@
         <!--     </BeginStoryboard> -->
         <!-- </EventTrigger> -->
     </Window.Triggers>
-    <Grid>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding UpdateCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid x:Name="Grid" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Label Content="SharkTracker 1.0" FontSize="40" FontFamily="Friz Quadrata Std" FontWeight="Bold"
                Foreground="#e6e6e6"
                HorizontalAlignment="Center" />
-        <Image Source="../Resources/pictures/sharkboiii.png" Width="640" Height="540" ></Image>
+        <Image Margin="10" Grid.Row="1"  Source="../Resources/pictures/sharkboiii.png" Width="480" Height="405" />
+        <ProgressBar Margin="10" Width="500" Height="40" Grid.Row="2" Maximum="{Binding ProgressBarMax}"
+                     Value="{Binding CurrentProgress}" />
+        <TextBlock Width="500" TextAlignment="Center" FontSize="20" FontFamily="Friz Quadrata Std"
+                   Foreground="#e6e6e6" Grid.Row="3" x:Name="TbProgress"
+                   Text="{Binding TextProgress}" />
     </Grid>
 </Window>

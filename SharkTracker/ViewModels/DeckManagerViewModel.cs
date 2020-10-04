@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SharkTracker.LoRDeckCodes;
 using SharkTracker.Models;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.ViewModels
 {

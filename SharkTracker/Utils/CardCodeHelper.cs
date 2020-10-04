@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using SharkTracker.LoRDeckCodes;
-using SharkTracker.Managers;
-using SharkTracker.Models;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.Utils
 {
-    public class CardCodeHelper
+    public static class CardCodeHelper
     {
 
         // ATTRIBUTES
@@ -17,7 +16,7 @@ namespace SharkTracker.Utils
 
         public static List<Card> CardsFromCodes(IEnumerable<CardCodeAndCount> codes)
         {
-            List<Card> cards = CardsManager.Instance.GetAllCards();
+            List<Card> cards = App.SharkTracker.GetAllCards();
 
             return codes.Select(code => cards.First(c => c.Code == code.CardCode)).ToList();
         }

@@ -2,12 +2,15 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SharkTracker.Models;
+using SharkTracker.Utils;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.Controls
 {
     public partial class CompactCardControl
     {
-        public static readonly DependencyProperty CardCompactProperty = DependencyProperty.Register("CardCompact", typeof(Card),
+        public static readonly DependencyProperty CardCompactProperty = DependencyProperty.Register("CardCompact",
+            typeof(Card),
             typeof(CompactCardControl), new PropertyMetadata(default(Card)));
 
 
@@ -32,7 +35,6 @@ namespace SharkTracker.Controls
         {
             SetCardCost();
             SetCardName();
-            await CardCompact.LoadArtwork();
             SetArtworkBackground();
             SetPopupArtwork();
         }
@@ -59,10 +61,11 @@ namespace SharkTracker.Controls
         /// </summary>
         private void SetArtworkBackground()
         {
-            if (CardCompact.BitmapArtwork == null)
-                return;
+            BitmapImage image = ImageHelper.LoadImageFromFile(SharkTrackerCore.Constants.PATH_CACHE_ARTWORK +
+                                                              CardCompact.Code +
+                                                              SharkTrackerCore.Constants.ARTWORK_SUFFIX);
             CroppedBitmap cb = new CroppedBitmap(
-                CardCompact.BitmapArtwork,
+                image,
                 new Int32Rect(30, 200, 620, 200));
             TransformedBitmap tb = new TransformedBitmap(cb, new ScaleTransform(0.25, 0.25));
             artworkImageBrush.ImageSource = tb;
@@ -74,9 +77,11 @@ namespace SharkTracker.Controls
         /// </summary>
         private void SetPopupArtwork()
         {
-            if (CardCompact.BitmapArtwork == null)
-                return;
-            TransformedBitmap scaledArt = new TransformedBitmap(CardCompact.BitmapArtwork, new ScaleTransform(0.5, 0.5));
+            BitmapImage image = ImageHelper.LoadImageFromFile(SharkTrackerCore.Constants.PATH_CACHE_ARTWORK +
+                                                              CardCompact.Code +
+                                                              SharkTrackerCore.Constants.ARTWORK_SUFFIX);
+            TransformedBitmap scaledArt =
+                new TransformedBitmap(image, new ScaleTransform(0.5, 0.5));
             artworkFullPopup.Source = scaledArt;
         }
     }

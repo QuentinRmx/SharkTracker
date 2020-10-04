@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SharkTracker.Models;
 using SharkTracker.Observation;
+using SharkTracker.Utils;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.Controls
 {
@@ -41,18 +43,18 @@ namespace SharkTracker.Controls
         /// </summary>
         private void SetPopupArtwork()
         {
-            if (CardCollection.BitmapArtwork == null)
-                return;
             TransformedBitmap scaledArt =
-                new TransformedBitmap(CardCollection.BitmapArtwork, new ScaleTransform(0.5, 0.5));
+                new TransformedBitmap(ImageHelper.LoadImageFromFile(SharkTrackerCore.Constants.PATH_CACHE_ARTWORK +
+                                                                    CardCollection.Code +
+                                                                    SharkTrackerCore.Constants.ARTWORK_SUFFIX),
+                    new ScaleTransform(0.5, 0.5));
             artworkFullPopup.Source = scaledArt;
         }
 
-        private async void UpdateUI()
+        private void UpdateUI()
         {
             SetCardName();
             SetCounterValue();
-            await CardCollection.LoadArtwork();
             SetArtwork();
             SetPopupArtwork();
         }
@@ -69,11 +71,11 @@ namespace SharkTracker.Controls
 
         private void SetArtwork()
         {
-            if (CardCollection.BitmapArtwork == null)
-                return;
-
             TransformedBitmap scaledArt =
-                new TransformedBitmap(CardCollection.BitmapArtwork, new ScaleTransform(0.125, 0.125));
+                new TransformedBitmap(ImageHelper.LoadImageFromFile(SharkTrackerCore.Constants.PATH_CACHE_ARTWORK +
+                                                                    CardCollection.Code +
+                                                                    SharkTrackerCore.Constants.ARTWORK_SUFFIX),
+                    new ScaleTransform(0.125, 0.125));
             artworkImage.Source = scaledArt;
         }
 
@@ -95,7 +97,7 @@ namespace SharkTracker.Controls
         //     CardCollection.QuantityOwned--;
         //     SetOwnedQuantity();
         // }
-        
+
         /// <inheritdoc />
         public void Notify()
         {
@@ -104,7 +106,7 @@ namespace SharkTracker.Controls
         }
 
         private readonly List<Observer> _observers = new List<Observer>();
-        
+
         /// <inheritdoc />
         public void Register(Observer o)
         {

@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SharkTracker"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:models="clr-namespace:SharkTracker.Models">
+             xmlns:models="clr-namespace:SharkTracker.Models"
+             xmlns:models1="clr-namespace:SharkTrackerCore.Models;assembly=SharkTrackerCore">
     <Application.Resources>
         <Color x:Key="MainBackgroundColor">#121212</Color>
         <!-- DataTemplate for cards in collection's listviews. -->
-        <DataTemplate x:Key="dtCard" DataType="models:Card">
+        <DataTemplate x:Key="dtCard" DataType="models1:Card">
             <Border BorderThickness="1" BorderBrush="White" CornerRadius="5">
                 <Grid Height="40">
                     <Grid.ColumnDefinitions>

@@ -10,6 +10,9 @@ namespace SharkTracker
     /// </summary>
     public partial class App : Application
     {
+        
+        public static readonly SharkTrackerCore.SharkTracker SharkTracker = SharkTrackerCore.SharkTracker.New();
+        
         /// <inheritdoc />
         protected override void OnStartup(StartupEventArgs e)
         {

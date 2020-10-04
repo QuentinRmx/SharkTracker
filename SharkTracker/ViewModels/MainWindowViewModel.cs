@@ -4,7 +4,6 @@ namespace SharkTracker.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-
         // ATTRIBUTES
 #if DEBUG
         private string _currentMenuSelection = "../Controls/TrackerControl.xaml";
@@ -24,8 +23,7 @@ namespace SharkTracker.ViewModels
 
         // CONSTRUCTORS
 
+
         // METHODS
-
-
     }
 }

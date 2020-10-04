@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using SharkTracker.Managers;
 using SharkTracker.Models;
 using SharkTracker.Models.Filters;
 using SharkTracker.Observation;
-using SharkTracker.Utils;
+using SharkTrackerCore.Models;
+using ERegion = SharkTrackerCore.Models.ERegion;
 
 namespace SharkTracker.ViewModels
 {
@@ -251,7 +248,8 @@ namespace SharkTracker.ViewModels
         public CollectionControlViewModel()
         {
             SelectedRegion = ERegion.ALL;
-            CardsManager.Instance.Register(this);
+            // TODO: Fix registering.
+            // CardsManager.Instance.Register(this);
             UpdateCollection();
             PrepareViewModels();
             UpdateStats();
@@ -312,15 +310,16 @@ namespace SharkTracker.ViewModels
 
         private void UpdateCollection()
         {
-            _collection = CardsManager.Instance.GetAllCards();
-            UserResources = CardsManager.Instance.GetUserResources();
+            _collection = App.SharkTracker.GetAllCards();
+            // UserResources = App.SharkTracker.GetUserResources();
             UpdateStats();
         }
 
         private void SaveCollection()
         {
-            CardsManager.Instance.SaveUserCollection(_collection);
-            CardsManager.Instance.SaveUserResources(UserResources);
+            //TODO: Fix save.
+            // CardsManager.Instance.SaveUserCollection(_collection);
+            // CardsManager.Instance.SaveUserResources(UserResources);
             UpdateStats();
         }
 
@@ -331,7 +330,6 @@ namespace SharkTracker.ViewModels
         {
             SaveCollection();
             // Clear artwork and delete the list.
-            _collection.ForEach(c => c.ClearArtwork());
             _collection = null;
             _cardVms = null;
         }
@@ -344,7 +342,7 @@ namespace SharkTracker.ViewModels
             }
 
             CardVms.Clear();
-            CurrentRegionCards.ToList().ForEach(async c => await c.LoadArtwork());
+            // CurrentRegionCards.ToList().ForEach(async c => await c.LoadArtwork());
             List<CardCollectionControlViewModel> toAdd = CurrentRegionCards
                 .Select(card => new CardCollectionControlViewModel {Card = card}).ToList();
             foreach (CardCollectionControlViewModel model in toAdd)
@@ -363,7 +361,6 @@ namespace SharkTracker.ViewModels
             SelectedRegion = newRegion;
             UpdateStats();
             PrepareViewModels();
-            _collection.Where(c => c.RegionEnum == toClear).ToList().ForEach(c => c.ClearArtwork());
         }
 
         private void UpdateStats()

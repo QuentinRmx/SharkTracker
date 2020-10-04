@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using SharkTracker.LoRDeckCodes;
 using SharkTracker.Utils;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.Models
 {

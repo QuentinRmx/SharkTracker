@@ -12,10 +12,10 @@ namespace SharkTrackerCore
             {
                 try
                 {
-                    if (!(sender is DownloadManager dl))
+                    if (!(sender is RiotDownloader dl))
                         return;
                     Console.WriteLine(
-                        $"Current progress: {dl.ProgressPercent}% ({dl.Progress}/{dl.TotalProgress} artworks)");
+                        $"Current progress: {dl.ProgressPercent:F2}% ({dl.Progress}/{dl.TotalProgress} files)");
                 }
                 catch (Exception e)
                 {

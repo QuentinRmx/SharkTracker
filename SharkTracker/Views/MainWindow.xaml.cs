@@ -1,7 +1,5 @@
 using System.Windows;
 using System.Windows.Input;
-using SharkTracker.Managers;
-using SharkTracker.Utils;
 
 namespace SharkTracker.Views
 {
@@ -31,8 +29,6 @@ namespace SharkTracker.Views
             };
 
             MainWindowFrame.MouseDown += TryDragMove;
-            
-            Dispatcher.Invoke(() => CardsManager.Instance.LoadAllCards());
         }
         
         public void TryDragMove(object sender, MouseButtonEventArgs mouseButtonEventArgs)

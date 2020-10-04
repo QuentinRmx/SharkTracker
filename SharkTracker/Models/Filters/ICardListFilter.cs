@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.Models.Filters
 {

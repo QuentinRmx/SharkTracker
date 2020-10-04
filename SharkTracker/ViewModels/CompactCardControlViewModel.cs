@@ -2,6 +2,7 @@ using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using SharkTracker.LoRDeckCodes;
 using SharkTracker.Models;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.ViewModels
 {

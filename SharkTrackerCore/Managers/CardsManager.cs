@@ -4,42 +4,33 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using SharkTracker.Models;
-using SharkTracker.Observation;
-using SharkTracker.Utils;
+using SharkTrackerCore.Models;
+using SharkTrackerCore.Observation;
 
-namespace SharkTracker.Managers
+namespace SharkTrackerCore.Managers
 {
-    public class CardsManager : AbstractObservable
+    internal class CardsManager : AbstractObservable
     {
         // ATTRIBUTES
 
         private List<Card> _cards;
 
+        public int CardCount => _cards?.Count ?? 0;
+
         private Dictionary<string, int> _userCollection;
 
-        private UserResources _userResources;
+        // private UserResources _userResources;
 
-        private static CardsManager _instance;
-
-        public static CardsManager Instance
-        {
-            get
-            {
-                _instance ??= new CardsManager();
-                return _instance;
-            }
-        }
 
         // CONSTRUCTORS
 
-        private CardsManager()
+        internal CardsManager()
         {
             // CheckLocalFiles();
             _cards = new List<Card>();
             _userCollection = new Dictionary<string, int>();
-            LoadUserCollection();
-            LoadUserResources();
+            // LoadUserCollection();
+            // LoadUserResources();
         }
 
         // private static void CheckLocalFiles()
@@ -174,42 +165,46 @@ namespace SharkTracker.Managers
             _cards.First(ca => ca.Code == c.Code).QuantityOwned = c.QuantityOwned;
         }
 
-        private void LoadUserResources()
+        // private void LoadUserResources()
+        // {
+        //     if (!File.Exists(Constants.PATH_USER_RESOURCES))
+        //     {
+        //         using FileStream tmp = File.Create(Constants.PATH_USER_RESOURCES);
+        //         tmp.Close();
+        //         SaveUserResources(new UserResources());
+        //         return;
+        //     }
+        //
+        //     string json = File.ReadAllText(Constants.PATH_USER_RESOURCES);
+        //     _userResources = JsonConvert.DeserializeObject<UserResources>(json);
+        //     if (_userResources == null)
+        //     {
+        //         _userResources = new UserResources();
+        //         SaveUserResources(_userResources);
+        //     }
+        // }
+        //
+        // public void SaveUserResources(UserResources userResources)
+        // {
+        //     _userResources = userResources;
+        //     string json = JsonConvert.SerializeObject(userResources);
+        //     using StreamWriter writer = new StreamWriter(Constants.PATH_USER_RESOURCES);
+        //     writer.Write(json);
+        //     writer.Close();
+        // }
+        //
+        // public UserResources GetUserResources()
+        // {
+        //     if (_userResources == null)
+        //     {
+        //         LoadUserResources();
+        //     }
+        //
+        //     return _userResources;
+        // }
+        public void SetAllCards(List<Card> allCards)
         {
-            if (!File.Exists(Constants.PATH_USER_RESOURCES))
-            {
-                using FileStream tmp = File.Create(Constants.PATH_USER_RESOURCES);
-                tmp.Close();
-                SaveUserResources(new UserResources());
-                return;
-            }
-
-            string json = File.ReadAllText(Constants.PATH_USER_RESOURCES);
-            _userResources = JsonConvert.DeserializeObject<UserResources>(json);
-            if (_userResources == null)
-            {
-                _userResources = new UserResources();
-                SaveUserResources(_userResources);
-            }
-        }
-
-        public void SaveUserResources(UserResources userResources)
-        {
-            _userResources = userResources;
-            string json = JsonConvert.SerializeObject(userResources);
-            using StreamWriter writer = new StreamWriter(Constants.PATH_USER_RESOURCES);
-            writer.Write(json);
-            writer.Close();
-        }
-
-        public UserResources GetUserResources()
-        {
-            if (_userResources == null)
-            {
-                LoadUserResources();
-            }
-
-            return _userResources;
+            this._cards = allCards;
         }
     }
 }

@@ -608,14 +608,10 @@
           <e p="LoRDeckEncoder.cs" t="Include" />
           <e p="VarintTranslator.cs" t="Include" />
         </e>
-        <e p="Managers" t="Include">
-          <e p="CardsManager.cs" t="Include" />
-        </e>
+        <e p="Managers" t="Include" />
         <e p="Models" t="Include">
-          <e p="Card.cs" t="Include" />
+          <e p="CardExtension.cs" t="Include" />
           <e p="Deck.cs" t="Include" />
-          <e p="ERarity.cs" t="Include" />
-          <e p="ERegion.cs" t="Include" />
           <e p="Filters" t="Include">
             <e p="ECollectionFilter.cs" t="Include" />
             <e p="ICardListFilter.cs" t="Include" />
@@ -680,6 +676,7 @@
           <e p="CompactCardControlViewModel.cs" t="Include" />
           <e p="DeckManagerViewModel.cs" t="Include" />
           <e p="MainWindowViewModel.cs" t="Include" />
+          <e p="SplashWindowViewModel.cs" t="Include" />
           <e p="TrackerControlViewModel.cs" t="Include" />
         </e>
         <e p="Views" t="Include">
@@ -693,8 +690,9 @@
       <e p="SharkTrackerCore" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Constants.cs" t="Include" />
-        <e p="DownloadManager.cs" t="Include" />
-        <e p="ImageHelper.cs" t="Include" />
+        <e p="Managers" t="Include">
+          <e p="CardsManager.cs" t="Include" />
+        </e>
         <e p="Models" t="Include">
           <e p="Card.cs" t="Include" />
           <e p="ERarity.cs" t="Include" />
@@ -707,7 +705,13 @@
             </e>
           </e>
         </e>
+        <e p="Observation" t="Include">
+          <e p="AbstractObservable.cs" t="Include" />
+          <e p="IObservable.cs" t="Include" />
+          <e p="Observer.cs" t="Include" />
+        </e>
         <e p="Program.cs" t="Include" />
+        <e p="RiotDownloader.cs" t="Include" />
         <e p="SharkTracker.cs" t="Include" />
         <e p="SharkTrackerCore.csproj" t="IncludeRecursive" />
       </e>

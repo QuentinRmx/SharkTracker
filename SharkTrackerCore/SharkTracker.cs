@@ -1,20 +1,49 @@
+#nullable enable
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using SharkTrackerCore.Managers;
+using SharkTrackerCore.Models;
 
 namespace SharkTrackerCore
 {
+    /// <summary>
+    /// Main class and entry point of the API.
+    /// This class is basically the main way from outside to perform actions such as tracking the active deck, updating
+    /// the data from Riot's servers or managing the player's collection.
+    /// </summary>
     public class SharkTracker
     {
 
+        internal static readonly HttpClient HttpClient;
+
+        static SharkTracker()
+        {
+            HttpClient = new HttpClient();
+        }
+
+        
         // ATTRIBUTES
 
-        private readonly DownloadManager _downloadManager;
+        /// <summary>
+        /// Private instance of RiotDownloader. Responsible of downloading json files and artworks.
+        /// Also keep track of the current progress of the download.
+        /// </summary>
+        private readonly RiotDownloader _riotDownloader;
+
+        private readonly CardsManager _cardsManager;
 
         // CONSTRUCTORS
 
+        /// <summary>
+        /// Private constructor.
+        /// </summary>
         private SharkTracker()
         {
-            _downloadManager = new DownloadManager();
+            // TODO: Dependency injections.
+            _riotDownloader = new RiotDownloader();
+            _cardsManager = new CardsManager();
         }
 
         // METHODS
@@ -43,8 +72,10 @@ namespace SharkTrackerCore
         {
             try
             {
-                _downloadManager.OnProgress += handler;
-                await _downloadManager.DownloadArtworks(new[] {"01DE002", "01DE003", "01DE004", "01DE006"});
+                _riotDownloader.OnProgress += handler;
+                // await _riotDownloader.DownloadArtworks(new[] {"01DE002", "01DE003", "01DE004", "01DE006"});
+                List<Card> allCards = await _riotDownloader.DownloadAllSets(HttpClient);
+                _cardsManager.SetAllCards(allCards);
             }
             catch (Exception e)
             {
@@ -52,6 +83,9 @@ namespace SharkTrackerCore
             }
         }
 
-
+        public List<Card> GetAllCards()
+        {
+            return _cardsManager.GetAllCards();
+        }
     }
 }

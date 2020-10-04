@@ -1,11 +1,15 @@
+using System.ComponentModel;
 using Newtonsoft.Json;
-
+using SharkTrackerCore.Observation;
 
 namespace SharkTrackerCore.Models
 {
-    public class Card
+    public class Card : AbstractObservable
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         // ATTRIBUTES
+
         [JsonProperty("name")] public string Name { get; set; }
 
         [JsonProperty("cardCode")] public string Code { get; set; }
@@ -27,7 +31,18 @@ namespace SharkTrackerCore.Models
 
         [JsonProperty("collectible")] public bool Collectible { get; set; }
 
-        [JsonProperty("quantityOwned")] public int QuantityOwned { get; set; }
+        [JsonIgnore] private int _quantityOwned;
+
+        [JsonProperty("quantityOwned")]
+        public int QuantityOwned
+        {
+            get => _quantityOwned;
+            set
+            {
+                _quantityOwned = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QuantityOwned)));
+            }
+        }
 
         [JsonIgnore]
         public ERarity RarityEnum
@@ -74,8 +89,35 @@ namespace SharkTrackerCore.Models
             return (region == ERegion.ALL || region == RegionEnum);
         }
 
+        // [JsonIgnore] public BitmapSource BitmapArtwork { get; private set; }
+        //
+        // [JsonIgnore]
+        // public Brush RarityColor
+        // {
+        //     get
+        //     {
+        //         return RarityEnum switch
+        //         {
+        //             ERarity.Champion => new SolidColorBrush(Colors.Gold),
+        //             ERarity.Epic => new SolidColorBrush(Colors.Purple),
+        //             ERarity.Rare => new SolidColorBrush(Colors.RoyalBlue),
+        //             ERarity.Common => new SolidColorBrush(Colors.ForestGreen),
+        //             _ => new SolidColorBrush(Colors.Red)
+        //         };
+        //     }
+        // }
+
+
         // CONSTRUCTORS
 
         // METHODS
+
+        // /// <summary>
+        // /// Empties the BitmapArtwork property to reduce memory usage.
+        // /// </summary>
+        // public void ClearArtwork()
+        // {
+        //     BitmapArtwork = null;
+        // }
     }
 }

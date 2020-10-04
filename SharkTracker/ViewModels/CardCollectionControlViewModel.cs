@@ -3,6 +3,7 @@ using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using SharkTracker.Models;
 using SharkTracker.Observation;
+using SharkTrackerCore.Models;
 
 namespace SharkTracker.ViewModels
 {
