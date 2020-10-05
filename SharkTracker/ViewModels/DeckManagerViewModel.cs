@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using SharkTracker.LoRDeckCodes;
 using SharkTracker.Models;
+using SharkTrackerCore.LoRDeckCodes;
 using SharkTrackerCore.Models;
 
 namespace SharkTracker.ViewModels

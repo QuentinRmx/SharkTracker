@@ -1,12 +1,10 @@
 #nullable enable
 using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using SharkTrackerCore;
 
 namespace SharkTracker.Views
 {

@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using SharkTracker.Models;
-using SharkTracker.Observation;
 using SharkTrackerCore.Models;
 
 namespace SharkTracker.Controls

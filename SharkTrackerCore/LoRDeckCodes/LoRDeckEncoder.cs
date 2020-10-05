@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharkTracker.LoRDeckCodes
+namespace SharkTrackerCore.LoRDeckCodes
 {
     public class LoRDeckEncoder
     {

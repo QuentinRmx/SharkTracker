@@ -33,7 +33,7 @@ THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
-namespace SharkTracker.LoRDeckCodes
+namespace SharkTrackerCore.LoRDeckCodes
 {
     public class VarintTranslator
     {

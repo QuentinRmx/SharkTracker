@@ -602,12 +602,6 @@
             </e>
           </e>
         </e>
-        <e p="LoRDeckCodes" t="Include">
-          <e p="Base32.cs" t="Include" />
-          <e p="CardCodeAndCount.cs" t="Include" />
-          <e p="LoRDeckEncoder.cs" t="Include" />
-          <e p="VarintTranslator.cs" t="Include" />
-        </e>
         <e p="Managers" t="Include" />
         <e p="Models" t="Include">
           <e p="CardExtension.cs" t="Include" />
@@ -617,7 +611,6 @@
             <e p="ICardListFilter.cs" t="Include" />
           </e>
           <e p="KeyWord.cs" t="Include" />
-          <e p="UserResources.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Release" t="Include">
@@ -643,11 +636,6 @@
               </e>
             </e>
           </e>
-        </e>
-        <e p="Observation" t="Include">
-          <e p="AbstractObservable.cs" t="Include" />
-          <e p="IObservable.cs" t="Include" />
-          <e p="Observer.cs" t="Include" />
         </e>
         <e p="Resources" t="Include">
           <e p="CardCompactControlTemplate.xaml" t="Include" />
@@ -690,6 +678,12 @@
       <e p="SharkTrackerCore" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Constants.cs" t="Include" />
+        <e p="LoRDeckCodes" t="Include">
+          <e p="Base32.cs" t="Include" />
+          <e p="CardCodeAndCount.cs" t="Include" />
+          <e p="LoRDeckEncoder.cs" t="Include" />
+          <e p="VarintTranslator.cs" t="Include" />
+        </e>
         <e p="Managers" t="Include">
           <e p="CardsManager.cs" t="Include" />
         </e>
@@ -697,6 +691,7 @@
           <e p="Card.cs" t="Include" />
           <e p="ERarity.cs" t="Include" />
           <e p="ERegion.cs" t="Include" />
+          <e p="UserResources.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Release" t="Include">

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using SharkTrackerCore.Managers;
 using SharkTrackerCore.Models;
+using SharkTrackerCore.Observation;
 
 namespace SharkTrackerCore
 {
@@ -86,6 +87,16 @@ namespace SharkTrackerCore
         public List<Card> GetAllCards()
         {
             return _cardsManager.GetAllCards();
+        }
+
+        public void SaveUserCollection(List<Card> userCollection)
+        {
+            _cardsManager.SaveUserCollection(userCollection);
+        }
+
+        public void RegisterObserverToCardManager(Observer observer)
+        {
+            _cardsManager.Register(observer);
         }
     }
 }

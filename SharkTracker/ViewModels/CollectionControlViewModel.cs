@@ -4,10 +4,9 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using SharkTracker.Models;
 using SharkTracker.Models.Filters;
-using SharkTracker.Observation;
 using SharkTrackerCore.Models;
+using SharkTrackerCore.Observation;
 using ERegion = SharkTrackerCore.Models.ERegion;
 
 namespace SharkTracker.ViewModels
@@ -85,7 +84,7 @@ namespace SharkTracker.ViewModels
             }
         }
 
-        public string TextNbChampions => $"{NbChampions}+({NbWildcardsChampions})/{_maxChampionsPerRegion}";
+        public string TextNbChampions => $"{NbChampions}/{_maxChampionsPerRegion}";
 
         public string ProgressChampions => $"{(NbChampions * 100) / _maxChampionsPerRegion}%";
 
@@ -249,7 +248,7 @@ namespace SharkTracker.ViewModels
         {
             SelectedRegion = ERegion.ALL;
             // TODO: Fix registering.
-            // CardsManager.Instance.Register(this);
+            App.SharkTracker.RegisterObserverToCardManager(this);
             UpdateCollection();
             PrepareViewModels();
             UpdateStats();
@@ -318,7 +317,7 @@ namespace SharkTracker.ViewModels
         private void SaveCollection()
         {
             //TODO: Fix save.
-            // CardsManager.Instance.SaveUserCollection(_collection);
+            App.SharkTracker.SaveUserCollection(_collection);
             // CardsManager.Instance.SaveUserResources(UserResources);
             UpdateStats();
         }
@@ -342,7 +341,6 @@ namespace SharkTracker.ViewModels
             }
 
             CardVms.Clear();
-            // CurrentRegionCards.ToList().ForEach(async c => await c.LoadArtwork());
             List<CardCollectionControlViewModel> toAdd = CurrentRegionCards
                 .Select(card => new CardCollectionControlViewModel {Card = card}).ToList();
             foreach (CardCollectionControlViewModel model in toAdd)

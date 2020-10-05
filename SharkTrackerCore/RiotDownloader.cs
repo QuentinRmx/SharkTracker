@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SharkTrackerCore.Models;
@@ -25,6 +23,9 @@ namespace SharkTrackerCore
         /// </summary>
         public double ProgressPercent => (Progress * 100) / TotalProgress;
 
+
+        private readonly object _lockProgress = new object();
+
         private double _progress;
 
         public double Progress
@@ -32,12 +33,29 @@ namespace SharkTrackerCore
             get => _progress;
             set
             {
-                _progress = value;
-                OnProgress?.Invoke(this, EventArgs.Empty);
+                lock (_lockProgress)
+                {
+                    _progress = value;
+                    OnProgress?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
-        public double TotalProgress { get; private set; }
+        private readonly object _lockTotalProgress = new object();
+
+        private double _totalProgress;
+
+        public double TotalProgress
+        {
+            get => _totalProgress;
+            set
+            {
+                lock (_lockTotalProgress)
+                {
+                    _totalProgress = value;
+                }
+            }
+        }
 
         // CONSTRUCTORS
 
@@ -53,7 +71,6 @@ namespace SharkTrackerCore
             foreach (string directory in directories)
             {
                 path = Path.Combine(path, directory);
-                Console.WriteLine(path);
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
             }
@@ -63,48 +80,48 @@ namespace SharkTrackerCore
         // METHODS
 
 
-        private async Task DownloadArtworkForCard(HttpClient client, string code)
-        {
-            try
-            {
-                string path = Constants.URL_LATEST_SET_BASE + code[1] + Constants.URL_DL_CARD_IMG_END + code +
-                              Constants.ARTWORK_SUFFIX;
-                HttpResponseMessage resp = await client.GetAsync(path);
-                if (resp.IsSuccessStatusCode)
-                {
-                    byte[] respContent = await resp.Content.ReadAsByteArrayAsync();
-                    Progress++;
-                    // Console.WriteLine($"{code} => downloaded {respContent.Length} bytes.");
+        // private async Task DownloadArtworkForCard(HttpClient client, string code)
+        // {
+        //     try
+        //     {
+        //         string path = Constants.URL_LATEST_SET_BASE + code[1] + Constants.URL_DL_CARD_IMG_END + code +
+        //                       Constants.ARTWORK_SUFFIX;
+        //         HttpResponseMessage resp = await client.GetAsync(path);
+        //         if (resp.IsSuccessStatusCode)
+        //         {
+        //             // byte[] respContent = await resp.Content.ReadAsByteArrayAsync();
+        //             Progress++;
+        //             // Console.WriteLine($"{code} => downloaded {respContent.Length} bytes.");
+        //
+        //             // TODO: what to do with the bytes now??
+        //             // BitmapArtwork = ImageHelper.LoadImageFromBytes(respContent);
+        //             // await File.WriteAllBytesAsync(artworkPath, respContent);
+        //         }
+        //         else
+        //         {
+        //             throw new Exception(
+        //                 $"Artwork for code [{code}] cannot be downloaded. Riot's servers are down or the " +
+        //                 "given code doesn't correspond to an existing card.");
+        //         }
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Console.WriteLine(e);
+        //     }
+        // }
 
-                    // TODO: what to do with the bytes now??
-                    // BitmapArtwork = ImageHelper.LoadImageFromBytes(respContent);
-                    // await File.WriteAllBytesAsync(artworkPath, respContent);
-                }
-                else
-                {
-                    throw new Exception(
-                        $"Artwork for code [{code}] cannot be downloaded. Riot's servers are down or the " +
-                        "given code doesn't correspond to an existing card.");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        public async Task DownloadArtworks(HttpClient client, IEnumerable<string> cardCodes)
-        {
-            IEnumerable<string> codes = cardCodes as string[] ?? cardCodes.ToArray();
-            TotalProgress = codes.Count();
-            Progress = 0;
-            await Task.WhenAll(codes.Select(code => DownloadArtworkForCard(client, code)));
-            if ((int) Progress != (int) TotalProgress)
-            {
-                throw new Exception(
-                    $"{TotalProgress - Progress} Error(s) happened while downloading all card artworks.");
-            }
-        }
+        // public async Task DownloadArtworks(HttpClient client, IEnumerable<string> cardCodes)
+        // {
+        //     IEnumerable<string> codes = cardCodes as string[] ?? cardCodes.ToArray();
+        //     TotalProgress = codes.Count();
+        //     Progress = 0;
+        //     await Task.WhenAll(codes.Select(code => DownloadArtworkForCard(client, code)));
+        //     if ((int) Progress != (int) TotalProgress)
+        //     {
+        //         throw new Exception(
+        //             $"{TotalProgress - Progress} Error(s) happened while downloading all card artworks.");
+        //     }
+        // }
 
         /// <summary>
         /// Order the RiotDownloader to start downloading the corresponding zip file from Riot's servers 
@@ -112,11 +129,10 @@ namespace SharkTrackerCore
         /// <returns></returns>
         public async Task<List<Card>> DownloadAllSets(HttpClient client)
         {
-            // TODO: Check folders' presence beforehand and create missing ones before doing anything.
-            // TODO: Also delete zip files.
+            // TODO: Delete zip files.
             int[] sets = new int[Constants.SET_AMOUNT];
             // temporary amount
-            TotalProgress = -1;
+            TotalProgress = 0;
             Progress = 0;
             for (int setIndex = 0; setIndex < sets.Length; setIndex++)
             {
@@ -125,13 +141,13 @@ namespace SharkTrackerCore
 
             List<Card>[] setsCards = await Task.WhenAll(sets.Select(s => DownloadSet(client, s)));
             List<Card> cards = setsCards.SelectMany(c => c).ToList();
-            
+
             // TODO: fix that threading issue instead of patching it...
-            if (TotalProgress - Progress < 1 && TotalProgress - Progress != 0)
-            {
-                Progress = TotalProgress;
-            }
-            
+            // if (TotalProgress - Progress < 1 && TotalProgress - Progress != 0)
+            // {
+            //     Progress = TotalProgress;
+            // }
+
             return cards;
         }
 
@@ -158,8 +174,8 @@ namespace SharkTrackerCore
 
                 using ZipArchive zipFile = ZipFile.OpenRead(zipPath);
                 // We update the total progress to reflect the real amount of tasks (nb of pictures + 1 json file).
-                TotalProgress += zipFile.Entries.Count(e =>
-                    e.FullName.Contains(Constants.ARTWORK_SUFFIX)) + 1;
+                int tasks = zipFile.Entries.Count(e => e.FullName.Contains(Constants.ARTWORK_SUFFIX)) + 1;
+                TotalProgress += tasks;
                 List<Card> cards = new List<Card>();
                 foreach (ZipArchiveEntry entry in zipFile.Entries)
                 {
@@ -171,8 +187,8 @@ namespace SharkTrackerCore
                         // {
                         //     File.Create(jsonPath);
                         // }
-                        entry.ExtractToFile(jsonPath, overwrite = true);
-                        Console.WriteLine($"{Progress}/{TotalProgress} - {entry.FullName} ({path})");
+                        entry.ExtractToFile(jsonPath, true);
+                        // Console.WriteLine($"{Progress}/{TotalProgress} - {entry.FullName} ({path})");
                         cards = JsonConvert.DeserializeObject<List<Card>>(await File.ReadAllTextAsync(jsonPath));
                         Progress++;
                     }
@@ -185,19 +201,22 @@ namespace SharkTrackerCore
                             !File.Exists(Path.GetFullPath(Constants.PATH_CACHE_ARTWORK + "alt/" + entry.Name)))
                         {
                             string artworkPath = Path.GetFullPath(Constants.PATH_CACHE_ARTWORK + "alt/" + entry.Name);
-                            entry.ExtractToFile(artworkPath, overwrite = true);
-                            Console.WriteLine($"{Progress}/{TotalProgress} - {entry.FullName} ({path})");
+                            if (!File.Exists(artworkPath))
+                                entry.ExtractToFile(artworkPath, true);
+                            // Console.WriteLine($"{Progress}/{TotalProgress} - {entry.FullName} ({path})");
                         }
                         else
                         {
                             string artworkPath = Path.GetFullPath(Constants.PATH_CACHE_ARTWORK + entry.Name);
-                            entry.ExtractToFile(artworkPath, overwrite = true);
-                            Console.WriteLine($"{Progress}/{TotalProgress} - {entry.FullName} ({path})");
+                            if (!File.Exists(artworkPath))
+                                entry.ExtractToFile(artworkPath, true);
+                            // Console.WriteLine($"{Progress}/{TotalProgress} - {entry.FullName} ({path})");
                         }
 
                         Progress++;
                     }
                 }
+
                 return cards;
             }
             catch (Exception e)

@@ -59,7 +59,7 @@
                HorizontalAlignment="Center" />
         <Image Margin="10" Grid.Row="1"  Source="../Resources/pictures/sharkboiii.png" Width="480" Height="405" />
         <ProgressBar Margin="10" Width="500" Height="40" Grid.Row="2" Maximum="{Binding ProgressBarMax}"
-                     Value="{Binding CurrentProgress}" />
+                     Value="{Binding CurrentProgress}" IsIndeterminate="{Binding IsProgressIndeterminate}" />
         <TextBlock Width="500" TextAlignment="Center" FontSize="20" FontFamily="Friz Quadrata Std"
                    Foreground="#e6e6e6" Grid.Row="3" x:Name="TbProgress"
                    Text="{Binding TextProgress}" />

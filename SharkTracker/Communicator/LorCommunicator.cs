@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using SharkTracker.LoRDeckCodes;
+using SharkTrackerCore.LoRDeckCodes;
 
 namespace SharkTracker.Communicator
 {

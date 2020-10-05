@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace SharkTracker.Utils
 {
     public static class Constants

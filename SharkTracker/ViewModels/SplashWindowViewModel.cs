@@ -1,12 +1,9 @@
 #nullable enable
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using SharkTracker.Views;
 using SharkTrackerCore;
 
 namespace SharkTracker.ViewModels
@@ -56,9 +53,25 @@ namespace SharkTracker.ViewModels
             
         }
 
+        private bool _isProgressIndeterminate = true;
+
+        public bool IsProgressIndeterminate
+        {
+            get => _isProgressIndeterminate;
+            set
+            {
+                _isProgressIndeterminate = value;
+                RaisePropertyChanged(nameof(IsProgressIndeterminate));
+            }
+        }
+
 
         // CONSTRUCTORS
 
+        public SplashWindowViewModel()
+        {
+            IsProgressIndeterminate = true;
+        }
 
         // METHODS
         
@@ -74,7 +87,8 @@ namespace SharkTracker.ViewModels
             TextProgress = $"Updating Data from Riot : {dl.ProgressPercent:F2}% ({dl.Progress}/{dl.TotalProgress} files)";
             CurrentProgress = (int) dl.Progress;
             ProgressBarMax = (int) dl.TotalProgress;
-            if (Math.Abs(dl.Progress - dl.TotalProgress) < .001)
+            IsProgressIndeterminate = !(ProgressBarMax > 0);
+            if (Math.Abs(dl.Progress - dl.TotalProgress) < .00001)
             {
                 // TODO: Signal we can go to next window.
                 TextProgress = "Ready";

@@ -16,7 +16,7 @@ namespace SharkTracker.Views
             {
                 if (args.Key == Key.Escape)
                 {
-                    Close();
+                    Application.Current.Shutdown();
                 }
             };
             

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using GalaSoft.MvvmLight;
-using SharkTracker.Models;
-using SharkTracker.Observation;
 using SharkTrackerCore.Models;
+using SharkTrackerCore.Observation;
 
 namespace SharkTracker.ViewModels
 {

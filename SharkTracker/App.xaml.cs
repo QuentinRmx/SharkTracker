@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Navigation;
-using SharkTracker.Views;
 
 namespace SharkTracker
 {

@@ -40,9 +40,12 @@ namespace SharkTrackerCore.Models
             set
             {
                 _quantityOwned = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QuantityOwned)));
+                PropertyChanged?.Invoke(this, _propertyChangedEventArgsQuantityOwned);
             }
         }
+
+        [JsonIgnore] private static readonly PropertyChangedEventArgs _propertyChangedEventArgsQuantityOwned =
+            new PropertyChangedEventArgs(nameof(QuantityOwned));
 
         [JsonIgnore]
         public ERarity RarityEnum
@@ -88,9 +91,8 @@ namespace SharkTrackerCore.Models
         {
             return (region == ERegion.ALL || region == RegionEnum);
         }
-
-        // [JsonIgnore] public BitmapSource BitmapArtwork { get; private set; }
-        //
+       
+        
         // [JsonIgnore]
         // public Brush RarityColor
         // {
@@ -105,19 +107,6 @@ namespace SharkTrackerCore.Models
         //             _ => new SolidColorBrush(Colors.Red)
         //         };
         //     }
-        // }
-
-
-        // CONSTRUCTORS
-
-        // METHODS
-
-        // /// <summary>
-        // /// Empties the BitmapArtwork property to reduce memory usage.
-        // /// </summary>
-        // public void ClearArtwork()
-        // {
-        //     BitmapArtwork = null;
         // }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using SharkTracker.LoRDeckCodes;
+using SharkTrackerCore.LoRDeckCodes;
 using SharkTrackerCore.Models;
 
 namespace SharkTracker.Utils

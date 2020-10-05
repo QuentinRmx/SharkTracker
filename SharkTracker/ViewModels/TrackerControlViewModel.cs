@@ -9,7 +9,7 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SharkTracker.Communicator;
-using SharkTracker.LoRDeckCodes;
+using SharkTrackerCore.LoRDeckCodes;
 using SharkTrackerCore.Models;
 
 namespace SharkTracker.ViewModels

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using SharkTracker.LoRDeckCodes;
+using SharkTrackerCore.LoRDeckCodes;
 
 namespace SharkTracker.Communicator
 {

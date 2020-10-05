@@ -63,7 +63,7 @@ namespace SharkTracker.Controls
 
         private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Close();
+            if (Application.Current != null) Application.Current.Shutdown();
         }
         
         

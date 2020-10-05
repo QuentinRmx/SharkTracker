@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace SharkTracker.Models
+namespace SharkTrackerCore.Models
 {
     public class UserResources
     {

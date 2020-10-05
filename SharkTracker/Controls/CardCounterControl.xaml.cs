@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using SharkTracker.Observation;
+using SharkTrackerCore.Observation;
 
 namespace SharkTracker.Controls
 {

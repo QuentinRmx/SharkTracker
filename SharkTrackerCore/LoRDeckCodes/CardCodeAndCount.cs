@@ -1,4 +1,4 @@
-﻿namespace SharkTracker.LoRDeckCodes
+﻿namespace SharkTrackerCore.LoRDeckCodes
 {
     public class CardCodeAndCount
     {
