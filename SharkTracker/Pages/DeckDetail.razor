@@ -15,7 +15,7 @@ else
     @if (Matchups is not null)
     {
         <div class="chartDonut">
-            <ApexChart @ref="DonutRef" TItem="Matchup" Title="Match-ups">
+            <ApexChart @ref="DonutRef" TItem="Matchup" Title="Match-ups" Options="_muOptions">
                 <ApexPointSeries TItem="Matchup"
                          Items="Matchups"
                          SeriesType="SeriesType.Donut"
@@ -74,7 +74,7 @@ else
                 <td><b>@Matchups.Sum(mu => mu.Win)</b></td>
                 <td><b>@Matchups.Sum(mu => mu.Lose)</b></td>
                 <td><b>@Matchups.Sum(mu => mu.TotalEncounters)</b></td>
-                <td><b>@(string.Format("{0:0.##}", Matchups.Average(mu => mu.Winrate))) %</b></td>
+                <td><b>@((Matchups.Any()) ? string.Format("{0:0.##} %", Matchups.Average(mu => mu.Winrate)) : "0")</b></td>
             </tr>
         </tfoot>
     </table>
@@ -94,6 +94,8 @@ else
 
     private ApexChart<Matchup>? DonutRef;
 
+    private ApexChartOptions<Matchup> _muOptions;
+
     protected override async Task OnParametersSetAsync()
     {
         DeckId = (DeckId is not null) ? DeckId.Replace("{", "").Replace("}", "") : "";
@@ -107,6 +109,16 @@ else
 
             var allMu = await App.MatchupRepo.GetAll();
             Matchups = allMu.FindAll(mu => mu.PlayerDeckId == id);
+
+            _muOptions = new ApexChartOptions<Matchup>
+                {
+                    Theme = new Theme
+                    {
+                        Mode = Mode.Light,
+                        Palette = PaletteType.Palette1
+                    }
+                };
+
         }
     }
 
@@ -177,7 +189,10 @@ else
 <style>
     .chartDonut {
         width: 25%;
+        max-width: 30%;
+        max-height: 30%;
         height: 25%;
+        margin: 10px;
     }
 
 
