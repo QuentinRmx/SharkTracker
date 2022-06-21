@@ -61,13 +61,22 @@ else
                         </div>
                     </td>
                     <td><b>@mu.TotalEncounters</b></td>
-                    <td><div class="@mu.EvaluateWinrate()"><b>@mu.Winrate %</b></div></td>
+                    <td><div class="@mu.EvaluateWinrate()"><b>@(string.Format("{0:0.##}", mu.Winrate)) %</b></div></td>
                     <td>
                         <button class="btn btn-outline-danger" @onclick="@(async () => await DeleteMu(mu) )"><span class="oi oi-trash"></span></button>
                     </td>
                 </tr>
             }
         </tbody>
+        <tfoot>
+            <tr>
+                <td><b>TOTAL</b></td>
+                <td><b>@Matchups.Sum(mu => mu.Win)</b></td>
+                <td><b>@Matchups.Sum(mu => mu.Lose)</b></td>
+                <td><b>@Matchups.Sum(mu => mu.TotalEncounters)</b></td>
+                <td><b>@(string.Format("{0:0.##}", Matchups.Average(mu => mu.Winrate))) %</b></td>
+            </tr>
+        </tfoot>
     </table>
 }
 
@@ -104,7 +113,10 @@ else
     private async Task RefreshGraphs()
     {
         if (DonutRef is not null)
+        {
             await DonutRef.UpdateSeriesAsync();
+            await DonutRef.RenderAsync();
+        }
     }
 
     private async Task NewMu()

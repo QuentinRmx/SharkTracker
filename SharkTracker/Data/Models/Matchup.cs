@@ -30,7 +30,7 @@ namespace SharkTracker.Data.Models
             get
             {
                 if (TotalEncounters == 0) return 0;
-                return (Win * 100) / TotalEncounters;
+                return (((decimal)Win * 100) / (decimal)TotalEncounters);
             }
         }
 
