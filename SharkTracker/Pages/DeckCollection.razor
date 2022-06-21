@@ -1,0 +1,88 @@
+﻿@page "/decks"
+@using SharkTracker.Data.Models;
+@using SharkTracker.Data;
+
+<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+
+<h1>Deck Collection</h1>
+<input placeholder="New Deck Name..." value="@NewDeckName" @oninput="(e)=> NewDeckName = e.Value.ToString()" />
+<input placeholder="New Deck Code..." value="@NewDeckCode" @oninput="(e)=> NewDeckCode = e.Value.ToString()" />
+<button class="btn btn-primary @((string.IsNullOrWhiteSpace(NewDeckName) || (string.IsNullOrWhiteSpace(NewDeckCode))) ? "disabled" : "")" @onclick="@(async () => await NewDeck() )">+</button>
+
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Winrate</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @foreach (var deck in _decks)
+        {
+            <tr>
+                <td>@deck.DeckName</td>
+                <td>@deck.DeckCode</td>
+                <td>@deck.Winrate</td>
+                <td>
+                    <a class="btn btn-outline-info" href="deckDetail/{@deck.Id}"><span class="oi oi-magnifying-glass"></span></a>
+                    <button class="btn btn-outline-danger" @onclick="@(async () => await DeleteDeck(deck) )"><span class="oi oi-trash"></span></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    #nullable enable
+
+    //list of decks.
+    private IList<Deck> _decks = new List<Deck>();
+
+    public string? NewDeckName;
+
+    public string? NewDeckCode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (App.DeckRepo is null)
+            return;
+        _decks = await App.DeckRepo.GetAll();
+    }
+
+    private async Task NewDeck()
+    {
+        if (App.DeckRepo is null) return;
+
+        var deck = new Deck()
+        {
+            DeckName = NewDeckName,
+            DeckCode = NewDeckCode
+        };
+
+        var result = await App.DeckRepo.Add(deck);
+        _decks.Add(deck);
+        NewDeckName = string.Empty;
+        NewDeckCode = string.Empty;
+    }
+
+    private async Task DeleteDeck(Deck deck)
+    {
+        if (App.DeckRepo is null) return;
+
+        var result = await App.DeckRepo.Delete(deck);
+        if (result == ERepositoryResponse.Success) _decks.Remove(deck);
+    }
+}
+
+<style>
+
+	@@import url('https://fonts.googleapis.com/css2?family=Work+Sans');
+
+	body {
+		font-family: 'Work Sans';
+	}
+</style>

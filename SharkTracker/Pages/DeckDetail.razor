@@ -1,0 +1,178 @@
+﻿@page "/deckDetail/{DeckId}"
+@using SharkTracker.Data
+@using SharkTracker.Data.Models
+
+
+<a href="/decks" class="btn btn-outline-dark"><span class="oi oi-arrow-thick-left"></span> Back</a>
+
+@if (Deck is null)
+{
+    <h1>No data...</h1>
+}
+else
+{
+    <h1>@Deck.DeckName</h1>
+    @if (Matchups is not null)
+    {
+        <div class="chartDonut">
+            <ApexChart @ref="DonutRef" TItem="Matchup" Title="Match-ups">
+                <ApexPointSeries TItem="Matchup"
+                         Items="Matchups"
+                         SeriesType="SeriesType.Donut"
+                         Name="Match-up"
+                         XValue="@(mu => mu.OpponentDeckName)"
+                         YValue="@(mu => mu.TotalEncounters)">
+                </ApexPointSeries>
+            </ApexChart>
+        </div>
+        
+    }
+
+    <input placeholder="New Match-Up Name..." value="@NewMuName" @oninput="(e)=> NewMuName = e.Value.ToString()" />
+    <button class="btn btn-primary @((string.IsNullOrWhiteSpace(NewMuName)) ? "disabled" : "")" @onclick="@(async () => await NewMu() )">+</button>
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Win</th>
+                <th>Lose</th>
+                <th>Total</th>
+                <th>Winrate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var mu in Matchups)
+            {
+                <tr>
+                    <td>@mu.OpponentDeckName</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-outline-primary @((mu.Win == 0) ? "disabled" : "")" @onclick="@(async () => await UpdateWin(mu, -1) )"><span class="oi oi-minus"></span></button>
+                            @mu.Win
+                            <button class="btn btn-outline-primary" @onclick="@(async () => await UpdateWin(mu, 1) )"><span class="oi oi-plus"></span></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button class="btn btn-outline-primary @((mu.Lose == 0) ? "disabled" : "") " @onclick="@(async () => await UpdateLose(mu, -1) )"><span class="oi oi-minus"></span></button>
+                            @mu.Lose
+                            <button class="btn btn-outline-primary" @onclick="@(async () => await UpdateLose(mu, 1) )"><span class="oi oi-plus"></span></button>
+                        </div>
+                    </td>
+                    <td><b>@mu.TotalEncounters</b></td>
+                    <td><div class="@mu.EvaluateWinrate()"><b>@mu.Winrate %</b></div></td>
+                    <td>
+                        <button class="btn btn-outline-danger" @onclick="@(async () => await DeleteMu(mu) )"><span class="oi oi-trash"></span></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    #nullable enable
+
+    [Parameter]
+    public string? DeckId{ get; set; }
+
+    public Deck? Deck { get; set; }
+
+    public List<Matchup> Matchups { get; set; } = new();
+
+    public string? NewMuName { get; set; }
+
+    private ApexChart<Matchup>? DonutRef;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        DeckId = (DeckId is not null) ? DeckId.Replace("{", "").Replace("}", "") : "";
+        if (int.TryParse(DeckId, out int id))
+        {
+
+            if (App.DeckRepo is null || App.MatchupRepo is null) return;
+
+            var allDecks = await App.DeckRepo.GetAll();
+            Deck = allDecks.FirstOrDefault(d => d.Id == id);
+
+            var allMu = await App.MatchupRepo.GetAll();
+            Matchups = allMu.FindAll(mu => mu.PlayerDeckId == id);
+        }
+    }
+
+    private async Task RefreshGraphs()
+    {
+        if (DonutRef is not null)
+            await DonutRef.UpdateSeriesAsync();
+    }
+
+    private async Task NewMu()
+    {
+        if (App.MatchupRepo is null || Deck is null) return;
+
+        Matchup mu = new Matchup
+            {
+                PlayerDeckId = Deck.Id,
+                OpponentDeckName = NewMuName
+            };
+        var result = await App.MatchupRepo.Add(mu);
+        Matchups.Add(mu);
+
+        await RefreshGraphs();
+    }
+
+    private async Task UpdateWin(Matchup mu, int value)
+    {
+        if (App.MatchupRepo is null) return;
+
+        mu.Win += value;
+        if (mu.Win < 0) mu.Win = 0;
+
+        await App.MatchupRepo.Update(mu);
+
+        await RefreshGraphs();
+    }
+
+    private async Task UpdateLose(Matchup mu, int value)
+    {
+        if (App.MatchupRepo is null) return;
+
+        mu.Lose += value;
+        if (mu.Lose < 0) mu.Lose = 0;
+
+        await App.MatchupRepo.Update(mu);
+
+        await RefreshGraphs();
+    }
+
+    private async Task DeleteMu(Matchup mu)
+    {
+        if (App.MatchupRepo is null) return;
+
+        var result = await App.MatchupRepo.Delete(mu);
+        if (result == ERepositoryResponse.Success) 
+        {
+            Matchups.Remove(mu); 
+            await RefreshGraphs();
+        }
+
+    }
+
+    
+}
+
+<style>
+    .chartDonut {
+        width: 25%;
+        height: 25%;
+    }
+
+
+
+    @@import url('https://fonts.googleapis.com/css2?family=Work+Sans');
+
+    body {
+        font-family: 'Work Sans';
+    }
+</style>
