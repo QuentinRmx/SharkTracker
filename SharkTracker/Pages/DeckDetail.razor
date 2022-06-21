@@ -1,5 +1,6 @@
 ﻿@page "/deckDetail/{DeckId}"
 @using SharkTracker.Data
+@using SharkTracker.Data.LoRDeckCodes
 @using SharkTracker.Data.Models
 
 
@@ -7,84 +8,113 @@
 
 @if (Deck is null)
 {
-    <h1>No data...</h1>
+    <h1>Loading data ...</h1>
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
 }
 else
 {
-    <h1>@Deck.DeckName</h1>
-    @if (Matchups is not null)
-    {
-        <div class="chartDonut">
-            <ApexChart @ref="DonutRef" TItem="Matchup" Title="Match-ups" Options="_muOptions">
-                <ApexPointSeries TItem="Matchup"
-                         Items="Matchups"
-                         SeriesType="SeriesType.Donut"
-                         Name="Match-up"
-                         XValue="@(mu => mu.OpponentDeckName)"
-                         YValue="@(mu => mu.TotalEncounters)">
-                </ApexPointSeries>
-            </ApexChart>
-        </div>
-        
-    }
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-10">
+                <h1>@Deck.DeckName</h1>
+                @if (Matchups is not null)
+                {
+                    <div class="chartDonut">
+                        <ApexChart @ref="DonutRef" TItem="Matchup" Title="Match-ups" Options="_muOptions">
+                            <ApexPointSeries TItem="Matchup"
+                                     Items="Matchups"
+                                     SeriesType="SeriesType.Donut"
+                                     Name="Match-up"
+                                     XValue="@(mu => mu.OpponentDeckName)"
+                                     YValue="@(mu => mu.TotalEncounters)">
+                            </ApexPointSeries>
+                        </ApexChart>
+                    </div>
 
-    <input placeholder="New Match-Up Name..." value="@NewMuName" @oninput="(e)=> NewMuName = e.Value.ToString()" />
-    <button class="btn btn-primary @((string.IsNullOrWhiteSpace(NewMuName)) ? "disabled" : "")" @onclick="@(async () => await NewMu() )">+</button>
-    <table class="table table-striped table-hover table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Name</th>
-                <th>Win</th>
-                <th>Lose</th>
-                <th>Total</th>
-                <th>Winrate</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            @foreach (var mu in Matchups)
-            {
-                <tr>
-                    <td>@mu.OpponentDeckName</td>
-                    <td>
-                        <div>
-                            <button class="btn btn-outline-primary @((mu.Win == 0) ? "disabled" : "")" @onclick="@(async () => await UpdateWin(mu, -1) )"><span class="oi oi-minus"></span></button>
-                            @mu.Win
-                            <button class="btn btn-outline-primary" @onclick="@(async () => await UpdateWin(mu, 1) )"><span class="oi oi-plus"></span></button>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <button class="btn btn-outline-primary @((mu.Lose == 0) ? "disabled" : "") " @onclick="@(async () => await UpdateLose(mu, -1) )"><span class="oi oi-minus"></span></button>
-                            @mu.Lose
-                            <button class="btn btn-outline-primary" @onclick="@(async () => await UpdateLose(mu, 1) )"><span class="oi oi-plus"></span></button>
-                        </div>
-                    </td>
-                    <td><b>@mu.TotalEncounters</b></td>
-                    <td><div class="@mu.EvaluateWinrate()"><b>@(string.Format("{0:0.##}", mu.Winrate)) %</b></div></td>
-                    <td>
-                        <button class="btn btn-outline-danger" @onclick="@(async () => await DeleteMu(mu) )"><span class="oi oi-trash"></span></button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td><b>TOTAL</b></td>
-                <td><b>@Matchups.Sum(mu => mu.Win)</b></td>
-                <td><b>@Matchups.Sum(mu => mu.Lose)</b></td>
-                <td><b>@Matchups.Sum(mu => mu.TotalEncounters)</b></td>
-                <td><b>@((Matchups.Any()) ? string.Format("{0:0.##} %", Matchups.Average(mu => mu.Winrate)) : "0")</b></td>
-            </tr>
-        </tfoot>
-    </table>
+                }
+
+                <input placeholder="New Match-Up Name..." value="@NewMuName" @oninput="(e)=> NewMuName = e.Value.ToString()" />
+                <button class="btn btn-primary @((string.IsNullOrWhiteSpace(NewMuName)) ? "disabled" : "")" @onclick="@(async () => await NewMu() )">+</button>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Win</th>
+                            <th>Lose</th>
+                            <th>Total</th>
+                            <th>Winrate</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @foreach (var mu in Matchups)
+                        {
+                            <tr>
+                                <td>@mu.OpponentDeckName</td>
+                                <td>
+                                    <div>
+                                        <button class="btn btn-outline-primary @((mu.Win == 0) ? "disabled" : "")" @onclick="@(async () => await UpdateWin(mu, -1) )"><span class="oi oi-minus"></span></button>
+                                        @mu.Win
+                                        <button class="btn btn-outline-primary" @onclick="@(async () => await UpdateWin(mu, 1) )"><span class="oi oi-plus"></span></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <button class="btn btn-outline-primary @((mu.Lose == 0) ? "disabled" : "") " @onclick="@(async () => await UpdateLose(mu, -1) )"><span class="oi oi-minus"></span></button>
+                                        @mu.Lose
+                                        <button class="btn btn-outline-primary" @onclick="@(async () => await UpdateLose(mu, 1) )"><span class="oi oi-plus"></span></button>
+                                    </div>
+                                </td>
+                                <td><b>@mu.TotalEncounters</b></td>
+                                <td><div class="@mu.EvaluateWinrate()"><b>@(string.Format("{0:0.##}", mu.Winrate)) %</b></div></td>
+                                <td>
+                                    <button class="btn btn-outline-danger" @onclick="@(async () => await DeleteMu(mu) )"><span class="oi oi-trash"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><b>TOTAL</b></td>
+                            <td><b>@Matchups.Sum(mu => mu.Win)</b></td>
+                            <td><b>@Matchups.Sum(mu => mu.Lose)</b></td>
+                            <td><b>@Matchups.Sum(mu => mu.TotalEncounters)</b></td>
+                            <td><b>@((Matchups.Any()) ? string.Format("{0:0.##} %", Matchups.Average(mu => mu.Winrate)) : "0")</b></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-2 border">
+                <h3>Deck List</h3>
+                <table class="table table-striped table-hover table-sm" style="vertical-align: middle;">
+                    <tbody class="table-group-divider">
+                        @foreach (Card c in DeckCards)
+                        {
+                            <tr>
+                                <td class="col-1">
+                                    <div class="manaCostContainer">
+                                        <img src="img/managem.png" style="z-index : -1;" width="30" height="30" />
+                                        <div class="manaCost"><b>@c.Cost</b></div>
+                                    </div>
+                                </td>
+                                <td class="col-3">@c.Name</td>
+                                <td class="col-2"><span style="color: gray;">x</span><b style="color:lightslategray;">@(Deck.Cards.First(cc => cc.CardCode == c.Code).Count)</b></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 
 @code {
-    #nullable enable
+#nullable enable
 
     [Parameter]
-    public string? DeckId{ get; set; }
+    public string? DeckId { get; set; }
 
     public Deck? Deck { get; set; }
 
@@ -94,7 +124,18 @@ else
 
     private ApexChart<Matchup>? DonutRef;
 
-    private ApexChartOptions<Matchup> _muOptions;
+    public List<Card> AllCards = new();
+
+    public List<Card> DeckCards = new();
+
+    private ApexChartOptions<Matchup> _muOptions = new ApexChartOptions<Matchup>
+        {
+            Theme = new Theme
+            {
+                Mode = Mode.Light,
+                Palette = PaletteType.Palette1
+            }
+        };
 
     protected override async Task OnParametersSetAsync()
     {
@@ -110,15 +151,16 @@ else
             var allMu = await App.MatchupRepo.GetAll();
             Matchups = allMu.FindAll(mu => mu.PlayerDeckId == id);
 
-            _muOptions = new ApexChartOptions<Matchup>
-                {
-                    Theme = new Theme
-                    {
-                        Mode = Mode.Light,
-                        Palette = PaletteType.Palette1
-                    }
-                };
-
+            if (Deck is null) return;
+            List<CardCodeAndCount> cardsCount = LoRDeckEncoder.GetDeckFromCode(Deck.DeckCode);
+            Deck.Cards = cardsCount;
+            AllCards = await App.GetAllCards();
+            foreach (CardCodeAndCount cc in Deck.Cards)
+            {
+                if (AllCards.Any(c => c.Code == cc.CardCode))
+                    DeckCards.Add(AllCards.First(c => c.Code == cc.CardCode));
+            }
+            DeckCards = DeckCards.OrderBy(c => c.Cost).ThenBy(c => c.Name).ToList();
         }
     }
 
@@ -142,6 +184,8 @@ else
             };
         var result = await App.MatchupRepo.Add(mu);
         Matchups.Add(mu);
+
+        NewMuName = string.Empty;
 
         await RefreshGraphs();
     }
@@ -175,15 +219,15 @@ else
         if (App.MatchupRepo is null) return;
 
         var result = await App.MatchupRepo.Delete(mu);
-        if (result == ERepositoryResponse.Success) 
+        if (result == ERepositoryResponse.Success)
         {
-            Matchups.Remove(mu); 
+            Matchups.Remove(mu);
             await RefreshGraphs();
         }
 
     }
 
-    
+
 }
 
 <style>
@@ -192,7 +236,7 @@ else
         max-width: 30%;
         max-height: 30%;
         height: 25%;
-        margin: 10px;
+        margin: 40px;
     }
 
 
@@ -201,5 +245,18 @@ else
 
     body {
         font-family: 'Work Sans';
+    }
+
+    .manaCostContainer {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+
+    .manaCost {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 </style>

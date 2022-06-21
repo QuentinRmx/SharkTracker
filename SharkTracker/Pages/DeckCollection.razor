@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
 
 <h1>Deck Collection</h1>
+
 <input placeholder="New Deck Name..." value="@NewDeckName" @oninput="(e)=> NewDeckName = e.Value.ToString()" />
 <input placeholder="New Deck Code..." value="@NewDeckCode" @oninput="(e)=> NewDeckCode = e.Value.ToString()" />
 <button class="btn btn-primary @((string.IsNullOrWhiteSpace(NewDeckName) || (string.IsNullOrWhiteSpace(NewDeckCode))) ? "disabled" : "")" @onclick="@(async () => await NewDeck() )">+</button>

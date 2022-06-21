@@ -1,4 +1,5 @@
 ﻿
+using SharkTracker.Data.LoRDeckCodes;
 using SQLite;
 
 namespace SharkTracker.Data.Models
@@ -13,5 +14,7 @@ namespace SharkTracker.Data.Models
 
         public string DeckName { get; set; }
 
+        [Ignore]
+        public List<CardCodeAndCount> Cards { get; set; }
     }
 }

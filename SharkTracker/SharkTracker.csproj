@@ -42,6 +42,7 @@
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
     <MauiImage Include="wwwroot\img\sharkboiii.png" />
+    <MauiImage Include="wwwroot\img\managem.png" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -53,6 +54,7 @@
 	<ItemGroup>
 	  <PackageReference Include="AntDesign.Charts" Version="0.2.3" />
 	  <PackageReference Include="Blazor-ApexCharts" Version="0.9.12-beta" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	  <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.0" />
 	</ItemGroup>
@@ -60,5 +62,6 @@
 	<ItemGroup>
 	  <None Include="wwwroot\img\sharkboiii.png" />
 	</ItemGroup>
+
 
 </Project>
