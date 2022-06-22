@@ -13,6 +13,10 @@ namespace SharkTracker.Data
 
         private static string _nameZipFile = "set";
 
+        private static string _artworkSuffix = @".png";
+
+        private static int _lastSet = 6;
+
 
         public static async Task<List<Card>> GetAllCardsData()
         {
@@ -20,20 +24,34 @@ namespace SharkTracker.Data
 
             try
             {
-                int index = 1;
-                bool success = true;
-                // This way we don't have to know what's the latest set, once the Http call fails we know there is no more set to download.
-                do
+                List<Task> actionList = new();
+
+                for (int index = 1; index <= _lastSet; index++)
                 {
-                    success = await DownloadSet(index, false, false);
-                    result.AddRange(await LoadCardsFromJson(index));
-                    index++;
-                } while (success);
+
+                    actionList.Add(DownloadSet(index, false, false));
+                }
+
+                result = await RunTasks(actionList.ToArray());
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return result;
+            }
+
+            return result;
+        }
+
+        public async static Task<List<Card>> RunTasks(Task[] tasks)
+        {
+            var result = new List<Card>();
+            await Task.WhenAll(tasks);
+
+            for (int index = 1; index <= _lastSet; index++)
+            {
+                result.AddRange(await LoadCardsFromJson(index));
             }
 
             return result;
@@ -45,8 +63,14 @@ namespace SharkTracker.Data
             {
                 string zipPath = FileAccessHelper.GetLocalFilePath(_nameZipFile + index + _suffixSet);
                 string jsonPath = FileAccessHelper.GetLocalFilePath("set" + index + ".json");
+                string artworkDirectory = FileAccessHelper.GetLocalFilePath("artwork");
 
-                if (overwrite || !File.Exists(jsonPath))
+                if (!Directory.Exists(artworkDirectory))
+                {
+                    Directory.CreateDirectory(artworkDirectory);
+                }
+
+                if (overwrite || (!File.Exists(jsonPath) && !File.Exists(zipPath)))
                 {
                     using HttpClient client = new HttpClient();
 
@@ -61,23 +85,26 @@ namespace SharkTracker.Data
                     contentStream = null;
                 }
 
-                if (!File.Exists(jsonPath))
+                using ZipArchive zipFile = ZipFile.OpenRead(zipPath);
+                foreach (ZipArchiveEntry entry in zipFile.Entries)
                 {
-                    using ZipArchive zipFile = ZipFile.OpenRead(zipPath);
-                    foreach (ZipArchiveEntry entry in zipFile.Entries)
+                    if (entry.FullName.Contains("set" + index + "-en_us.json") && !File.Exists(jsonPath))
                     {
-                        if (entry.FullName.Contains("set" + index + "-en_us.json"))
-                        {
-                            entry.ExtractToFile(jsonPath, overwrite);
-                            return true;
-                        }
+                        entry.ExtractToFile(jsonPath, overwrite);
+
+                        break;     
                     }
+                    //else if (entry.FullName.Contains(_artworkSuffix) && !File.Exists(FileAccessHelper.GetLocalFilePath("artwork/" + entry.Name)))
+                    //{
+                    //    string artworkPath = FileAccessHelper.GetLocalFilePath("artwork/" + entry.Name);
+                    //    entry.ExtractToFile(artworkPath);
+                    //}
+
                 }
-
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e);
                 throw;
             }
 
@@ -96,5 +123,5 @@ namespace SharkTracker.Data
         }
     }
 
-    
+
 }

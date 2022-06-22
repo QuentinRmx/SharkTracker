@@ -7,7 +7,16 @@
 
 	<main>
 		<article class="content px-4">
-			@Body
+			<ErrorBoundary>
+				<ChildContent>
+					@Body
+				</ChildContent>
+				<ErrorContent Context="ex">
+					<p>@ex.Source</p>
+					<p>@ex.InnerException</p>
+					<p>@ex.Message</p>
+				</ErrorContent>
+			</ErrorBoundary>
 		</article>
 	</main>
 </div>

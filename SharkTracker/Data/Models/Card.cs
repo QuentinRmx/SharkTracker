@@ -27,5 +27,27 @@ namespace SharkTracker.Data.Models
         [JsonProperty("rarity")] public string Rarity { get; set; }
 
         [JsonProperty("collectible")] public bool Collectible { get; set; }
+
+        [JsonIgnore] private Image _artwork;
+
+        [JsonIgnore]
+        public Image Artwork
+        {
+            get
+            {
+                if (_artwork is null)
+                {
+                    _artwork = new Image
+                    {
+                        Source = ImageSource.FromFile(FileAccessHelper.GetLocalFilePath("artwork\\" + Code + ".png"))
+                    };
+                }
+
+                return _artwork;
+            }
+        }
+
+        [JsonIgnore]
+        public string ArtworkPath => FileAccessHelper.GetLocalFilePath("artwork\\" + Code + ".png");
     }
 }

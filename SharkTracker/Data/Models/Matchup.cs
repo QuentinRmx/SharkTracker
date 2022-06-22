@@ -15,6 +15,8 @@ namespace SharkTracker.Data.Models
 
         public int PlayerDeckId { get; set; }
 
+        public int PlayerDeckVersion { get; set; }
+
         public string OpponentDeckName { get; set; }
 
         public int Win { get; set; }

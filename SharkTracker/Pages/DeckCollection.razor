@@ -30,7 +30,7 @@
                     <td class="col-1">@((_matchups.Any(mu => mu.PlayerDeckId == deck.Id) ? _matchups.Where(mu => mu.PlayerDeckId == deck.Id).Sum(mu => mu.TotalEncounters) : ""))</td>
                     <td class="col-1">@((_matchups.Any(mu => mu.PlayerDeckId == deck.Id) ? string.Format("{0:0.##} %", _matchups.Where(mu => mu.PlayerDeckId == deck.Id).Average(mu => mu.Winrate)) : ""))</td>
                     <td class="col-3">
-                        <a class="btn btn-outline-info" href="deckDetail/{@deck.Id}"><span class="oi oi-magnifying-glass"></span></a>
+                        <a class="btn btn-outline-info" href="deckDetail/{@deck.DeckId}"><span class="oi oi-magnifying-glass"></span></a>
                         <button class="btn btn-outline-danger" @onclick="@(async () => await DeleteDeck(deck) )"><span class="oi oi-trash"></span></button>
                     </td>
                 </tr>
@@ -58,7 +58,9 @@
         if (App.DeckRepo is null || App.MatchupRepo is null) return;
 
         _decks = await App.DeckRepo.GetAll();
-        _matchups = await App.MatchupRepo.GetAll();
+        _decks = _decks.OrderByDescending(d => d.Version).GroupBy(d => d.DeckId).Select(d => d.First()).ToList();
+
+    _matchups = await App.MatchupRepo.GetAll();
 
     }
 
@@ -67,10 +69,12 @@
         if (App.DeckRepo is null) return;
 
         var deck = new Deck()
-        {
-            DeckName = NewDeckName,
-            DeckCode = NewDeckCode
-        };
+            {
+                DeckName = NewDeckName,
+                DeckCode = NewDeckCode,
+                Version = 1,
+                DeckId = (_decks.Any()) ? _decks.Max(d => d.Id) + 1 : 1
+            };
 
         var result = await App.DeckRepo.Add(deck);
         _decks.Add(deck);
@@ -89,9 +93,9 @@
 
 <style>
 
-	@@import url('https://fonts.googleapis.com/css2?family=Work+Sans');
+    @@import url('https://fonts.googleapis.com/css2?family=Work+Sans');
 
-	body {
-		font-family: 'Work Sans';
-	}
+    body {
+        font-family: 'Work Sans';
+    }
 </style>

@@ -1,8 +1,44 @@
 ﻿@page "/"
 
 <h1 class="text-center display-1"> SHARKTRACKER</h1>
+@if (IsDataReady)
+{
 
-<img src="img/sharkboiii.png" class="homeimg"/>
+    <h2>SharTracker is ready for use !</h2>
+}
+else
+{
+    <h2>Checking card and player data...</h2>
+    <div class="lead">This might take some time, hang on !</div>
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+
+<img src="img/sharkboiii.png" class="homeimg" />
+
+
+
+
+@code {
+    public bool IsDataReady { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await App.GetAllCards();
+            IsDataReady = true;
+            StateHasChanged();
+        }
+        else
+        {
+            IsDataReady = true;
+            StateHasChanged();
+        }
+    }
+}
+
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Work+Sans');
 
